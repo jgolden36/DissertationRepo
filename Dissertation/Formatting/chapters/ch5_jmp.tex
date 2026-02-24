@@ -1,0 +1,38 @@
+% =============================================================================
+% Chapter 6: Investment and the Transfer of Power (Job Market Paper)
+% Draws content from:
+%   ../JMP/main_revised_with_figures.tex
+% Bib file: LiteratureElectric.bib (in ../JMP/; found via BIBINPUTS)
+% =============================================================================
+
+% --- Set graphics search path for this chapter ---
+\graphicspath{{../JMP/}{../JMP/images/}}
+
+\chapter{Investment and the Transfer of Power: Dynamic Effects of Transmission in Electricity Markets}
+\label{ch:jmp}
+
+\begingroup
+
+% --- Suppress front-matter commands ---
+\renewcommand{\maketitle}{}%
+\renewcommand{\title}[1]{}%
+\renewcommand{\author}[1]{}%
+\renewcommand{\date}[1]{}%
+
+% --- Suppress titlepage environment from the included file ---
+\SuppressTitlePage
+
+% --- Handle biblatex -> natbib translation ---
+% The JMP uses \printbibliography; redefine it to use natbib's \bibliography
+\renewcommand{\printbibliography}{%
+  \bibliographystyle{chicago}%
+  \bibliography{LiteratureElectric}%
+}
+
+% --- Include the essay body (docmute strips preamble) ---
+\input{../JMP/main_revised_with_figures.tex}
+
+% --- Restore titlepage ---
+\RestoreTitlePage
+
+\endgroup

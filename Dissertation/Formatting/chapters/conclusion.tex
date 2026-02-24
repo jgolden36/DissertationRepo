@@ -1,0 +1,24 @@
+% =============================================================================
+% Chapter 7: Conclusion
+% Draws content from: ../Intro and Conclusion/Conclusion.tex
+% =============================================================================
+
+\chapter{Conclusion}
+\label{ch:conclusion}
+
+% --- Suppress the included file's own front-matter commands ---
+\begingroup
+\renewcommand{\maketitle}{}%
+\renewcommand{\title}[1]{}%
+\renewcommand{\author}[1]{}%
+\renewcommand{\date}[1]{}%
+
+% The Conclusion.tex body only contains a \section{Conclusion} heading.
+% Suppress it since the chapter heading serves the same purpose.
+\let\origsection\section
+\renewcommand{\section}[1]{}%
+
+\input{../Intro and Conclusion/Conclusion.tex}
+
+\let\section\origsection
+\endgroup

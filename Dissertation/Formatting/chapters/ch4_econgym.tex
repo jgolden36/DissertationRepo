@@ -1,0 +1,37 @@
+% =============================================================================
+% Chapter 5: Econ Gym Working Paper
+% Draws content from:
+%   ../Econ Gym Working Paper/econ_gym_working_paper.tex
+% Bibliography: inline \begin{thebibliography} (no external .bib file needed)
+% =============================================================================
+
+% --- Set graphics search path for this chapter ---
+\graphicspath{{../Econ Gym Working Paper/}{../Econ Gym Working Paper/Figures/}}
+
+\chapter{Econ Gym: A Generalized Framework for Solving Dynamic Structural Models in Economics}
+\label{ch:econgym}
+
+\begingroup
+
+% --- Suppress front-matter commands ---
+\renewcommand{\maketitle}{}%
+\renewcommand{\title}[1]{}%
+\renewcommand{\author}[1]{}%
+\renewcommand{\date}[1]{}%
+
+% --- Suppress \tableofcontents from the included file ---
+\let\origtoc\tableofcontents
+\renewcommand{\tableofcontents}{}%
+
+% --- Suppress bibliographystyle (thebibliography is self-contained) ---
+\let\origbibliographystyle\bibliographystyle
+\renewcommand{\bibliographystyle}[1]{}%
+
+% --- Include the essay body (docmute strips preamble) ---
+\input{../Econ Gym Working Paper/econ_gym_working_paper.tex}
+
+% --- Restore commands ---
+\let\tableofcontents\origtoc
+\let\bibliographystyle\origbibliographystyle
+
+\endgroup

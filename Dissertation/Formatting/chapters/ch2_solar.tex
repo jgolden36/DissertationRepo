@@ -1,0 +1,51 @@
+% =============================================================================
+% Chapter 3: Learning-by-Doing and Industrial Policies — Solar Panels
+% Draws content from:
+%   ../Solar Panel Project/Draft_LBD.tex
+% Bib file: solar_tech.bib (in that same folder; found via BIBINPUTS)
+% =============================================================================
+
+% --- Set graphics search path for this chapter ---
+\graphicspath{{../Solar Panel Project/}{../Solar Panel Project/Figures/}}
+
+\chapter{Learning-by-Doing and Industrial Policies: Evidence from China's Solar Panel Industry}
+\label{ch:solar}
+
+\begingroup
+
+% --- Suppress front-matter commands ---
+\renewcommand{\maketitle}{}%
+\renewcommand{\title}[1]{}%
+\renewcommand{\author}[1]{}%
+\renewcommand{\date}[1]{}%
+
+% --- Suppress bibliography commands (we issue our own below) ---
+\let\origbibliographystyle\bibliographystyle
+\let\origbibliography\bibliography
+\renewcommand{\bibliographystyle}[1]{}%
+\renewcommand{\bibliography}[1]{}%
+
+% --- Suppress page-counter manipulation from the included file ---
+% (Draft_LBD.tex has \setcounter{page}{1} and \thispagestyle{empty} in body)
+\let\origsetcounter\setcounter
+\renewcommand{\setcounter}[2]{%
+  \ifstrequal{#1}{page}{}{\origsetcounter{#1}{#2}}}%
+\let\origthispagestyle\thispagestyle
+\renewcommand{\thispagestyle}[1]{}%
+
+% --- Include the essay body (docmute strips preamble) ---
+\input{../Solar Panel Project/Draft_LBD.tex}
+
+% --- Restore commands ---
+\let\bibliographystyle\origbibliographystyle
+\let\bibliography\origbibliography
+\let\setcounter\origsetcounter
+\let\thispagestyle\origthispagestyle
+
+\endgroup
+
+% --- Per-chapter bibliography ---
+\singlespacing
+\bibliographystyle{chicago}
+\bibliography{solar_tech}
+\doublespacing

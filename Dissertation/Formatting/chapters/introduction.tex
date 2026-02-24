@@ -1,0 +1,24 @@
+% =============================================================================
+% Chapter 1: Introduction
+% Draws content from: ../Intro and Conclusion/Introduction.tex
+% =============================================================================
+
+\chapter{Introduction}
+\label{ch:introduction}
+
+% --- Suppress the included file's own front-matter commands ---
+\begingroup
+\renewcommand{\maketitle}{}%
+\renewcommand{\title}[1]{}%
+\renewcommand{\author}[1]{}%
+\renewcommand{\date}[1]{}%
+
+% The Introduction.tex body only contains a \section{Introduction} heading.
+% We suppress that since the chapter heading serves the same purpose.
+\let\origsection\section
+\renewcommand{\section}[1]{}%
+
+\input{../Intro and Conclusion/Introduction.tex}
+
+\let\section\origsection
+\endgroup
