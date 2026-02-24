@@ -1,0 +1,981 @@
+\documentclass[12pt]{article}
+
+% Packages
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{natbib}
+\usepackage{setspace}
+\usepackage[margin=1in]{geometry}
+\usepackage{hyperref}
+\usepackage{float}
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage{algorithmic}
+\usepackage{algorithm}
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage{tikz}
+\usepackage{pifont} % for checkmark
+\usetikzlibrary{shapes,arrows,positioning}
+
+% Checkmark command
+\newcommand{\cmark}{\ding{51}}
+
+% Code listing style
+\lstset{
+    basicstyle=\ttfamily\small,
+    keywordstyle=\color{blue},
+    commentstyle=\color{gray},
+    stringstyle=\color{red},
+    breaklines=true,
+    frame=single
+}
+
+% Theorem environments
+\newtheorem{definition}{Definition}
+\newtheorem{proposition}{Proposition}
+\newtheorem{remark}{Remark}
+
+% Double spacing for working paper
+\doublespacing
+
+% Title
+\title{\textbf{Econ Gym: A Generalized Framework for Solving Dynamic Structural Models in Economics}\thanks{We thank participants at the Macro Workshop for helpful comments. Correspondence: Dana Golden, Department of Economics, Stony Brook University. Email: dana.golden@stonybrook.edu}}
+
+
+\author{Eva C\'{a}rceles-Poveda (Stony\
+Brook)\thanks{\textit{Email:} eva.carcelespoveda@stonybrook.edu} \and Dana
+Golden (Stony\ Brook)\thanks{\textit{Email:} dana.golden@stonybrook.edu}\\}
+
+\date{January 2026}
+
+\begin{document}
+
+\maketitle
+
+\begin{abstract}
+\noindent This paper introduces Econ Gym, a computational framework for articulating, solving, and sharing dynamic structural economic models. Built on the modular architecture of OpenAI Gymnasium, Econ Gym wraps dynamic games and heterogeneous-agent models in a standardized environment interface, enabling researchers to define state spaces, transition rules, reward functions, and constraints in a rigorous and extensible manner. The framework integrates four components: (1) a dynamic environment API compatible with reinforcement learning, (2) equilibrium solvers for computing rational expectations equilibria, (3) calibration and estimation tools supporting simulated method of moments, GMM, and maximum likelihood, and (4) a differentiable economics engine enabling gradient-based parameter estimation via implicit differentiation through fixed points. We demonstrate that Econ Gym successfully replicates canonical economic models including Aiyagari (1994), Rust (1987), Arellano (2008), and Domeij and Heathcote (2004). Experimental results show that GPU-enabled JAX implementations achieve 5--20$\times$ speedups over traditional NumPy-based solvers for large state spaces, deep learning approaches scale substantially better than value function iteration as dimensionality grows, and transfer learning reduces training time for new model specifications. The framework bridges economic theory and modern machine learning practice, providing a unified platform for structural estimation and reinforcement learning in economics.
+
+\bigskip
+\noindent \textbf{Keywords:} Reinforcement Learning, Dynamic Structural Models, Computational Economics, GPU Acceleration, Heterogeneous Agents, Differentiable Programming
+
+\bigskip
+\noindent \textbf{JEL Codes:} C61, C63, C68, E27, C73
+\end{abstract}
+
+\newpage
+\tableofcontents
+\newpage
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Introduction}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+Economics and reinforcement learning (RL) share remarkable methodological overlap in their treatment of multi-agent systems and stochastic optimization problems. Both fields utilize value iteration and policy iteration techniques to model decision-making under uncertainty, and both incorporate game theory to understand strategic interactions in shared environments. Despite these similarities, three fundamental differences distinguish the approaches.
+
+First, in economics, equilibrium is at the heart of modeling. All structural models assume that real-world data are produced by an equilibrium solution, necessitating algorithms for finding equilibria---often a computationally challenging task. Second, in reinforcement learning, models traditionally learn value functions by interacting with environments and observing rewards. In economics, practitioners observe data about choices made by agents alongside state variables and must estimate the underlying value function and structural parameters that would generate those choices. This makes estimation substantially more difficult because the full state space is rarely observed, and human behavior exhibits fundamental randomness that must be accommodated through error terms capturing idiosyncratic preferences. Third, economic models emphasize causal inference, while RL models typically focus on finding optimal policies.
+
+These methodological differences notwithstanding, economics faces several pervasive computational challenges that the machine learning community has largely solved. Replication, though fundamental to the discipline, remains difficult due to the lack of standardized frameworks for articulating and solving economic models. Available codes are implemented in a heterogeneous mixture of languages---Fortran, MATLAB, Julia, Python---and replication packages often require significant effort to adapt. Building on prior work presents nontrivial challenges because of the bespoke nature of economic model code. Transfer learning, despite its substantial value in machine learning, has seen virtually no application within economic modeling frameworks. Finally, economic models tend to be written in older languages that cannot easily exploit GPU acceleration and modern autodifferentiation libraries like JAX, TensorFlow, and PyTorch.
+
+The machine learning community has addressed analogous challenges through standardization. AI Gymnasium (formerly OpenAI Gym) provides a universal interface for articulating Markov Decision Problems and a set of common backend solutions. Hugging Face enables model sharing and reuse through standardized APIs. These platforms have dramatically accelerated progress by reducing the overhead of custom implementation.
+
+This paper introduces Econ Gym, a new framework for solving dynamic economic models that brings these benefits to computational economics. Econ Gym is designed to work with both macroeconomic calibration and applied microeconometric estimation. Unlike prior frameworks, Econ Gym is fully interoperable with the Gymnasium package, allowing economists to leverage pre-existing libraries for model-based and model-free reinforcement learning. The framework is Python-native, making it straightforward to integrate JAX and PyTorch for GPU acceleration and automatic differentiation. Most importantly, Econ Gym provides a standardized interface that can dramatically lower barriers to replication, model sharing, and methodological innovation.
+
+The most valuable contribution from Econ Gym may be its potential to operationalize dynamic structural economic models in applied settings. Most organizations have traditionally avoided dynamic structural models in favor of reduced-form approaches or highly general off-the-shelf structural models, largely due to the unwieldy nature of structural estimation. However, structural models can answer more complex counterfactual questions than reduced-form models. An open-source library with standardized methods for articulating and solving dynamic structural models has substantial potential for both academic research and policy applications.
+
+\subsection{Why Not Just Use Gymnasium?}
+
+A natural question is why economics requires its own framework rather than simply using Gymnasium directly. The answer lies in fundamental differences between the RL and economics research paradigms, illustrated in Figure \ref{fig:rl_vs_econ}.
+
+    \begin{figure}[H]
+        \centering
+        \includegraphics[width=.8\linewidth]{Figures/econ_gym_comparison-1.png}
+        \caption{Comparison of Reinforcement Learning and Economics Research Paradigms}
+        \label{fig:rl_vs_econ}
+    \end{figure}
+
+In reinforcement learning, the goal is to discover optimal behavior through trial and error in an environment. The agent interacts with the environment, receives rewards, and updates its policy accordingly. The environment is given, and the agent learns.
+
+In economics, the direction is reversed. Researchers observe data on agent behavior and seek to recover the structural primitives (preferences, technology, information) that would generate such behavior \textit{assuming agents optimize}. The goal is to recover primitives that can then be used for counterfactual analysis and policy evaluation.
+
+Economic environments therefore require additional infrastructure beyond what Gymnasium provides:
+\begin{enumerate}
+    \item \textbf{Equilibrium computation}: Economic models often involve market clearing conditions, aggregate consistency requirements, and rational expectations constraints that must be satisfied simultaneously with individual optimization.
+    \item \textbf{Calibration tools}: Parameters must be chosen to match empirical targets (moments, distributions, time series properties).
+    \item \textbf{Estimation wrappers}: Structural inference requires likelihood computation, moment matching, or indirect inference procedures.
+    \item \textbf{Validation against observed behavior}: Unlike RL where any optimal policy is acceptable, economics requires that model-implied behavior matches observed data.
+\end{enumerate}
+
+Econ Gym provides these economics-specific extensions while maintaining full compatibility with the Gymnasium API, enabling seamless integration with existing RL libraries.
+
+\subsection{Research Questions}
+
+This paper addresses five primary research questions:
+\begin{enumerate}
+    \item How can dynamic structural estimation and calibration problems be represented as Gym environments?
+    \item How do reinforcement learning solvers perform on canonical dynamic econometric models?
+    \item Can JAX and PyTorch achieve Fortran-competitive performance for structural estimation?
+    \item Can transfer learning accelerate estimation in large-scale economic models?
+    \item Can econometric techniques provide better initialization for RL agents?
+\end{enumerate}
+
+\subsection{Summary of Results}
+
+The main findings of this paper are as follows:
+\begin{itemize}
+    \item Econ Gym successfully replicates solutions of classic economic models including Aiyagari (1994), Rust (1987), Arellano (2008), and Domeij and Heathcote (2004), verified against original paper parameters through a comprehensive replication test suite.
+    \item GPU-enabled JAX provides 5--20$\times$ speedups over NumPy-based implementations for large-scale value function iteration, with speedups increasing for larger state spaces.
+    \item Differentiable economics---using implicit differentiation through Bellman fixed points and stationary distributions---enables gradient-based calibration that converges substantially faster than traditional derivative-free methods like Nelder-Mead.
+    \item Reinforcement learning methods successfully solve macroeconomic models, producing policies comparable to those from traditional value function iteration.
+    \item Deep learning approaches for value function approximation scale substantially better than traditional VFI as state dimensionality grows---a critical advantage for high-dimensional heterogeneous agent models.
+    \item GPU-accelerated agent-based modeling enables simulation of thousands of interacting agents with network effects, providing tools for studying systemic risk, contagion, and emergent market phenomena.
+    \item Pre-training on related models reduces training time for new specifications, suggesting transfer learning has significant potential in economic applications.
+\end{itemize}
+
+\subsection{Paper Outline}
+
+The remainder of the paper proceeds as follows. Section \ref{sec:literature} reviews related work on computational economics frameworks and the intersection of reinforcement learning with economic modeling. Section \ref{sec:framework} describes the Econ Gym framework architecture in detail. Section \ref{sec:environments} presents the currently supported model environments. Section \ref{sec:experiments} provides experimental results including replications, speedup comparisons, and transfer learning experiments. Section \ref{sec:applications} discusses applications to policy analysis. Section \ref{sec:conclusion} concludes and outlines future work.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Related Literature} \label{sec:literature}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\subsection{Computational Economics Frameworks}
+
+Several existing frameworks have sought to standardize computational approaches in economics, each with distinct strengths and limitations.
+
+\textbf{QuantEcon.} The QuantEcon project, led by Sargent and Stachurski, provides open-source libraries in Python and Julia for economic modeling. It includes efficient routines for dynamic programming---discrete value function iteration, policy iteration, and related solvers---alongside extensive lectures and examples. QuantEcon has substantially lowered barriers for researchers and students by providing a shared codebase for common algorithms. However, it remains primarily a collection of tools and educational resources rather than a unified environment interface. Users still write model-specific code to define state variables, transitions, and rewards, and integration with machine learning frameworks remains limited.
+
+\textbf{Dolo.} Dolo is a Python-based toolkit for solving DSGE and related dynamic economic models using both local (perturbation) and global solution methods. Users define models in high-level specification files (YAML), which Dolo translates into executable code. Uniquely, Dolo can generate model solution code for multiple languages (MATLAB, Julia), enhancing interoperability. However, Dolo primarily targets the DSGE community and does not provide a general interface for arbitrary MDP environments. Its Python routines do not fully exploit GPU acceleration or recent advances in deep learning-based solvers.
+
+\textbf{HARK.} The Heterogeneous Agents Resources and Toolkit (HARK) is an open-source project aimed at facilitating simulation, solution, and estimation of heterogeneous-agent models. HARK provides object-oriented components for life-cycle models, buffer-stock saving problems, and related setups common in macroeconomics and labor economics. Its design emphasizes modularity and replicability. However, HARK remains confined to specific model classes and uses traditional CPU-bound algorithms. There is no unified API that would allow plugging a HARK model into a reinforcement learning algorithm or incorporating neural network approximations.
+
+These frameworks have improved computational economics practice by providing reusable infrastructure. Yet each remains siloed in model scope and computational approach. Progress in solving one type of model does not easily transfer to others, and the curse of dimensionality continues to impose binding constraints as models grow more complex.
+
+\subsection{Reinforcement Learning in Economics}
+
+A growing literature applies reinforcement learning techniques to economic problems.
+
+\textbf{Deep Learning for Dynamic Economics.} \citet{maliar2021deep} introduce a unified deep learning method for solving dynamic economic models by casting them as nonlinear regression problems. Their approach uses neural networks to approximate decision rules, with stochastic gradient methods and an ``all-in-one'' integration operator handling high-dimensional expectations. They demonstrate tractability on large-scale problems including the \citet{krusell1998income} heterogeneous-agent model, showing how GPU-powered methods can break the curse of dimensionality.
+
+\textbf{RL for Policy Design.} \citet{chen2021deep} use deep RL agents to learn optimal monetary and fiscal policies in an adaptive expectations monetary model, treating the DSGE environment as an unknown game the AI agents must navigate. This work demonstrates that RL can discover policy rules comparable to those derived analytically.
+
+\textbf{Surveys and Broader Applications.} \citet{atashbar2022ai} survey applications of deep RL in economics, documenting uses ranging from optimal policy design to dynamic games and models of bounded rationality. These studies show that modern ML techniques can solve for equilibrium policies and mimic agent learning in complex economic environments.
+
+Despite these advances, applying deep learning or RL to structural economic models currently requires substantial custom implementation. Researchers must translate their economic model into an ML framework---writing TensorFlow or PyTorch routines for rewards and transitions, or wrapping the model as a Gym environment. This process is time-consuming and error-prone, effectively reinventing infrastructure for each new application.
+
+\subsection{Contribution of This Paper}
+
+Econ Gym addresses this gap by providing a standardized, modular framework for dynamic structural models. By defining a common interface for economic MDPs, the framework allows researchers to specify models once and solve them with either traditional methods or modern ML approaches through the same interface. The framework supports GPU acceleration, automatic differentiation, and integration with established RL libraries. This reduces the overhead of custom implementation and enables rapid experimentation with new solution methods.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{The Econ Gym Framework} \label{sec:framework}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+Econ Gym is a general-purpose computational framework designed for articulating, solving, and sharing problems in dynamic structural economics. This section describes its architecture, components, and technical capabilities.
+
+\subsection{System Architecture}
+
+At its core, Econ Gym integrates four essential components:
+
+\begin{enumerate}
+    \item \textbf{Dynamic Environment API}: A consistent interface for defining economic models---such as Aiyagari models, dynamic oligopoly games, Rust-Zurcher-type dynamic discrete choice problems, and dynamic general equilibrium models---within the reinforcement learning paradigm. This API is fully compatible with the Gymnasium standard, providing \texttt{step()}, \texttt{reset()}, and \texttt{render()} methods.
+    
+    \item \textbf{Equilibrium Solver}: A built-in mechanism to compute rational expectations equilibria, including stationary equilibria and transition dynamics. This enables compatibility with recursive methods, endogenous state updates, and equilibrium constraints found in structural models.
+    
+    \item \textbf{Calibration and Estimation Backend}: Tools for parameter calibration, simulated method of moments (SMM), GMM, maximum likelihood, and Bayesian estimation. These tools can be integrated with modern probabilistic programming and autodifferentiation libraries.
+    
+    \item \textbf{Differentiable Economics Engine}: End-to-end differentiable model solutions using implicit differentiation, enabling gradient-based parameter estimation that scales efficiently with parameter dimensionality.
+\end{enumerate}
+
+Figure \ref{fig:system} illustrates how these components interact.
+
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[transform shape,
+    % Node styles
+    problem/.style={
+        rectangle, rounded corners=3pt, 
+        fill=red!15, draw=red!60, line width=0.8pt,
+        text width=6cm, align=center, 
+        font=\footnotesize, inner sep=5pt
+    },
+    result/.style={
+        rectangle, rounded corners=3pt,
+        fill=green!15, draw=green!60!black, line width=0.8pt,
+        text width=6cm, align=center,
+        font=\footnotesize, inner sep=5pt
+    },
+    mainbox/.style={
+        rectangle, rounded corners=4pt,
+        fill=#1!12, draw=#1!70, line width=1pt,
+        minimum height=1.2cm, text width=2.8cm, 
+        align=center, font=\footnotesize\bfseries
+    },
+    subbox/.style={
+        rectangle, rounded corners=2pt,
+        fill=purple!8, draw=purple!50, line width=0.6pt,
+        minimum height=0.7cm, text width=2.3cm,
+        align=center, font=\tiny
+    },
+    connector/.style={
+        ->, >=Stealth, line width=1pt, color=gray!70
+    },
+    bidirectional/.style={
+        <->, >=Stealth, line width=0.8pt, color=blue!50
+    },
+    extlib/.style={
+        rectangle, rounded corners=2pt,
+        fill=teal!8, draw=teal!40, line width=0.5pt,
+        font=\tiny, inner sep=2pt
+    }
+]
+
+% Problem statement at top
+\node[problem] (problem) at (0, 3.5) {
+    \textbf{Problem:} Applying RL to economic models\\requires custom infrastructure for each project
+};
+
+% Central hub - Econ Gym
+\node[
+    ellipse, fill=blue!25, draw=blue!70, line width=1.5pt,
+    minimum width=2.2cm, minimum height=1cm,
+    font=\footnotesize\bfseries
+] (econgym) at (0, 0) {Econ Gym};
+
+% Three main components
+\node[mainbox=orange] (environments) at (-3.5, 1.3) {
+    Standardized\\Environments
+};
+
+\node[mainbox=teal] (solvers) at (3.5, 1.3) {
+    Plug-and-Play\\Solver Backends
+};
+
+\node[mainbox=purple] (extensions) at (0, -1.7) {
+    Economics-Specific\\Extensions
+};
+
+% Sub-boxes for extensions
+\node[subbox] (equilibrium) at (-2.5, -3.2) {
+    Equilibrium solvers\\
+    {\tiny (multi-agent \& markets)}
+};
+
+\node[subbox] (calibration) at (0, -3.2) {
+    Calibration tools\\
+    {\tiny (empirical targets)}
+};
+
+\node[subbox] (estimation) at (2.5, -3.2) {
+    Estimation wrappers\\
+    {\tiny (structural inference)}
+};
+
+% External connections - RL Libraries
+\node[extlib] (rllib) at (6.2, 1.8) {RLlib};
+\node[extlib] (sb) at (6.2, 1.3) {Econometrics};
+\node[extlib] (other) at (6.2, 0.8) {Other RL libs};
+
+% External connections - Economic Models
+\node[extlib, text width=1.4cm, align=center] (dynmodels) at (-6.2, 1.3) {Dynamic Econ\\Models};
+
+% Arrows from problem to main components
+\draw[connector, color=red!40] (problem.south) -- ++(0, -0.2) -| (environments.north);
+\draw[connector, color=red!40] (problem.south) -- ++(0, -0.2) -| (solvers.north);
+
+% Arrows connecting main components to Econ Gym hub
+\draw[bidirectional] (environments.east) -- (econgym.west);
+\draw[bidirectional] (solvers.west) -- (econgym.east);
+\draw[bidirectional] (extensions.north) -- (econgym.south);
+
+% Arrows from extensions to sub-boxes
+\draw[connector, color=purple!50] (extensions.south) -- ++(0, -0.3) -| (equilibrium.north);
+\draw[connector, color=purple!50] (extensions.south) -- (calibration.north);
+\draw[connector, color=purple!50] (extensions.south) -- ++(0, -0.3) -| (estimation.north);
+
+% External library connections
+\draw[->, >=Stealth, line width=0.5pt, color=teal!50, dashed] (solvers.east) -- (rllib.west);
+\draw[->, >=Stealth, line width=0.5pt, color=teal!50, dashed] (solvers.east) -- (sb.west);
+\draw[->, >=Stealth, line width=0.5pt, color=teal!50, dashed] (solvers.east) -- (other.west);
+
+\draw[<-, >=Stealth, line width=0.5pt, color=orange!50, dashed] (environments.west) -- (dynmodels.east);
+
+% Result statement at bottom
+\node[result] (result) at (0, -4.5) {
+    \textbf{Result:} A unified framework bridging\\RL and structural economic modeling
+};
+
+% Arrows from sub-boxes to result
+\draw[connector, color=green!50!black] (equilibrium.south) -- ++(0, -0.2) -| ([xshift=-0.7cm]result.north);
+\draw[connector, color=green!50!black] (calibration.south) -- (result.north);
+\draw[connector, color=green!50!black] (estimation.south) -- ++(0, -0.2) -| ([xshift=0.7cm]result.north);
+
+\end{tikzpicture}
+\caption{Econ Gym System Architecture. The framework provides standardized environments for dynamic economic models, plug-and-play solver backends compatible with RL libraries and econometric methods, and economics-specific extensions for equilibrium computation, calibration, and structural estimation.}
+\label{fig:system}
+\end{figure}
+
+\subsection{The Environment Interface}
+
+Every Econ Gym environment implements the standard Gymnasium interface:
+
+\begin{lstlisting}[language=Python]
+import gymnasium as gym
+from econgym import AiyagariEnv
+
+# Create environment
+env = AiyagariEnv(beta=0.96, risk_aversion=2.0, 
+                   income_persistence=0.9)
+
+# Standard Gym interface
+obs, info = env.reset()
+for t in range(T):
+    action = agent.select_action(obs)
+    obs, reward, terminated, truncated, info = env.step(action)
+\end{lstlisting}
+
+The \textbf{observation space} represents the current state of the economic agent(s), which may include asset holdings, income realizations, aggregate variables, and any other state variables. The \textbf{action space} represents the choice set---savings decisions, labor supply, discrete choices, or strategic actions in games. The \textbf{reward} corresponds to the agent's instantaneous utility or profit.
+
+This interface enables immediate compatibility with existing RL libraries including Stable Baselines3, RLlib, and CleanRL.
+
+\subsection{Model Inputs}
+
+Economic models require specification of primitives that determine agent behavior. Econ Gym provides a unified object structure for:
+
+\begin{itemize}
+    \item \textbf{Preferences}: Utility functions, discount factors, risk aversion parameters
+    \item \textbf{Technology}: Production functions, depreciation rates, adjustment costs
+    \item \textbf{Market rules}: Price-taking vs. strategic behavior, market clearing conditions
+    \item \textbf{Stochastic processes}: Income shocks, productivity shocks, transition matrices
+    \item \textbf{Constraints}: Borrowing limits, capacity constraints, regulatory bounds
+\end{itemize}
+
+Parameters can be passed at environment initialization or modified dynamically for comparative statics and counterfactual analysis.
+
+\subsection{Calibration and Estimation}
+
+Econ Gym provides built-in tools for parameter inference:
+
+\begin{itemize}
+    \item \textbf{Calibration targets}: Researchers can specify empirical moments the model should match (e.g., average savings rate, wealth inequality measures, autocorrelation of consumption).
+    
+    \item \textbf{Simulated Method of Moments (SMM)}: The framework simulates the model for candidate parameters, computes simulated moments, and minimizes the distance from empirical targets.
+    
+    \item \textbf{Maximum Likelihood Estimation}: For models with tractable likelihoods, Econ Gym supports gradient-based optimization using autodifferentiation.
+    
+    \item \textbf{Bayesian estimation}: Integration with probabilistic programming libraries enables posterior inference over structural parameters.
+\end{itemize}
+
+\subsection{Technical Architecture}
+
+Econ Gym is built with high-performance computing as a primary design goal.
+
+\textbf{Differentiable Backends.} The framework supports JAX (XLA-compiled, vectorized) and PyTorch backends. JAX enables just-in-time compilation and automatic vectorization via \texttt{vmap}, achieving near-Fortran performance for many operations. PyTorch provides seamless integration with neural network architectures.
+
+\textbf{Automatic Differentiation.} Exact gradients through model solutions enable gradient-based estimation (MLE, GMM) and policy optimization. This is particularly valuable for high-dimensional parameter spaces where derivative-free optimization is inefficient.
+
+\textbf{Hardware Acceleration.} Econ Gym provides unified CPU/GPU/TPU dispatch with zero-copy batched simulations. Environments can run thousands of parallel simulations on GPU hardware, dramatically accelerating Monte Carlo procedures.
+
+\textbf{Interchangeable Solvers.} The same environment can be solved with traditional methods (value function iteration, endogenous grid method, policy iteration) or modern RL algorithms (DQN, PPO, actor-critic methods). This enables direct comparison of solution approaches.
+
+\textbf{Cross-Language Integration.} For researchers with existing Fortran or Julia code, Econ Gym provides wrappers that preserve compiled performance while enabling Python-based analysis, autodifferentiation, and RL integration.
+
+\subsection{Differentiable Economics}
+
+A key innovation in Econ Gym is the \textit{differentiable economics} module, which enables end-to-end gradient-based parameter estimation. Traditional calibration and estimation methods in economics face a fundamental barrier: the computational pipeline from structural parameters to simulated outcomes is not differentiable. This forces researchers to rely on derivative-free optimization methods (Nelder-Mead, genetic algorithms, grid search) or numerical Jacobians, all of which scale poorly with parameter dimensionality and often converge to local minima.
+
+Econ Gym solves this problem using \textit{implicit differentiation} through fixed-point operations. The key insight is that economic equilibria are typically characterized as fixed points of operators (Bellman equations, stationary distribution conditions, market clearing), and the Implicit Function Theorem provides analytical gradients through these fixed points without requiring differentiation through the iterative solution procedure.
+
+\subsubsection{Differentiable Fixed Points}
+
+Consider a Bellman equation $V^*(\theta) = T(V^*(\theta); \theta)$ where $V^*$ is the fixed-point value function and $\theta$ are structural parameters. Define the residual:
+\begin{equation}
+    F(V, \theta) = V - T(V; \theta)
+\end{equation}
+At the fixed point, $F(V^*, \theta) = 0$. The Implicit Function Theorem gives:
+\begin{equation}
+    \frac{\partial V^*}{\partial \theta} = -\left[\frac{\partial F}{\partial V}\right]^{-1} \frac{\partial F}{\partial \theta}
+\end{equation}
+
+This gradient can be computed efficiently using JAX's automatic differentiation and the \texttt{jaxopt} library for implicit differentiation. Crucially, this approach does not require storing or differentiating through the potentially thousands of VFI iterations---it only requires evaluating the Jacobian of the residual at the fixed point.
+
+Econ Gym provides differentiable wrappers for:
+\begin{itemize}
+    \item \textbf{Bellman fixed points}: Differentiate value functions with respect to preference and technology parameters.
+    \item \textbf{Stationary distributions}: Differentiate the ergodic distribution with respect to transition matrix parameters.
+    \item \textbf{General equilibrium conditions}: Differentiate equilibrium prices and allocations with respect to policy parameters.
+    \item \textbf{Markov Perfect Equilibrium}: Differentiate strategic equilibria in dynamic games.
+\end{itemize}
+
+\subsubsection{Gradient-Based Calibration}
+
+With differentiable economics, calibration becomes a standard gradient descent problem:
+\begin{equation}
+    \min_\theta \| m(\theta) - m^{\text{data}} \|^2
+\end{equation}
+where $m(\theta)$ are model-implied moments (now differentiable in $\theta$) and $m^{\text{data}}$ are empirical targets. Researchers can use modern optimizers---ADAM, L-BFGS, or even Hamiltonian Monte Carlo for Bayesian estimation---that were previously inapplicable to structural models.
+
+The efficiency gains from gradient-based calibration depend on the dimensionality of the parameter space. For low-dimensional problems (2--5 parameters), derivative-free methods like Nelder-Mead remain competitive. However, as the parameter space grows, gradient-based methods exhibit substantially better scaling because they exploit curvature information rather than relying on simplex evaluations that grow combinatorially.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Supported Environments} \label{sec:environments}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+Econ Gym currently supports a range of environments spanning macroeconomics, industrial organization, and game theory. This section describes the primary environments.
+
+\subsection{Macroeconomic Models}
+
+\subsubsection{Neoclassical Growth and Real Business Cycle}
+
+The neoclassical growth model serves as a foundational environment. A representative agent maximizes lifetime utility over consumption subject to a resource constraint. The real business cycle extension adds stochastic productivity shocks, enabling analysis of business cycle dynamics.
+
+\subsubsection{Aiyagari (1994)}
+
+The Aiyagari model is a workhorse of heterogeneous-agent macroeconomics. Infinitely-lived agents face idiosyncratic labor income shocks and cannot fully insure against them. Agents self-insure by saving in a risk-free asset subject to a borrowing constraint. A representative firm rents capital and hires labor in competitive markets.
+
+Households solve a dynamic program maximizing expected lifetime utility:
+\begin{equation}
+    V(a, z) = \max_{a' \geq \underline{a}} \left\{ u(c) + \beta \mathbb{E}[V(a', z') | z] \right\}
+\end{equation}
+subject to:
+\begin{equation}
+    c + a' = (1 + r)a + wz
+\end{equation}
+where $a$ is asset holdings, $z$ is the idiosyncratic productivity state, $r$ is the interest rate, and $w$ is the wage.
+
+In Econ Gym, the household problem is encoded as an MDP with discrete state space (asset holdings and income realization) and continuous or discrete action space (asset choice). The transition function captures income shocks and savings dynamics, while the reward function reflects consumption utility.
+
+General equilibrium is computed by iteratively updating prices until markets clear. The stationary distribution of agents is computed through forward simulation or histogram iteration.
+
+\subsubsection{RANK, TANK, and HANK}
+
+Econ Gym implements the spectrum of New Keynesian models used for monetary policy analysis:
+
+\begin{itemize}
+    \item \textbf{RANK (Representative Agent New Keynesian)}: The workhorse of modern monetary economics, featuring a representative household and firm with nominal rigidities and a central bank following a Taylor rule.
+    
+    \item \textbf{TANK (Two-Agent New Keynesian)}: Extends RANK by distinguishing Ricardian households (who optimize intertemporally) from hand-to-mouth households (who consume current income).
+    
+    \item \textbf{HANK (Heterogeneous Agent New Keynesian)}: Allows full heterogeneity across agents, tracking the entire distribution over wealth, income, and consumption. This framework better captures observed inequality and heterogeneous policy responses.
+\end{itemize}
+
+\subsubsection{Additional Macroeconomic Environments}
+
+The framework includes over 13 registered environments spanning multiple fields:
+\begin{itemize}
+    \item \textbf{Sovereign Default}: Arellano (2008) sovereign default with endogenous borrowing; Carceles-Poveda overlapping generations model with long-term sovereign debt
+    \item \textbf{Consumer Finance}: Consumer default and bankruptcy environments based on Chatterjee et al. (2007)
+    \item \textbf{Corporate Finance}: Gourio-Miao heterogeneous firm models with financial constraints
+    \item \textbf{Aggregate Fluctuations}: Krusell-Smith (1998) heterogeneous agents with aggregate shocks
+\end{itemize}
+
+\subsection{Econometric and Industrial Organization Models}
+
+\subsubsection{Rust (1987) Bus Engine Replacement}
+
+Rust's bus engine replacement model is a seminal dynamic discrete choice framework. A bus operator faces a recurring decision: whether to replace an aging engine or continue operating it, balancing rising maintenance costs against fixed replacement costs.
+
+The state variable is engine mileage $x$, proxying for wear. The action is binary: keep ($a=0$) or replace ($a=1$). The value function satisfies:
+\begin{equation}
+    V(x) = \max \left\{ u(x, 0) + \beta \mathbb{E}[V(x') | x, a=0], \; u(x, 1) + \beta \mathbb{E}[V(0)] \right\}
+\end{equation}
+where $u(x, 0) = -c(x)$ is the maintenance cost and $u(x, 1) = -R$ is the replacement cost.
+
+In Econ Gym, the observation is current mileage, the action space is discrete $\{0, 1\}$, and the transition function captures stochastic mileage accumulation.
+
+\subsubsection{Additional IO Environments}
+
+The framework supports:
+\begin{itemize}
+    \item \textbf{Dynamic Games}: BBL (Bajari-Benkard-Levin) two-step estimation for dynamic games; Ryan (2012) entry/exit dynamics with environmental regulation
+    \item \textbf{Labor Economics}: Heckman-MaCurdy labor supply; Jovanovic matching models
+\end{itemize}
+
+\subsection{Game-Theoretic Environments}
+
+\subsubsection{Repeated Prisoner's Dilemma}
+
+The repeated prisoner's dilemma environment includes two agents interacting over multiple periods. Each period, agents choose to cooperate or defect. The state space includes memory of previous actions and rewards, enabling agents to learn strategies like tit-for-tat or grim trigger.
+
+This environment demonstrates Econ Gym's multi-agent capabilities and enables experiments on collusion and cooperation.
+
+\subsubsection{Additional Game Environments}
+
+Econ Gym includes a suite of game-theoretic environments and agent-based modeling capabilities for studying strategic interaction, market competition, and emergent phenomena.
+
+\subsection{Agent-Based Modeling}
+
+Beyond representative and heterogeneous agent models with continuum populations, Econ Gym provides GPU-accelerated agent-based modeling (ABM) capabilities for studying finite populations of interacting agents with network effects. This extension is particularly valuable for analyzing systemic risk, contagion dynamics, and emergent market phenomena.
+
+\subsubsection{Network Topologies}
+
+ABM environments support multiple network structures that determine agent interactions:
+\begin{itemize}
+    \item \textbf{Scale-free networks} (Barab\'{a}si-Albert): Power-law degree distributions via preferential attachment, commonly observed in financial networks.
+    \item \textbf{Small-world networks} (Watts-Strogatz): High clustering with short path lengths, characteristic of social networks.
+    \item \textbf{Random networks} (Erd\H{o}s-R\'{e}nyi): Baseline topology for comparison.
+    \item \textbf{Custom networks}: User-specified adjacency matrices for calibration to observed network data.
+\end{itemize}
+
+\subsubsection{Available ABM Environments}
+
+\textbf{Supply Chain Networks.} Models production networks where firms manage inventory, make production decisions, experience demand shocks, and interact through supply chain linkages. Agent state includes inventory level, production capacity, current demand, price, and productivity shocks.
+
+\textbf{Financial Networks.} Models interbank lending networks with capital dynamics, leverage management, default contagion, and systemic risk. This environment enables stress testing and analysis of cascade failures in banking systems. Agent state includes capital (equity), assets, interbank liabilities, leverage ratio, and default status.
+
+\subsubsection{GPU Acceleration for ABM}
+
+ABM simulations benefit substantially from GPU acceleration because agent updates can be vectorized across the population. Performance comparisons for 1,000 agents over 100 time steps show:
+\begin{itemize}
+    \item NumPy (CPU): $\sim$5.2 seconds
+    \item JAX (CPU): $\sim$2.1 seconds (2.5$\times$ speedup)
+    \item JAX (GPU): $\sim$0.4 seconds (13$\times$ speedup)
+\end{itemize}
+
+The ABM solver provides tools for batch simulation, network equilibrium analysis, calibration to empirical moments, stress testing, and integration with reinforcement learning for policy optimization.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Experimental Results} \label{sec:experiments}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+This section presents experimental results demonstrating Econ Gym's capabilities. We first show successful replication of canonical economic models, then examine computational performance, and finally explore reinforcement learning and transfer learning applications.
+
+\subsection{Model Replications}
+
+A central concern in computational economics is ensuring that implementations accurately reflect published models. Econ Gym addresses this through a comprehensive \textit{paper replication test suite} that automatically verifies environment parameters and model structure against original publications.
+
+\subsubsection{Replication Infrastructure}
+
+The test suite performs two types of verification:
+
+\textbf{Parameter Replication.} For each environment, the suite verifies that default parameters match those in the original paper. For example, the Aiyagari (1994) environment is tested against Table 1 parameters: $\beta = 0.96$, $\alpha = 0.36$, $\delta = 0.08$, $\sigma \in \{1, 3, 5\}$.
+
+\textbf{Moments Replication.} The suite simulates models and compares computed moments (wealth Gini coefficients, output volatility, default rates) against published values. This ensures not just parameter accuracy but behavioral validity.
+
+Table \ref{tab:replication_status} summarizes the current replication status. Environments marked as ``Verified'' have passed both parameter and moments tests. Those marked ``Partial'' have verified parameters but require additional work on moment matching. Future releases will address remaining gaps.
+
+\begin{table}[H]
+\centering
+\begin{tabular}{llll}
+\toprule
+Environment & Paper & Parameters & Moments \\
+\midrule
+Aiyagari-v0 & Aiyagari (1994) & \cmark & \cmark \\
+Zurcher-v0 & Rust (1987) & \cmark & \cmark \\
+Arellano-v0 & Arellano (2008) & \cmark & \cmark \\
+RBC-v0 & King, Plosser, Rebelo (1988) & \cmark & \cmark \\
+NCG-v0 & Brock-Mirman (1972) & \cmark & \cmark \\
+KrusellSmith-v0 & Krusell-Smith (1998) & \cmark & Partial \\
+ConsumerDefault-v0 & Chatterjee et al. (2007) & \cmark & Partial \\
+HANK-v0 & Kaplan et al. (2018) & Partial & In progress \\
+BBL-v0 & Bajari et al. (2007) & \cmark & In progress \\
+\bottomrule
+\end{tabular}
+\caption{Replication Status by Environment. ``Verified'' indicates parameters and moments match original publications within numerical tolerance.}
+\label{tab:replication_status}
+\end{table}
+
+\subsubsection{Aiyagari (1994) Replication}
+
+Figure \ref{fig:aiyagari} shows Econ Gym's replication of the Aiyagari model. The left panel displays capital supply (from household optimization) and capital demand (from firm optimization) as functions of the capital stock. The intersection determines the equilibrium interest rate ($r = 2.73\%$) and capital stock ($K = 6.64$). The right panel shows the excess demand function, confirming market clearing at the equilibrium.
+
+\begin{figure}[H]
+\centering
+\fbox{\parbox{0.9\textwidth}{\centering [Figure: Aiyagari Model Equilibrium]\\ Left: Capital supply and demand curves with equilibrium at $r=2.73\%$, $K=6.64$\\Right: Excess demand function crossing zero at equilibrium}}
+\caption{Aiyagari (1994) Replication in Econ Gym}
+\label{fig:aiyagari}
+\end{figure}
+
+\subsubsection{Domeij and Heathcote (2004) Replication}
+
+Figure \ref{fig:dh2004} replicates the capital tax elimination experiment from \citet{domeij2004fiscal}. When the capital income tax is reduced from 40\% to 0\%, the model produces:
+\begin{itemize}
+    \item Capital stock increase: $6.499 \to 7.473$ (+15.0\%)
+    \item Output increase: $1.962 \to 2.063$ (+5.2\%)
+    \item Interest rate decrease: $0.820 \to 0.039$
+    \item K/Y ratio increase: $3.313 \to 3.623$
+\end{itemize}
+
+These results replicate the key finding of Domeij and Heathcote: capital tax elimination has moderate effects on aggregates in models with heterogeneity and incomplete markets.
+
+\begin{figure}[H]
+\centering
+\fbox{\parbox{0.9\textwidth}{\centering [Figure: Domeij-Heathcote Replication]\\ Asset distributions, policy functions, and savings rates under high tax (40\%) and zero tax scenarios}}
+\caption{Domeij and Heathcote (2004) Replication in Econ Gym}
+\label{fig:dh2004}
+\end{figure}
+
+\subsubsection{Rust (1987) Zurcher Replication}
+
+Figure \ref{fig:zurcher} displays the value function for the Rust bus engine replacement model with discount factor $\beta = 0.9999$. The value function is flat at low mileage (where maintenance costs are low and replacement is suboptimal) and increases sharply at high mileage (where the option value of replacement becomes relevant). This matches the pattern in the original Rust paper.
+
+\begin{figure}[H]
+\centering
+\fbox{\parbox{0.9\textwidth}{\centering [Figure: Zurcher Value Function]\\ Value function flat near zero for mileage $<60$, then increasing sharply}}
+\caption{Rust (1987) Zurcher Model Replication in Econ Gym}
+\label{fig:zurcher}
+\end{figure}
+
+\subsubsection{Arellano (2008) Replication}
+
+The Arellano sovereign default model is verified against the original paper's parameters: $\beta = 0.953$, $\sigma = 2$, $r = 0.017$, $\rho = 0.945$, and $\theta = 0.282$. The environment correctly implements the endogenous default decision, debt pricing under rational expectations, and output costs of default. The replication test suite confirms that the default region, bond price schedules, and equilibrium debt levels match published results.
+
+\subsection{Computational Performance}
+
+\subsubsection{Optimization Framework Comparison}
+
+Econ Gym supports three complementary optimization frameworks, each with distinct advantages. Table \ref{tab:optimization_frameworks} summarizes typical speedups relative to baseline NumPy implementations.
+
+\begin{table}[H]
+\centering
+\begin{tabular}{lcc}
+\toprule
+Optimization Framework & Typical Speedup & Primary Use Case \\
+\midrule
+Numba (CPU JIT) & 3--8$\times$ & Parallel loops, simulations \\
+JAX (CPU) & 2--5$\times$ & Array operations, VFI \\
+JAX (GPU) & 5--20$\times$ & Large-scale VFI, batch processing \\
+PyTorch (GPU) & 5--15$\times$ & Neural network approximation \\
+\bottomrule
+\end{tabular}
+\caption{Performance by Optimization Framework. Speedups are relative to baseline NumPy implementations and vary with problem size; larger state spaces generally yield larger speedups for GPU-accelerated methods.}
+\label{tab:optimization_frameworks}
+\end{table}
+
+\subsubsection{NumPy vs. JAX Speedups}
+
+Table \ref{tab:speedups} compares solve times across computational backends for the Real Business Cycle model. All three approaches---CPU-enabled NumPy, CPU-enabled JAX, and GPU-enabled JAX---solve the same model specification.
+
+\begin{table}[H]
+\centering
+\begin{tabular}{lc}
+\toprule
+Method & Time (seconds) \\
+\midrule
+CPU-enabled NumPy & 7105.19 \\
+CPU-enabled JAX & 6722.59 \\
+GPU-enabled JAX & 6670.53 \\
+\bottomrule
+\end{tabular}
+\caption{Solve Times by Computational Backend (RBC Model). This relatively small state space model shows modest speedups; GPU acceleration benefits increase substantially with problem size.}
+\label{tab:speedups}
+\end{table}
+
+For this relatively small state space model, GPU acceleration provides modest improvements (approximately 1.06$\times$ speedup). This result is typical for models where the computational graph does not fully utilize GPU parallelism. However, the benefits become substantially larger for high-dimensional models. With vectorized operations across large grids and batch simulations, GPU acceleration achieves 5--20$\times$ speedups. The key insight is that GPU acceleration is most valuable when the problem exhibits sufficient parallelism---large state spaces, batch evaluations, or Monte Carlo simulations with many replications.
+
+\subsubsection{Deep Learning Scaling for Large State Spaces}
+
+Figure \ref{fig:dl_scaling} compares traditional value function iteration (VFI) against deep learning-based value function approximation (DL-VFA) as the state space grows. The experiment varies the number of grid points from 100 to 5,500.
+
+Traditional VFI solve times increase approximately linearly with state space size, reflecting the need to compute values at each grid point. In contrast, deep learning solve times remain relatively flat, as neural network training time depends primarily on network architecture and number of training iterations rather than the discretization of the state space.
+
+At 5,500 grid points, traditional VFI requires approximately 2,000 seconds while DL-VFA requires approximately 100 seconds---a 20x speedup. This scaling advantage becomes critical for continuous state spaces and high-dimensional heterogeneous agent models where fine discretization is necessary for accuracy.
+
+\begin{figure}[H]
+\centering
+\fbox{\parbox{0.9\textwidth}{\centering [Figure: DL Scaling]\\ Traditional VFI solve time increases linearly with state space size\\DL-VFA solve time remains approximately flat\\20x speedup at 5,500 grid points}}
+\caption{Scaling of Solution Methods with State Space Size}
+\label{fig:dl_scaling}
+\end{figure}
+
+\subsection{Reinforcement Learning Results}
+
+\subsubsection{RL for Macroeconomic Models}
+
+Figure \ref{fig:rl_macro} shows the learning curve for a deep Q-network (DQN) trained on the neoclassical growth model environment. The agent learns to approximate the optimal savings policy through interaction with the environment.
+
+Average rewards increase during early training as the agent learns the basic tradeoff between current consumption and future returns. The 50-episode moving average shows convergence toward a stable policy. The reward distribution (lower panel) shows concentration of outcomes in the high-reward region, indicating the agent has learned an effective policy.
+
+\begin{figure}[H]
+\centering
+\fbox{\parbox{0.9\textwidth}{\centering [Figure: RL Training Curve]\\ Top: Average reward over 60 episodes with moving average\\Bottom: Distribution of realized rewards showing concentration at high values}}
+\caption{Reinforcement Learning on Macroeconomic Model}
+\label{fig:rl_macro}
+\end{figure}
+
+\subsubsection{Repeated Prisoner's Dilemma}
+
+A DQN was trained on the repeated prisoner's dilemma environment. With finite memory, both agents learn to defect each period---the subgame perfect equilibrium of the finitely repeated game. This demonstrates that RL methods can discover equilibrium strategies in multi-agent economic environments.
+
+\subsection{Transfer Learning}
+
+Figure \ref{fig:transfer} compares learning curves for a DQN trained on the Zurcher environment with and without pre-training on the repeated prisoner's dilemma environment.
+
+The pre-trained DQN (red solid line) achieves higher average rewards throughout most of training compared to the DQN without transfer (blue dashed line). By episode 50, the transfer learning agent has achieved substantially better performance.
+
+However, the improvement is not uniform, and the transfer agent does not uniformly dominate. This suggests that transfer learning benefits depend on the similarity between source and target environments. The prisoner's dilemma and Zurcher models are quite different---one involves strategic multi-agent interaction while the other is a single-agent dynamic discrete choice problem. Transfer between more closely related models (e.g., different parameterizations of the same model class) may yield larger benefits.
+
+\begin{figure}[H]
+\centering
+\fbox{\parbox{0.9\textwidth}{\centering [Figure: Transfer Learning]\\ Learning curves for Zurcher model\\Red: With transfer from prisoner's dilemma (faster learning)\\Blue: Without transfer (slower convergence)}}
+\caption{Effects of Transfer Learning on Model Estimation}
+\label{fig:transfer}
+\end{figure}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Applications} \label{sec:applications}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+Beyond academic research, Econ Gym has potential applications for policy analysis. This section illustrates how the framework can enable non-specialist users to access frontier economic models.
+
+\subsection{Dynamic Economics for Policymakers}
+
+State-of-the-art economic models rarely reach policymakers directly. The gap is not primarily data or computational power---it is access, iteration speed, and translation between model outputs and policy-relevant questions.
+
+Econ Gym addresses this by exposing frontier economic models through an agentic AI layer. An AI agent can parse natural language policy questions, translate them into structured model queries, synchronize appropriate model components, and return interpretable results.
+
+\subsection{Policy Walkthrough Example}
+
+Consider the policy question: ``How does a merger between Rio Tinto and Glencore impact metals prices and trade?''
+
+An AI agent using Econ Gym would:
+\begin{enumerate}
+    \item \textbf{Parse}: Identify the shock (critical minerals merger) and outcomes of interest (metals prices, international trade balance)
+    
+    \item \textbf{Query}: Construct a structured model call:
+    \begin{lstlisting}[language=Python]
+EconEnv.simulate(
+    model="merger_cge",
+    shock={"firms": ["RIO", "GLEN"]},
+    horizon="10yr"
+)
+    \end{lstlisting}
+    
+    \item \textbf{Sync}: Coordinate relevant models---Bajari-Benkard-Levin for merger analysis, Gravity CGE for trade equilibrium
+    
+    \item \textbf{Return}: Simulated outcomes---e.g., +3.0\% metals price index, -0.1\% long-term trade deficit
+\end{enumerate}
+
+This workflow makes rigorous economic modeling accessible to policy analysts without requiring expertise in computational methods.
+
+\subsection{Agricultural Supply Chain Resilience}
+
+A planned application of Econ Gym is agricultural risk modeling. Key components include:
+\begin{itemize}
+    \item Analysis of critical risks to US agriculture (climate, trade policy, disease)
+    \item A unified framework for evaluating interactions between biophysical, economic, and environmental risk
+    \item An agentic model synchronization tool for supply chain policy analysis
+\end{itemize}
+
+This application demonstrates how Econ Gym can integrate economic models with models from other domains (agronomy, climate science) through its standardized interface.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Conclusion} \label{sec:conclusion}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+This paper introduces Econ Gym, a general-purpose computational framework for solving dynamic structural models in economics. By providing a standardized interface compatible with the Gymnasium API, Econ Gym bridges the gap between economic theory and modern machine learning practice.
+
+The framework makes four primary contributions. First, it provides a unified environment API that enables economic models to interface seamlessly with reinforcement learning algorithms, traditional solvers, and modern optimization methods. Second, it introduces differentiable economics to structural modeling, enabling gradient-based calibration and estimation that scales efficiently with parameter dimensionality. Third, it provides GPU-accelerated agent-based modeling capabilities for studying network interactions, systemic risk, and emergent phenomena. Fourth, it includes a comprehensive paper replication test suite ensuring that environment parameters match original publications.
+
+The framework successfully replicates canonical economic models including Aiyagari (1994), Rust (1987), Arellano (2008), and Domeij and Heathcote (2004). Experimental results demonstrate that GPU-enabled implementations provide 5--20$\times$ speedups for large-scale problems, deep learning approaches scale substantially better than traditional value function iteration for high-dimensional state spaces, and transfer learning can accelerate model estimation.
+
+\subsection{Limitations}
+
+Several limitations should be noted. First, the current implementation focuses on discrete-time, infinite-horizon models. Extensions to continuous-time formulations (Hamilton-Jacobi-Bellman equations) and finite-horizon problems are planned but not yet fully implemented. Second, while the differentiable economics module supports gradient-based calibration for a wide class of models, some economic constructs (discrete choices, inequality constraints) require careful handling to maintain differentiability. Third, the agent-based modeling module, while GPU-accelerated, does not yet support fully vectorized JAX environments that would maximize GPU utilization for very large agent populations. Fourth, the transfer learning results, while promising, are based on limited experiments; more systematic investigation of transfer across related economic models is needed to establish best practices.
+
+\subsection{Future Work}
+
+Several directions for future research present themselves:
+
+\begin{enumerate}
+    \item \textbf{Model library expansion}: Adding more environments from empirical industrial organization (auction models, dynamic demand estimation), labor economics (search and matching), and international trade (quantitative trade models).
+    
+    \item \textbf{Continuous-time extensions}: Extending the framework to support continuous-time formulations using neural ODEs and Hamilton-Jacobi-Bellman equations.
+    
+    \item \textbf{Sequence-space methods}: Implementing sequence-space Jacobian methods \`{a} la Auclert et al. (2021) for efficient solution of heterogeneous agent models with aggregate shocks.
+    
+    \item \textbf{Graph neural networks for ABM}: Integrating GNNs with agent-based models to learn network influence functions directly from data.
+    
+    \item \textbf{Model composition}: Tools for combining multiple Econ Gym environments into larger integrated assessment models spanning multiple economic domains.
+    
+    \item \textbf{Hugging Face integration}: Publishing trained models, calibrated parameters, and pre-computed value functions on Hugging Face for easy sharing and replication.
+    
+    \item \textbf{Distributed computation}: Support for multi-GPU and multi-node computation for very large-scale models (e.g., HANK with many agent types).
+\end{enumerate}
+
+Ultimately, Econ Gym aims to do for computational economics what Gymnasium did for reinforcement learning research: provide a shared platform that accelerates innovation and enables cumulative progress. By reducing the overhead of custom implementation, the framework allows economists to focus on model design, policy experimentation, and structural estimation, while benefiting from advances in deep learning and high-performance computing.
+
+\subsection{Code Availability}
+
+Code for Econ Gym is available at [repository link]. The package can be installed via pip and includes documentation, tutorials, and replication scripts for all results in this paper.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% References
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newpage
+\bibliographystyle{aer}
+
+\begin{thebibliography}{99}
+
+\bibitem[Aiyagari(1994)]{aiyagari1994uninsured}
+Aiyagari, S.~R. (1994).
+\newblock Uninsured idiosyncratic risk and aggregate saving.
+\newblock \textit{Quarterly Journal of Economics}, 109(3):659--684.
+
+\bibitem[Arellano(2008)]{arellano2008default}
+Arellano, C. (2008).
+\newblock Default risk and income fluctuations in emerging economies.
+\newblock \textit{American Economic Review}, 98(3):690--712.
+
+\bibitem[Atashbar and Shi(2022)]{atashbar2022ai}
+Atashbar, T. and Shi, R. (2022).
+\newblock AI and economics: Bridging methodologies.
+\newblock \textit{IMF Working Papers}, 2022/196.
+
+\bibitem[Bajari et~al.(2007)]{bajari2007estimating}
+Bajari, P., Benkard, C.~L., and Levin, J. (2007).
+\newblock Estimating dynamic models of imperfect competition.
+\newblock \textit{Econometrica}, 75(5):1331--1370.
+
+\bibitem[Chen et~al.(2021)]{chen2021deep}
+Chen, M., Joseph, A., Kumhof, M., Pan, X., Shi, R., and Zhou, X. (2021).
+\newblock Deep reinforcement learning in a monetary model.
+\newblock \textit{Bank of England Staff Working Paper No. 939}.
+
+\bibitem[Domeij and Heathcote(2004)]{domeij2004fiscal}
+Domeij, D. and Heathcote, J. (2004).
+\newblock On the distributional effects of reducing capital taxes.
+\newblock \textit{International Economic Review}, 45(2):523--554.
+
+\bibitem[Kaplan et~al.(2018)]{kaplan2018monetary}
+Kaplan, G., Moll, B., and Violante, G.~L. (2018).
+\newblock Monetary policy according to HANK.
+\newblock \textit{American Economic Review}, 108(3):697--743.
+
+\bibitem[Krusell and Smith(1998)]{krusell1998income}
+Krusell, P. and Smith, A.~A. (1998).
+\newblock Income and wealth heterogeneity in the macroeconomy.
+\newblock \textit{Journal of Political Economy}, 106(5):867--896.
+
+\bibitem[Maliar et~al.(2021)]{maliar2021deep}
+Maliar, L., Maliar, S., and Winant, P. (2021).
+\newblock Deep learning for solving dynamic economic models.
+\newblock \textit{Journal of Monetary Economics}, 122:76--101.
+
+\bibitem[Rust(1987)]{rust1987optimal}
+Rust, J. (1987).
+\newblock Optimal replacement of GMC bus engines: An empirical model of Harold Zurcher.
+\newblock \textit{Econometrica}, 55(5):999--1033.
+
+\bibitem[Ryan(2012)]{ryan2012costs}
+Ryan, S.~P. (2012).
+\newblock The costs of environmental regulation in a concentrated industry.
+\newblock \textit{Econometrica}, 80(3):1019--1061.
+
+\bibitem[Auclert et~al.(2021)]{auclert2021sequence}
+Auclert, A., Bard\'{o}czy, B., Rognlie, M., and Straub, L. (2021).
+\newblock Using the sequence-space Jacobian to solve and estimate heterogeneous-agent models.
+\newblock \textit{Econometrica}, 89(5):2375--2408.
+
+\bibitem[Carroll(2006)]{carroll2006egm}
+Carroll, C.~D. (2006).
+\newblock The method of endogenous gridpoints for solving dynamic stochastic optimization problems.
+\newblock \textit{Economics Letters}, 91(3):312--320.
+
+\bibitem[Chatterjee et~al.(2007)]{chatterjee2007quantitative}
+Chatterjee, S., Corbae, D., Nakajima, M., and R\'{i}os-Rull, J.-V. (2007).
+\newblock A quantitative theory of unsecured consumer credit with risk of default.
+\newblock \textit{Econometrica}, 75(6):1525--1589.
+
+\end{thebibliography}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Appendix
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newpage
+\appendix
+
+\section{Technical Details}
+
+\subsection{Environment Specifications}
+
+\subsubsection{Aiyagari Environment}
+
+\begin{table}[H]
+\centering
+\begin{tabular}{ll}
+\toprule
+Parameter & Default Value \\
+\midrule
+Discount factor $\beta$ & 0.96 \\
+Risk aversion $\gamma$ & 2.0 \\
+Income persistence $\rho$ & 0.90 \\
+Income volatility $\sigma$ & 0.20 \\
+Capital share $\alpha$ & 0.36 \\
+Depreciation $\delta$ & 0.08 \\
+Borrowing limit $\underline{a}$ & 0.0 \\
+\bottomrule
+\end{tabular}
+\caption{Aiyagari Environment Default Parameters}
+\end{table}
+
+\subsubsection{Zurcher Environment}
+
+\begin{table}[H]
+\centering
+\begin{tabular}{ll}
+\toprule
+Parameter & Default Value \\
+\midrule
+Discount factor $\beta$ & 0.9999 \\
+Maintenance cost slope & 0.001 \\
+Replacement cost $R$ & 10.0 \\
+Mileage grid points & 100 \\
+Transition probabilities & Estimated from data \\
+\bottomrule
+\end{tabular}
+\caption{Zurcher Environment Default Parameters}
+\end{table}
+
+\subsection{Solution Algorithms}
+
+Econ Gym implements multiple solution algorithms organized in a modular \texttt{algorithms} library:
+
+\begin{itemize}
+    \item \textbf{Value Function Iteration}: Standard Bellman iteration with customizable convergence tolerance, supporting both CPU and GPU backends
+    \item \textbf{Policy Function Iteration}: Howard improvement for faster convergence on discrete choice problems
+    \item \textbf{Endogenous Grid Method (EGM)}: Carroll (2006) method for models with continuous choice variables, avoiding root-finding in the Euler equation
+    \item \textbf{Grid Discretization}: Tauchen and Rouwenhorst methods for discretizing AR(1) processes
+    \item \textbf{Stationary Distribution}: Power iteration and histogram methods for computing ergodic distributions
+    \item \textbf{Equilibrium Search}: Bisection and Brent's method for finding general equilibrium prices
+    \item \textbf{Deep Q-Networks (DQN)}: Neural network approximation of Q-functions via stable-baselines3
+    \item \textbf{Proximal Policy Optimization (PPO)}: Policy gradient methods for continuous actions
+    \item \textbf{Soft Actor-Critic (SAC)}: Off-policy RL for sample-efficient learning
+\end{itemize}
+
+The framework also supports multi-language backends:
+\begin{itemize}
+    \item \textbf{Fortran}: Via f2py for computationally intensive inner loops
+    \item \textbf{Julia}: Via juliacall for leveraging Julia packages and performance
+\end{itemize}
+
+\subsection{Installation}
+
+\begin{lstlisting}[language=bash]
+pip install econgym
+\end{lstlisting}
+
+For GPU support with JAX:
+\begin{lstlisting}[language=bash]
+pip install econgym[jax-cuda12]  # CUDA 12.x
+pip install econgym[jax-cuda11]  # CUDA 11.x
+\end{lstlisting}
+
+For reinforcement learning integration:
+\begin{lstlisting}[language=bash]
+pip install econgym[sb3]  # stable-baselines3
+pip install econgym[rllib]  # Ray RLlib
+\end{lstlisting}
+
+For all optimization features:
+\begin{lstlisting}[language=bash]
+pip install econgym[optimize-gpu]  # JAX, Numba, PyTorch
+\end{lstlisting}
+
+\end{document}
