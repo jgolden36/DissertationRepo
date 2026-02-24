@@ -1,0 +1,352 @@
+% =============================================================================
+% DISSERTATION MAIN FILE
+% Five Essays on the Econometric Analysis of Policy for Electricity Markets
+% Dana Golden — Stony Brook University — May 2026
+%
+% This file draws content from each essay's original folder via \input
+% (with the docmute package stripping preambles). Edit the essays in their
+% own folders; recompile this file to produce the unified dissertation.
+%
+% BUILD: run "make" in this directory (see Makefile for details).
+% =============================================================================
+
+\documentclass[12pt, oneside, letterpaper]{report}
+
+% ========================== GEOMETRY =========================================
+% Guidelines: 1.5 in left (binding), 1 in top/right/bottom
+\usepackage[left=1.5in, right=1.0in, top=1.0in, bottom=1.0in]{geometry}
+
+% ========================== FONTS ============================================
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{mathptmx}        % Times Roman (body + math)
+\usepackage{microtype}        % Improved typesetting
+
+% ========================== SPACING ==========================================
+\usepackage[doublespacing]{setspace}
+
+% ========================== BIBLIOGRAPHY (per-chapter) =======================
+\usepackage[round, authoryear]{natbib}
+\usepackage[sectionbib]{chapterbib}
+
+% ========================== TOC / LISTS ======================================
+\usepackage{tocloft}
+% Dot leaders for chapters in TOC
+\renewcommand{\cftchapdotsep}{\cftdotsep}
+
+% ========================== FIGURES / GRAPHICS ===============================
+\usepackage{graphicx}
+\usepackage[justification=justified]{caption}
+\usepackage{subfig}           % Solar Panel essay uses \subfloat
+\usepackage{float}
+\usepackage{placeins}
+\usepackage[export]{adjustbox}
+\usepackage{wrapfig}
+
+% ========================== MATH =============================================
+\usepackage{amsmath, amssymb, amsfonts, amsthm}
+\usepackage{mathrsfs}
+\usepackage{bbm}
+\usepackage{bm}
+
+% ========================== TABLES ===========================================
+\usepackage{array}
+\usepackage{tabularx}
+\usepackage{booktabs}
+\usepackage{multirow}
+\usepackage{makecell}
+\usepackage{threeparttable}
+\usepackage{longtable}
+\usepackage{colortbl}
+\usepackage{hhline}
+\usepackage{tabu}
+
+% ========================== CODE LISTINGS ====================================
+\usepackage{listings}
+\lstset{
+    basicstyle=\ttfamily\small,
+    keywordstyle=\color{blue},
+    commentstyle=\color{gray},
+    stringstyle=\color{red},
+    breaklines=true,
+    frame=single
+}
+\usepackage{algorithm}
+\usepackage{algorithmic}
+
+% ========================== TIKZ / PGFPLOTS ==================================
+\usepackage{tikz}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18}
+\usetikzlibrary{%
+  arrows, arrows.meta, positioning, decorations.pathreplacing,
+  shapes, shapes.geometric, calc, backgrounds, intersections,
+  shadows, fit, pgfplots.groupplots}
+
+% ========================== COLORS ===========================================
+\usepackage[dvipsnames, table]{xcolor}
+
+% --- HVDC essay colors ---
+\definecolor{FADFC8}{rgb}{0.980, 0.875, 0.784}
+\definecolor{DFFFDF}{rgb}{0.875, 1.000, 0.875}
+\definecolor{FAFAE7}{rgb}{0.980, 0.980, 0.905}
+\definecolor{ECF4FF}{rgb}{0.925, 0.956, 1.000}
+\definecolor{F3E5F5}{rgb}{0.953, 0.894, 0.960}
+\definecolor{lightlavender}{rgb}{0.918, 0.910, 1.0}
+\definecolor{lightpink}{rgb}{1.0, 0.875, 0.875}
+\definecolor{lightpurple}{rgb}{0.953, 0.898, 0.961}
+\definecolor{lightpeach}{rgb}{0.980, 0.875, 0.784}
+\definecolor{lightorange}{rgb}{1.0, 0.925, 0.843}
+\definecolor{lightgreen}{rgb}{0.82, 0.973, 0.816}
+\definecolor{lightblue}{rgb}{0.925, 0.956, 1.0}
+\definecolor{lightyellow}{rgb}{0.980, 0.980, 0.905}
+\definecolor{lightmint}{rgb}{0.910, 1.0, 0.973}
+\definecolor{lightbeige}{rgb}{0.961, 0.910, 0.804}
+
+% --- JMP / Econometric Model colors ---
+\definecolor{econBlue}{RGB}{31, 119, 180}
+\definecolor{econRed}{RGB}{214, 39, 40}
+\definecolor{econGold}{RGB}{188, 143, 46}
+\definecolor{fossilRed}{RGB}{196, 69, 54}
+\definecolor{fossilRedLight}{RGB}{248, 229, 227}
+\definecolor{reGreen}{RGB}{46, 125, 50}
+\definecolor{reGreenLight}{RGB}{232, 245, 233}
+\definecolor{primaryBlue}{RGB}{26, 54, 93}
+\definecolor{primaryBlueLight}{RGB}{232, 238, 245}
+\definecolor{accentOrange}{RGB}{217, 119, 6}
+\definecolor{mutedGray}{RGB}{73, 80, 87}
+\definecolor{surfaceGray}{RGB}{248, 249, 250}
+\definecolor{rootcolor}{HTML}{2C3E50}
+\definecolor{catA}{HTML}{2980B9}
+\definecolor{catB}{HTML}{27AE60}
+\definecolor{catC}{HTML}{C0392B}
+\definecolor{leafbg}{HTML}{F5F6FA}
+\definecolor{catD}{HTML}{8E44AD}
+
+% --- Econometric Model axis colors ---
+\definecolor{isoBlue}{RGB}{0, 114, 178}
+\definecolor{costRed}{RGB}{213, 94, 0}
+\definecolor{constrGreen}{RGB}{0, 158, 115}
+\definecolor{valBlue}{RGB}{0, 114, 178}
+\definecolor{profGold}{RGB}{230, 159, 0}
+\definecolor{stateGray}{RGB}{100, 100, 100}
+
+% --- Solar Panel color ---
+\definecolor{darkblue}{rgb}{0.0, 0.0, 0.3}
+
+% ========================== MISCELLANEOUS PACKAGES ===========================
+\usepackage{textcomp}
+\usepackage{eurosym}
+\usepackage{pifont}
+\usepackage[normalem]{ulem}
+\usepackage{indentfirst}
+\usepackage{mdframed}
+\usepackage{epigraph}
+\usepackage{enumitem}
+\usepackage{comment}
+\usepackage{lscape}
+\usepackage{pdflscape}
+\usepackage{multicol}
+\usepackage{ragged2e}
+\usepackage{csquotes}
+\usepackage{tcolorbox}
+\usepackage{etoolbox}
+\usepackage[stable]{footmisc}
+
+% ========================== HYPERLINKS (load near last) ======================
+\usepackage[colorlinks=true, linkcolor=black, citecolor=blue,
+            urlcolor=blue, linktoc=all]{hyperref}
+\usepackage{url}
+\urlstyle{same}
+
+% ========================== DOCMUTE (strips preambles from \input'd files) ===
+\usepackage{docmute}
+
+% ========================== PAGE STYLE =======================================
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[R]{\thepage}
+\renewcommand{\headrulewidth}{0pt}
+% Plain style for chapter opening pages: page number bottom center
+\fancypagestyle{plain}{%
+  \fancyhf{}%
+  \fancyfoot[C]{\thepage}%
+  \renewcommand{\headrulewidth}{0pt}%
+}
+
+% ========================== THEOREM ENVIRONMENTS =============================
+\newtheorem{theorem}{Theorem}[chapter]
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{assumption}[theorem]{Assumption}
+\newtheorem{remark}[theorem]{Remark}
+\newtheorem{example}[theorem]{Example}
+\newtheorem{hyp}{Hypothesis}
+\newtheorem{subhyp}{Hypothesis}[hyp]
+\renewcommand{\thesubhyp}{\thehyp\alph{subhyp}}
+
+% ========================== CUSTOM COLUMN TYPES ==============================
+\newcolumntype{C}[1]{>{\centering\arraybackslash}p{#1}}
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
+\newcolumntype{R}[1]{>{\raggedleft\arraybackslash}p{#1}}
+
+% ========================== CUSTOM COMMANDS (from various essays) ============
+\newcommand{\cmark}{\ding{51}}
+\newcommand{\xmark}{\ding{55}}
+\newcommand{\sym}[1]{^{#1}}
+\newcommand{\red}[1]{{\color{red} #1}}
+\newcommand{\blue}[1]{{\color{blue} #1}}
+\newcommand{\ds}{\displaystyle}
+\DeclareMathOperator*{\mean}{mean}
+\newcommand{\nb}[1]{\textcolor{blue}{NB[#1]}}
+\newcommand{\aruna}[1]{\textcolor{blue}{Aruna[#1]}}
+\chardef\mhyphen="2D
+\providecommand{\U}[1]{\protect\rule{.1in}{.1in}}
+
+% TikZ styles used across essays
+\tikzset{
+    econAxis/.style={thick, ->, >=stealth},
+    supply/.style={thick, econRed},
+    demand/.style={thick, econBlue},
+    priceLine/.style={thin, gray, densely dashed},
+}
+
+% ========================== IEEE CLASS STUBS =================================
+% Commands from ieeeaccess.cls that appear in the HVDC essay body
+\providecommand{\authorrefmark}[1]{}
+\providecommand{\IEEEmembership}[1]{}
+\providecommand{\address}[2][]{}
+\providecommand{\tfootnote}[1]{}
+\providecommand{\markboth}[2]{}
+\providecommand{\corresp}[1]{}
+\providecommand{\headeretal}{~\textit{et~al.}}
+\providecommand{\EOD}{}
+% IEEEbiography: capture arguments, discard body into void box
+\newenvironment{IEEEbiography}[2][]{\setbox\z@\vbox\bgroup}{\egroup}
+\providecommand{\titlepgskip}{}
+\providecommand{\history}[1]{}
+
+% ========================== ACM CLASS STUBS ==================================
+% Commands from acmart.cls that appear in the Econometric Model essay body
+\providecommand{\setcopyright}[1]{}
+\providecommand{\copyrightyear}[1]{}
+\providecommand{\acmYear}[1]{}
+\providecommand{\acmDOI}[1]{}
+\providecommand{\acmConference}[4][]{}
+\providecommand{\acmPrice}[1]{}
+\providecommand{\acmISBN}[1]{}
+\providecommand{\acmBooktitle}[1]{}
+\providecommand{\acmSubmissionID}[1]{}
+\providecommand{\received}[2][]{}
+\providecommand{\ccsdesc}[2][]{}
+\providecommand{\keywords}[1]{}
+\providecommand{\authorsaddresses}[1]{}
+\providecommand{\citestyle}[1]{}
+\providecommand{\Description}[1]{}
+\providecommand{\shortauthors}{}
+% Absorb <CCSXML> environment (verbatim skip via comment package)
+\excludecomment{CCSXML}
+% Absorb teaserfigure environment (render as figure)
+\newenvironment{teaserfigure}{\begin{figure}}{\end{figure}}
+% strip environment (from cuted package, used in HVDC)
+\newenvironment{strip}{}{}
+
+% ========================== BIBLATEX STUBS ===================================
+% The JMP essay uses biblatex; we emulate key commands via natbib
+\providecommand{\addbibresource}[1]{}
+
+% ========================== SUPPRESS ESSAY FRONT-MATTER ======================
+% When including essays, suppress their \title, \author, \date, \maketitle
+% These are saved/restored in each chapter wrapper.
+% Also suppress \tableofcontents and \titlepage from included files.
+
+% Redefine the titlepage environment to discard content when inside chapters
+\newcommand{\SuppressTitlePage}{%
+  \renewenvironment{titlepage}{\setbox\z@\vbox\bgroup}{\egroup}%
+}
+\newcommand{\RestoreTitlePage}{%
+  \renewenvironment{titlepage}{\newpage\thispagestyle{empty}}{\newpage}%
+}
+
+% BibTeX logo command
+\providecommand\BibTeX{{Bib\TeX}}
+
+% ========================== ABSTRACT ENVIRONMENT (in-chapter) ================
+% Redefine abstract for use inside chapters (report class default is limited)
+\renewenvironment{abstract}{%
+  \begin{quotation}\noindent\textbf{Abstract.}\space\ignorespaces
+}{%
+  \end{quotation}\bigskip
+}
+
+% =============================================================================
+% BEGIN DOCUMENT
+% =============================================================================
+\begin{document}
+
+% ========================== FRONT MATTER =====================================
+\pagenumbering{roman}
+\pagestyle{plain}
+
+% --- Title Page (page i, number not shown) ---
+\input{front_matter/titlepage}
+
+% --- Approval Page ---
+\input{front_matter/approval}
+
+% --- Copyright Page ---
+\input{front_matter/copyright}
+
+% --- Abstract ---
+\input{front_matter/abstract}
+
+% --- Dedication ---
+\input{front_matter/dedication}
+
+% --- Table of Contents ---
+\clearpage
+\tableofcontents
+
+% --- List of Figures ---
+\clearpage
+\listoffigures
+\addcontentsline{toc}{chapter}{List of Figures}
+
+% --- List of Tables ---
+\clearpage
+\listoftables
+\addcontentsline{toc}{chapter}{List of Tables}
+
+% --- Acknowledgments ---
+\input{front_matter/acknowledgments}
+
+% ========================== MAIN BODY ========================================
+\clearpage
+\pagenumbering{arabic}
+\pagestyle{fancy}
+
+% --- Chapter 1: Introduction ---
+\include{chapters/introduction}
+
+% --- Chapter 2: HVDC Wind Farms ---
+\include{chapters/ch1_hvdc}
+
+% --- Chapter 3: Solar Panel ---
+\include{chapters/ch2_solar}
+
+% --- Chapter 4: AI Power Grids ---
+\include{chapters/ch3_ai_power}
+
+% --- Chapter 5: Econ Gym ---
+\include{chapters/ch4_econgym}
+
+% --- Chapter 6: JMP (Transmission & Investment) ---
+\include{chapters/ch5_jmp}
+
+% --- Chapter 7: Conclusion ---
+\include{chapters/conclusion}
+
+\end{document}

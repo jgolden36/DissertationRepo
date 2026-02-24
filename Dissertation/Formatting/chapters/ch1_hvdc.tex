@@ -1,0 +1,41 @@
+% =============================================================================
+% Chapter 2: Offshore Horizons — HVDC Wind Farms
+% Draws content from:
+%   ../HVDC Wind Farms - IEEE_Access_Final_Submission/access.tex
+% Bib file: References.bib (in that same folder; found via BIBINPUTS)
+% =============================================================================
+
+% --- Set graphics search path for this chapter ---
+\graphicspath{{../HVDC Wind Farms - IEEE_Access_Final_Submission/}{../HVDC Wind Farms - IEEE_Access_Final_Submission/Figures/}{../HVDC Wind Farms - IEEE_Access_Final_Submission/Pic_author/}}
+
+\chapter{Offshore Horizons: HVDC Wind Farms --- Exploring Techno-Economic Dimensions}
+\label{ch:hvdc}
+
+\begingroup
+
+% --- Suppress front-matter commands from the included file ---
+\renewcommand{\maketitle}{}%
+\renewcommand{\title}[1]{}%
+\renewcommand{\author}[1]{}%
+\renewcommand{\date}[1]{}%
+
+% --- Suppress bibliography commands (we issue our own below) ---
+\let\origbibliographystyle\bibliographystyle
+\let\origbibliography\bibliography
+\renewcommand{\bibliographystyle}[1]{}%
+\renewcommand{\bibliography}[1]{}%
+
+% --- Include the essay body (docmute strips preamble) ---
+\input{../HVDC Wind Farms - IEEE_Access_Final_Submission/access.tex}
+
+% --- Restore bibliography commands ---
+\let\bibliographystyle\origbibliographystyle
+\let\bibliography\origbibliography
+
+\endgroup
+
+% --- Per-chapter bibliography ---
+\singlespacing
+\bibliographystyle{ieeetr}
+\bibliography{References}
+\doublespacing
