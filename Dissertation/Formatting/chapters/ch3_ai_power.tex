@@ -29,12 +29,23 @@
 \renewcommand{\bibliographystyle}[1]{}%
 \renewcommand{\bibliography}[1]{}%
 
+% --- Suppress \appendix so it does not switch chapter numbering globally ---
+\renewcommand{\appendix}{}%
+
+% --- Convert wrapfigure to regular figure to prevent text overlapping
+%     under double spacing ---
+\let\origwrapfigure\wrapfigure
+\let\origendwrapfigure\endwrapfigure
+\renewenvironment{wrapfigure}[2]{\begin{figure}[htbp]}{\end{figure}}%
+
 % --- Include the essay body (docmute strips preamble) ---
 \input{../Econometric Model of System-level Impacts of AI on US Power Grids/main.tex}
 
 % --- Restore bibliography commands ---
 \let\bibliographystyle\origbibliographystyle
 \let\bibliography\origbibliography
+\let\wrapfigure\origwrapfigure
+\let\endwrapfigure\origendwrapfigure
 
 \endgroup
 

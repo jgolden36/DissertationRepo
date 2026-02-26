@@ -25,13 +25,26 @@
 \renewcommand{\bibliographystyle}[1]{}%
 \renewcommand{\bibliography}[1]{}%
 
-% --- Suppress page-counter manipulation from the included file ---
-% (Draft_LBD.tex has \setcounter{page}{1} and \thispagestyle{empty} in body)
+% --- Suppress page-counter and other counter manipulation from the included
+%     file (Draft_LBD.tex resets page, section, table, figure, equation
+%     counters before its appendix) ---
 \let\origsetcounter\setcounter
-\renewcommand{\setcounter}[2]{%
-  \ifstrequal{#1}{page}{}{\origsetcounter{#1}{#2}}}%
+\renewcommand{\setcounter}[2]{}%
 \let\origthispagestyle\thispagestyle
 \renewcommand{\thispagestyle}[1]{}%
+
+% --- Suppress \appendix so it does not switch chapter numbering globally ---
+\renewcommand{\appendix}{}%
+
+% --- Suppress spacing commands from the included file ---
+\let\origsinglespacing\singlespacing
+\renewcommand{\singlespacing}{}%
+\let\origonehalfspacing\onehalfspacing
+\renewcommand{\onehalfspacing}{}%
+
+% --- Suppress \small font size change from bibliography section ---
+\let\origsmall\small
+\renewcommand{\small}{}%
 
 % --- Include the essay body (docmute strips preamble) ---
 \input{../Solar Panel Project/Draft_LBD.tex}
@@ -41,6 +54,9 @@
 \let\bibliography\origbibliography
 \let\setcounter\origsetcounter
 \let\thispagestyle\origthispagestyle
+\let\singlespacing\origsinglespacing
+\let\onehalfspacing\origonehalfspacing
+\let\small\origsmall
 
 \endgroup
 

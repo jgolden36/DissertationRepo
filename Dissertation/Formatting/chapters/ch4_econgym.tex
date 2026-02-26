@@ -27,6 +27,9 @@
 \let\origbibliographystyle\bibliographystyle
 \renewcommand{\bibliographystyle}[1]{}%
 
+% --- Suppress \appendix so it does not switch chapter numbering globally ---
+\renewcommand{\appendix}{}%
+
 % --- Include the essay body (docmute strips preamble) ---
 \input{../Econ Gym Working Paper/econ_gym_working_paper.tex}
 
