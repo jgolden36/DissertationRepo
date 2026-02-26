@@ -29,10 +29,22 @@
   \bibliography{LiteratureElectric}%
 }
 
+% --- Suppress \appendix so it does not switch chapter numbering globally ---
+\renewcommand{\appendix}{}%
+
+% --- Suppress spacing commands from the included file so the dissertation's
+%     double spacing is maintained throughout ---
+\let\origsinglespacing\singlespacing
+\renewcommand{\singlespacing}{}%
+\let\origonehalfspacing\onehalfspacing
+\renewcommand{\onehalfspacing}{}%
+
 % --- Include the essay body (docmute strips preamble) ---
 \input{../JMP/main_revised_with_figures.tex}
 
 % --- Restore titlepage ---
 \RestoreTitlePage
+\let\singlespacing\origsinglespacing
+\let\onehalfspacing\origonehalfspacing
 
 \endgroup
