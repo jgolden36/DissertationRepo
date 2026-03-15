@@ -12,22 +12,18 @@
 # =============================================================================
 
 MAIN     = dissertation
-CHAPTERS = chapters/introduction \
-           chapters/ch1_hvdc \
+CHAPTERS = chapters/ch5_jmp \
            chapters/ch2_solar \
-           chapters/ch3_ai_power \
-           chapters/ch4_econgym \
-           chapters/ch5_jmp \
-           chapters/conclusion
+           chapters/ch3_ai_power
 
 LATEX    = pdflatex
 BIBTEX   = bibtex
 
 # Search paths so BibTeX / LaTeX can find .bib, .bst, figures, etc.
 # in each essay folder without needing full paths in the .tex files.
-export BIBINPUTS := ../HVDC Wind Farms - IEEE_Access_Final_Submission//:../Solar Panel Project//:../Econometric Model of System-level Impacts of AI on US Power Grids//:../Econ Gym Working Paper//:../JMP//:$(BIBINPUTS)
+export BIBINPUTS := ../Solar Panel Project//:../Econometric Model of System-level Impacts of AI on US Power Grids//:../JMP//:$(BIBINPUTS)
 export BSTINPUTS := ../Econometric Model of System-level Impacts of AI on US Power Grids//:$(BSTINPUTS)
-export TEXINPUTS := ../HVDC Wind Farms - IEEE_Access_Final_Submission//:../Solar Panel Project//:../Econometric Model of System-level Impacts of AI on US Power Grids//:../Econ Gym Working Paper//:../JMP//:../Intro and Conclusion//:$(TEXINPUTS)
+export TEXINPUTS := ../Solar Panel Project//:../Econometric Model of System-level Impacts of AI on US Power Grids//:../JMP//:$(TEXINPUTS)
 
 # --- Flags ---
 LATEXFLAGS = -interaction=nonstopmode -file-line-error
