@@ -22,12 +22,8 @@
 % --- Suppress titlepage environment from the included file ---
 \SuppressTitlePage
 
-% --- Handle biblatex -> natbib translation ---
-% The JMP uses \printbibliography; redefine it to use natbib's \bibliography
-\renewcommand{\printbibliography}{%
-  \bibliographystyle{chicago}%
-  \bibliography{LiteratureElectric}%
-}
+% --- Suppress biblatex \printbibliography (we issue our own below) ---
+\renewcommand{\printbibliography}{}
 
 % --- Suppress \appendix so it does not switch chapter numbering globally ---
 \renewcommand{\appendix}{}%
@@ -48,3 +44,9 @@
 \let\onehalfspacing\origonehalfspacing
 
 \endgroup
+
+% --- Per-chapter bibliography ---
+\singlespacing
+\bibliographystyle{chicago}
+\bibliography{LiteratureElectric}
+\doublespacing
