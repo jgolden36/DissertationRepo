@@ -206,6 +206,7 @@
 \newcommand{\aruna}[1]{\textcolor{blue}{Aruna[#1]}}
 \chardef\mhyphen="2D
 \providecommand{\U}[1]{\protect\rule{.1in}{.1in}}
+\providecommand{\degree}{\ensuremath{{}^\circ}}
 
 % TikZ styles used across essays
 \tikzset{
@@ -260,6 +261,7 @@
 \providecommand{\addbibresource}[1]{}
 \newcommand{\printbibliography}{}
 \providecommand{\autocite}[1]{\citep{#1}}
+\providecommand{\sym}[1]{\textsuperscript{#1}}
 
 % ========================== SUPPRESS ESSAY FRONT-MATTER ======================
 % When including essays, suppress their \title, \author, \date, \maketitle
@@ -268,7 +270,7 @@
 
 % Redefine the titlepage environment to discard content when inside chapters
 \newcommand{\SuppressTitlePage}{%
-  \renewenvironment{titlepage}{\setbox\z@\vbox\bgroup}{\egroup}%
+  \renewenvironment{titlepage}{\setbox0=\vbox\bgroup}{\egroup}%
 }
 \newcommand{\RestoreTitlePage}{%
   \renewenvironment{titlepage}{\newpage\thispagestyle{empty}}{\newpage}%
