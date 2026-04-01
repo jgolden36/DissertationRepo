@@ -35,7 +35,7 @@ all: $(MAIN).pdf
 
 $(MAIN).pdf: $(MAIN).tex front_matter/*.tex chapters/*.tex
 	@echo "=== Pass 1: pdflatex ==="
-	$(LATEX) $(LATEXFLAGS) $(MAIN).tex
+	-$(LATEX) $(LATEXFLAGS) $(MAIN).tex
 	@echo "=== BibTeX for each chapter ==="
 	-$(BIBTEX) $(MAIN) || true
 	@for ch in $(CHAPTERS); do \
@@ -43,9 +43,9 @@ $(MAIN).pdf: $(MAIN).tex front_matter/*.tex chapters/*.tex
 	    $(BIBTEX) $$ch || true; \
 	done
 	@echo "=== Pass 2: pdflatex ==="
-	$(LATEX) $(LATEXFLAGS) $(MAIN).tex
+	-$(LATEX) $(LATEXFLAGS) $(MAIN).tex
 	@echo "=== Pass 3: pdflatex ==="
-	$(LATEX) $(LATEXFLAGS) $(MAIN).tex
+	-$(LATEX) $(LATEXFLAGS) $(MAIN).tex
 	@echo "=== Done: $(MAIN).pdf ==="
 
 quick:
