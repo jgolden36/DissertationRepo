@@ -231,6 +231,22 @@
 \providecommand{\titlepgskip}{}
 \providecommand{\history}[1]{}
 
+% ========================== CAS CLASS STUBS ===================================
+% Commands from cas-sc.cls (Energy Economics Submission)
+\providecommand{\shorttitle}[1]{}
+\providecommand{\shortauthors}[1]{}
+\providecommand{\cormark}[1][]{}
+\providecommand{\ead}[1]{}
+\providecommand{\credit}[1]{}
+\providecommand{\cortext}[2][]{}
+\providecommand{\affiliation}[2][]{}
+\providecommand{\sep}{;}
+\providecommand{\WriteBookmarks}{}
+\providecommand{\niranjan}[1]{}
+% highlights and keywords environments (absorb content)
+\newenvironment{highlights}{\setbox\z@\vbox\bgroup}{\egroup}
+\newenvironment{keywords}{\setbox\z@\vbox\bgroup}{\egroup}
+
 % ========================== ACM CLASS STUBS ==================================
 % Commands from acmart.cls that appear in the Econometric Model essay body
 \providecommand{\setcopyright}[1]{}
@@ -342,7 +358,7 @@
 % --- Chapter 2: Solar Panel ---
 \include{chapters/ch2_solar}
 
-% --- Chapter 3: AI Power Grids ---
+% --- Chapter 3: AI Power Grids (Energy Economics Submission) ---
 \include{chapters/ch3_ai_power}
 
 \end{document}

@@ -1,27 +1,45 @@
 % =============================================================================
-% Chapter 3: Econometric Model of System-level Impacts of AI on US Power Grids
+% Chapter 3: Certificates without Electrons? AI-Driven Power Demand
 % Draws content from:
-%   ../Econometric Model of System-level Impacts of AI on US Power Grids/main.tex
+%   ../Energy Economics Submission/Energy_CAS.tex
 % Bib file: Energy.bib (in that same folder; found via BIBINPUTS)
 % =============================================================================
 
 % --- Set graphics search path for this chapter ---
-\graphicspath{{../Econometric Model of System-level Impacts of AI on US Power Grids/}{../Econometric Model of System-level Impacts of AI on US Power Grids/Figures/}}
+\graphicspath{{../Energy Economics Submission/}{../Energy Economics Submission/Figures/}}
 
-\chapter{An Econometric Model for Measuring Impacts of AI on United States Power Grids}
+\chapter{Certificates without Electrons? Theory and Evidence on Impacts from AI-Driven Power Demand}
 \label{ch:ai_power}
 
 \begingroup
 
 % --- Suppress front-matter commands ---
 \renewcommand{\maketitle}{}%
-\renewcommand{\title}[1]{}%
-\renewcommand{\author}[1]{}%
+\renewcommand{\title}[2][]{}%
+\renewcommand{\author}[2][]{}%
 \renewcommand{\date}[1]{}%
 
-% --- Suppress ACM-specific body commands that docmute does not strip ---
-% (Most ACM preamble commands are already stubbed globally;
-%  these handle any that slip through in the body.)
+% --- Suppress CAS-specific front-matter commands ---
+\renewcommand{\shorttitle}[1]{}%
+\renewcommand{\shortauthors}[1]{}%
+\renewcommand{\cormark}[1][]{}%
+\renewcommand{\ead}[1]{}%
+\renewcommand{\credit}[1]{}%
+\renewcommand{\cortext}[2][]{}%
+
+% --- Suppress CAS affiliation (takes optional + mandatory arg) ---
+\let\origaffiliation\affiliation
+\renewcommand{\affiliation}[2][]{}%
+
+% --- Suppress CAS highlights environment ---
+\let\orighighlights\highlights
+\let\origendhighlights\endhighlights
+\renewenvironment{highlights}{\setbox\z@\vbox\bgroup}{\egroup}%
+
+% --- Suppress CAS keywords environment ---
+\let\origkeywords\keywords
+\let\origendkeywords\endkeywords
+\renewenvironment{keywords}{\setbox\z@\vbox\bgroup}{\egroup}%
 
 % --- Suppress bibliography commands (we issue our own below) ---
 \let\origbibliographystyle\bibliographystyle
@@ -39,13 +57,16 @@
 \renewenvironment{wrapfigure}[2]{\begin{figure}[htbp]}{\end{figure}}%
 
 % --- Include the essay body (docmute strips preamble) ---
-\input{../Econometric Model of System-level Impacts of AI on US Power Grids/main.tex}
+\input{../Energy Economics Submission/Energy_CAS.tex}
 
 % --- Restore bibliography commands ---
 \let\bibliographystyle\origbibliographystyle
 \let\bibliography\origbibliography
 \let\wrapfigure\origwrapfigure
 \let\endwrapfigure\origendwrapfigure
+
+% --- Restore CAS affiliation ---
+\let\affiliation\origaffiliation
 
 \endgroup
 
