@@ -21,9 +21,9 @@ BIBTEX   = bibtex
 
 # Search paths so BibTeX / LaTeX can find .bib, .bst, figures, etc.
 # in each essay folder without needing full paths in the .tex files.
-export BIBINPUTS := ../Solar Panel Project//:../Econometric Model of System-level Impacts of AI on US Power Grids//:../JMP//:$(BIBINPUTS)
-export BSTINPUTS := ../Econometric Model of System-level Impacts of AI on US Power Grids//:$(BSTINPUTS)
-export TEXINPUTS := ../Solar Panel Project//:../Econometric Model of System-level Impacts of AI on US Power Grids//:../JMP//:$(TEXINPUTS)
+export BIBINPUTS := ../Solar Panel Project//:../Energy Economics Submission//:../JMP//:$(BIBINPUTS)
+export BSTINPUTS := ../Energy Economics Submission//:$(BSTINPUTS)
+export TEXINPUTS := ../Solar Panel Project//:../Energy Economics Submission//:../JMP//:$(TEXINPUTS)
 
 # --- Flags ---
 LATEXFLAGS = -interaction=nonstopmode -file-line-error
