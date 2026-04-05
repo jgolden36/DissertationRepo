@@ -74,7 +74,11 @@
 \begin{document}
 
 \begin{titlepage}
-\title{Investment and the Transfer of Power: Dynamic Effects of Transmission in Electricity Markets} \author{Dana Golden\thanks{Golden: Economics Department, Stony Brook University, dana.golden@stonybrook.edu. I owe unpayable debt of gratitude to my advisor Yiyi Zhou and my co-advisor Steven Stern. I am also immensely thankful to Fang Luo for his engineering and technical guidance and to Mark Montgomery. Eva Carceles-Poveda was immensely helpful throughout this process. 
+\title{Investment and the Transfer of Power: Dynamic Effects of Transmission in Electricity Markets} \author{Dana Golden\thanks{Golden: Economics Department, Stony Brook University, dana.golden@stonybrook.edu. I owe an unpayable debt of gratitude to my advisor Yiyi Zhou and my co-advisor Steven Stern. I am also immensely thankful to Fang Luo for his engineering and technical guidance and to Mark Montgomery. Eva Carceles-Poveda was immensely helpful throughout this process. This material is based upon work supported by the
+National Science Foundation under Grant No. NRT-HDR 2125295. Any opinions,
+findings, and conclusions or recommendations expressed in this material are those of
+the author(s) and do not necessarily reflect the views of the National Science
+Foundation.
 %This work has benefited from discussions with Robert Millard, Hugo Benitez-Silva, Pradeep Dubey, Eran Shmaya, and Ting Liu. 
 %Outside of Stony Brook Economics, Mansi Sharma, Rong Wang, Anjali Sinha, Ashley Langer, Kathleen McGarry, Takahiro Moriya, and Robert Baluja all provided valuable thoughts and feedback. Gautam Gowirsanakaran provided useful responses via email. 
 All errors are my own.}}
@@ -102,50 +106,48 @@ All errors are my own.}}
 
 \section{Introduction} \label{sec:introduction}
 
-Climate change remains the most important environmental issue facing the world at present. In order to prevent catastrophic impacts of climate change, economies need to decrease greenhouse gas emissions. Electricity was associated with the highest share of carbon emissions in the United States, 31 percent in 2022 according to the Energy Information Administration, and has continuously provided the largest source of greenhouse gas emissions for decades \autocite{EIAReport}. Renewable energy provides the clearest pathway to a reduction in electricity-related greenhouse gas emissions. Currently, a major project is underway throughout the developed world and the United States in particular to replace fossil fuel generators with renewable generation.
+Climate change remains the most important environmental issue facing the world at present. In order to prevent catastrophic impacts of climate change, economies need to decrease greenhouse gas emissions. Electricity is associated with the highest share of carbon emissions in the United States, 31 percent in 2022 according to the Energy Information Administration, and has continuously provided the largest source of greenhouse gas emissions for decades \autocite{EIAReport}. Renewable energy provides the clearest pathway to a reduction in electricity-related greenhouse gas emissions. Currently, a massive transition is underway throughout the developed world and the United States in particular to replace fossil fuel generators with renewable generation.
 
-However, two persistent problems plague the renewable energy transition. First, the unequal dispersion of potential for renewable resources makes renewable generation infeasible in vast swaths of the United States. The climate of states like New York and New Hampshire presents significantly less potential for renewable generation than that of states like Texas and Nevada. Texas and Nevada have abundant sun and wind, which have allowed renewable energy to flourish. The area required by solar and wind also means that the locations with the highest propensity for renewable generation often are further from cities. Figure \ref{fig:renewablePotential} illustrates this geographic heterogeneity, showing combined technical potential for wind and solar generation across U.S. counties. Second, renewable resources tend to be intermittent. The sun shines only for so many hours a day, and when the wind blows demonstrates marked variability. As electricity must always balance, intermittency can cause instability in electric grids. If too much electricity enters the system at one time, it can cause an overload and lead to system outages. Storage has been proposed as a potential solution for the intermittency problem but remains costly and limited. Storage also does not provide a solution in areas with limited ability to take advantage of any renewable energy.
+However, two persistent problems plague the renewable energy transition. First, the unequal dispersion of potential for renewable resources makes renewable generation infeasible in vast swaths of the United States. The climate of states like New York and New Hampshire presents significantly less potential for renewable generation than that of states like Texas and Nevada. Texas and Nevada have abundant sun and wind, which have allowed renewable energy to flourish. The area required by solar and wind also means that the locations with the highest propensity for renewable generation often are further from cities. Figure \ref{fig:renewablePotential} illustrates this geographic heterogeneity, showing combined technical potential for wind and solar generation across U.S. counties. Second, renewable resources tend to be intermittent. The sun shines only for so many hours a day, and wind patterns demonstrate marked variability. As electricity supply and demand must always balance, intermittency can cause instability in electric grids. If too much electricity enters the system at one time, it can cause an overload and lead to system outages. While storage offers a potential solution to intermittency, it remains costly and physically limited at present. Storage also does not provide a solution in areas with limited ability to take advantage of any renewable energy.
 
-Increasing transmission, the ability to send electricity between zones, provides another potential solution to the problem of intermittency and dispersion. Time-zone and geographic differences ensure that the peak hours for sunlight in Kansas coincide well with the peak demand hours in Indiana, and increasing long-distance transmission increases market interconnectedness, which decreases risks of instability and renewable energy curtailment, the forced shutdown of renewable resources due to over-supply. While long-distance transmission has previously proved largely infeasible both technically and economically, advancement in technologies such as High-Voltage Direct Current (HVDC) and High-Voltage Alternating Current (HVAC) provide a method through which to increase the range of transmission and potentially facilitate greater connection of renewables to the grid. Figure \ref{fig:hvdcLines} shows the current state of HVDC infrastructure in the United States, with existing lines shown as solid and proposed expansions shown as dashed. Similarly, the transition from fossil fuel resources that could be easily transported to renewable resources increases economic viability of transmission expansion. Despite its potential merits as a technique to increase adoption rates for renewable energies, transmission expansion has largely escaped examination by economists.
+Increasing transmission, the ability to send electricity between zones, provides another potential solution to the problem of intermittency and dispersion. Time-zone and geographic differences ensure that the peak hours for sunlight in Kansas coincide well with the peak demand hours in Indiana, and increasing long-distance transmission increases market interconnectedness, which decreases risks of instability and renewable energy curtailment (the forced shutdown of renewable resources due to over-supply). While long-distance transmission has previously proved largely infeasible both technically and economically, advancement in technologies such as High-Voltage Direct Current (HVDC) and High-Voltage Alternating Current (HVAC) provide a method through which to increase the range of transmission and potentially facilitate greater connection of renewables to the grid. Figure \ref{fig:hvdcLines} shows the current state of HVDC infrastructure in the United States, with existing lines shown as solid and proposed expansions shown as dashed. Similarly, the transition from fossil fuel resources that could be easily transported to renewable resources increases economic viability of transmission expansion. Despite its potential merits as a technique to increase adoption rates for renewable energies, transmission expansion has largely escaped examination by economists.
 
 %How do utilities choose which lines to invest in when it comes to long-range transmission, and 
-How does long-run investment in transmission impact capacity investment in renewable resources? At face value, the direction of the welfare effects of transmission expansion may seem trivially positive as is the case in most problems of friction reduction; however, because of the substantial cost of increasing transmission capacity combined with the dynamic effects of firm investment, the sign of welfare change remains ambiguous without further study. Increasing transmission tends to lead to equilibration of prices across markets and thus may lead lower prices to cause exit in some markets and higher prices to cause entrance in others. Exiting firms may cause blackout and decreased reliability, which can cause significant losses in consumer welfare due to the high inelasticity of the demand curve for electricity. Beyond first order welfare and reliability effects, emissions produced must be examined. 
+How does long-run investment in transmission impact capacity investment in renewable resources? At face value, the direction of the welfare effects of transmission expansion may seem trivially positive as is the case in most problems of friction reduction; however, because of the substantial cost of increasing transmission capacity combined with the dynamic effects of firm investment, the sign of welfare change remains ambiguous without further study.
 
-Two main counterfactual experiments are performed to examine policy impacts. First, the impacts of the increased subsidization of investment in long-range transmission infrastructure are examined through the lens of the Bipartisan Infrastructure Law. This enters the model through changes in the adjacency matrix representing the ability to send electricity between locations. Second, the impacts of subsidization in renewable energy technology through the Inflation Reduction Act are examined. By performing the experiments separately and together, it can be determined if subsidization of transmission infrastructure is an alternative to subsidization of renewable generation or simultaneous subsidization policies complement each other.
+Increasing transmission tends to lead to equilibration of prices across markets and thus, lower prices may drive firm exit in some markets, while higher prices spur entry in others. Exiting firms may cause blackout and decreased reliability, which can cause significant losses in consumer welfare due to the high inelasticity of the demand curve for electricity. Beyond first order welfare and reliability effects, emissions produced and distributional effects must be examined. 
 
-Recent work within the industrial organization literature has taken a profound interest in the determinants of long-run investment in the electricity market as it relates to energy transition. \cite{butters2021soaking} examine the issue of battery investment to reduce intermittency as it relates to the California Independent System Operator (CAISO) market while \cite{elliott2022investment} uses an oligopolistic model to consider the potential impacts of carbon taxes and capacity payments on the resource mix in Western Australia. While both consider the dynamics of the electricity market, both also assume that prices are constant throughout the entire region and cannot be used to analyze locations with more than one settlement point.  More recent work by \cite{gowrisankaran2024energy} connects changes in the price differential between natural gas and coal to widespread changes in capacity investment away from coal to natural gas. \cite{arkolakis2023clean} integrates the impacts of transmission into a macro model and considers how the implementation of proposed projects might impact further adoption of renewable energy. Though Arkolakis and Walsh's work considers a similar question, the question is approached from a macro perspective and so, the dynamics of individual firms are neglected providing an important source of future research the current work addresses. 
+Three main sets of counterfactual experiments are performed to examine policy impacts. Broadly, these counterfactual experiments focus on transmission upgrades, new long-distance lines, and federal legislation. I examine transmission upgrades from current HVAC to more modern HVDC infrastructure to determine the impact of replacing current inter-zonal transmission with improved lines. From the perspective of line additions, I examine the limits of transmission with a counterfactual where all constraints are removed. I also consider the impact of further interconnection between ERCOT and the Eastern Interconnection and of the Grain Belt Express. I examine three main pieces of federal legislation, two passed and one hypothetical. I examine the BIG WIRES Act, which provides a mandated amount of inter-regional transmission expansion. I further examine the impacts of generation investment subsidies from the Inflation Reduction Act and investments in transmission from the Bipartisan infrastructure Law. For all experiments, I consider overall welfare changes and distributional effects with the goal of understanding static and dynamic impacts but also providing insight into potential transfers that might make line additions Pareto improving.
 
-\cite{gonzales2022dynamic} considers the implications of interconnection between the Northern and Southern Chilean electricity markets for long-run entry and exit. My work extends their work by generalizing the model to deal with larger and more complex grids. My work also goes further by utilizing variation in spatial transmission capacity to examine transmission's impact without significant temporal variation in transmission infrastructure.
+% Three main sets of counterfactual experiments are performed to examine policy impacts. First, the impacts of the increased subsidization of investment in long-range transmission infrastructure are examined through the lens of the Bipartisan Infrastructure Law. This enters the model through changes in the adjacency matrix representing the ability to send electricity between locations. Second, the impacts of subsidization in renewable energy technology through the Inflation Reduction Act are examined. By performing the experiments separately and together, it can be determined if subsidization of transmission infrastructure is an alternative to subsidization of renewable generation, or whether simultaneous subsidization policies complement each other.
 
-The inclusion of generator investment based on price differentials between locations marks a major contribution to the literature. Real-world limitations on the movement of electricity make ignoring transmission perilous, and the need for investment in renewables makes a valuation of transmission expansion including its effects on renewables investment increasingly pertinent. Consideration of how interconnected electricity markets function together even on short time scales also remains conspicuously absent from the industrial organization literature around electricity providing a gap for research. 
+Recent work within the industrial organization literature has taken a profound interest in the determinants of long-run investment in the electricity market as it relates to energy transition. \cite{butters2021soaking} examine the issue of battery investment to reduce intermittency as it relates to the California Independent System Operator (CAISO) market while \cite{elliott2022investment} uses an oligopolistic model to consider the potential impacts of carbon taxes and capacity payments on the resource mix in Western Australia. While both consider the dynamics of the electricity market, both also assume that prices are constant throughout the entire region and cannot be used to analyze locations with more than one settlement point.  More recent work by \cite{gowrisankaran2024energy} connects changes in the price differential between natural gas and coal to widespread changes in capacity investment away from coal to natural gas. \cite{arkolakis2023clean} integrates the impacts of transmission into a macro model and considers how the implementation of proposed projects might impact further adoption of renewable energy. Though Arkolakis and Walsh's work considers a similar question, the question is approached from a macro perspective and so, the dynamics of individual firms are neglected, providing an important source of future research that the current work addresses. 
+
+\cite{gonzales2022dynamic} considers the implications of interconnection between the Northern and Southern Chilean electricity markets for long-run entry and exit. My work extends their research by generalizing the model to deal with larger and more complex grids. My work also goes further by utilizing variation in spatial transmission capacity to examine transmission's impact without significant temporal variation in transmission infrastructure.
+
+The inclusion of generator investment based on price differentials between locations marks a major contribution to the literature. Real-world limitations on the movement of electricity make ignoring transmission perilous, and the need for investment in renewables makes a valuation of transmission expansion, including its effects on renewables investment, increasingly pertinent. Consideration of how interconnected electricity markets function together even on short time scales also remains conspicuously absent from the industrial organization literature around electricity providing a gap for research. 
 %The model also has potential usage outside of electricity markets as it examines the problem of endogenous network formation, a problem of perpetual interest to microeconomists.
 
-I examine the behavior of generators providing electricity in the wholesale market by building a theoretical model of the short-run electricity market and connecting the model to a dynamic game in the long-run electricity market where generators enter and exit. The model builds on prior work in electricity by adding constrained trade between regions in electricity. I estimate the short-run model using maximum likelihood, and I estimate the long-run model using a fixed-point generalized method of moments methodology using the strategy for estimation capacity investment in dynamic games found in \cite{gowrisankaran2024computable}. I run the counterfactuals by adjusting the available set of long-range transmission lines in the United States and the fixed costs and entrance costs of the generators in line with the legislation considered.
+I examine the behavior of generators providing electricity in the wholesale market by building a theoretical model of the short-run electricity market and connecting the model to a dynamic game in the long-run electricity market where generators enter and exit. The model builds on prior work in electricity by adding constrained trade between regions in electricity. I estimate the short-run model using maximum likelihood, and I estimate the long-run model using a fixed-point generalized method of moments methodology, applying the strategy for estimating capacity investment in dynamic games found in \cite{gowrisankaran2024computable}. I run the counterfactuals by adjusting the available set of long-range transmission lines in the United States and the fixed costs and entrance costs of the generators in line with the legislation considered.
 %I follow \cite{holmes2011diffusion} and \cite{pakes2015moment} in estimating the long-run model through the moment inequality method
 
- The paper is organized as follows. Section \ref{sec:literature} reviews the prior literature related to transmission as well as investment in the electricity market. Section \ref{sec:data} describes the structure of the market analyzed and presents descriptive statistics about the market. Section \ref{sec:Model} presents a structural model, while Section \ref{sec:Estimation} describes the estimation strategy using the structural model. Section \ref{sec:result} provides a description on results and model-fit.  Section \ref{sec:Counterfactuals} details counterfactuals. Section \ref{sec:conclusion} concludes the paper and provides further research directions.
+ The paper is organized as follows. Section \ref{sec:literature} reviews the prior literature related to transmission as well as investment in the electricity market. Section \ref{sec:data} describes the structure of the market analyzed and presents descriptive statistics about the market. Section \ref{sec:Model} presents a structural model, while Section \ref{sec:Estimation} describes the estimation strategy using the structural model. Section \ref{sec:result} provides a description of the results and model-fit.  Section \ref{sec:Counterfactuals} details counterfactuals. Section \ref{sec:conclusion} concludes the paper and provides further research directions.
 
 \section{Literature Review} \label{sec:literature}
-
-The literature related to the question of the impact of congestion on investment by generators in the electricity market falls in three distinct categories: discussions of the problems related to a changing resource mix in the electricity market, examinations of investment decisions by firms in the electricity market, and considerations of the impacts of congestion on firm behavior. 
-
-A rich body of literature exists related to the current energy transition the United States and the world is undergoing as it relates to electricity markets and firm behavior in these markets. \cite{gowrisankaran2016intermittency} examines intermittency of renewable resources and how the intermittency impacts the electricity market. \cite{gowrisankaran2016intermittency} finds that intermittency accounts for a substantial portion of social costs related to renewable energy and that intermittency presents a major barrier to a grid powered mainly be renewable energy. More recently, \cite{gowrisankaran2024energy} examines the rationale for utility's shift away from coal and towards natural gas. The paper utilizes an estimation technique popularized by \cite{gowrisankaran2024computable} to understand how the increasing price differential between coal and natural gas led to a shift in the resource mix and substantial changes in capacity investment. My estimation strategy borrows substantially from this strain, especially in the creation of an estimation strategy but utilizes a dynamic game to consider the actions of multiple generation companies together, takes into account the shift towards renewables, and integrates transmission into the model.
-
-Related to the body of work on a changing resource mix comes a substantial group of papers that ask the question of how firms choose to invest in and enter electricity markets. \cite{butters2021soaking} examines the impact of California's battery capacity mandate on battery adoption and electricity markets. The paper builds a model of the operations of battery storage facilities in the day ahead and real time markets and relates the operations model to the long-run market for storage capacity. The paper concludes with a series of implications relating to policy and also the impacts of differing assumptions about depreciation and capital changes over time. The paper finds that the mandate increases social welfare slightly after considering capital costs even before taking into account the impacts on reliability. 
-
-\cite{elliott2022investment} builds on \cite{butters2021soaking} by building a model of investment in generators in the Australian electricity market. Elliot's model divides generation companies into strategic firms whose entry and exit impacts price and fringe firms and then uses this division to model a dynamic game in which firms choose to add or subtract generation from their portfolio in the long-run. Elliot utilizes the model to run a series of counterfactuals with the primary focus on changes to carbon taxes and the capacity market. Both models provide a useful framework to consider the impact of policy on long-run firm behavior in the electricity market.
-
-\cite{holland2022decarbonization} provides the first model from the literature to consider multiple wholesale markets simultaneously. Holland uses EIA data on generation mix and load to model the impacts of several market policies including increasing transmission on renewables adoption and social welfare in the electricity market. While \cite{holland2022decarbonization} proves ambitious, the model considers regional markets as homogeneous and makes the strong assumption that increasing transmission simply means all generators have access to all load. The current work builds on this modelling by considering a more realistic model of transmission and congestion in an electricity market with equilibria determined at the node level.
-
-As the current work examines the impact of transmission on investment, I focus heavily on the impacts of transmission on markets and the firms that operate in them. \cite{arkolakis2023clean} builds a macro-style model of the process of growing the economy while also converting to clean energy. Within the model, transmission is considered as well as the impacts of transmission expansion; however, very little consideration is given as to how the energy markets function and the endogenous process of market investment by resources.
-
-\cite{gonzales2022dynamic} performs the most similar research to my work. The paper also has a model of long-run dynamics within the Chile electricity market and estimates the impacts of a grid expansion connecting the Northern and Southern regions of Chile on entry and exit of renewables and fossil fuels. The short-run model used to relate transmission expansion to prices is very simplistic and does not allow for settlement at multiple points simultaneously. It also requires generation data, which are not available for the United States. As the American grid is substantially larger and more complex, the expansion of \cite{gonzales2022dynamic} I perform by adding these features presents a valuable contribution. 
-
-Finally, \cite{gonzales2022dynamic} does not seriously consider the interdependence of generators in its long-run model. My model utilizes a dynamic game for the long-run stage, which allows for a more accurate model of transmission's impact on capacity investment. This is because within a transmission framework, long-run capacity choices are fundamentally interdependent. When considering transmission, the decision to invest in solar in Nebraska impacts the choices of Indiana coal plant owners, making this consideration valuable.
-
-The current work builds heavily on prior work conducted by \cite{butters2021soaking}, \cite{elliott2022investment}, \cite{gonzales2022dynamic}, \cite{gowrisankaran2024energy} related to investments in electricity markets to understand the determinants of investments in increased capacity at the grid level. 
-
-My work expands on prior work by incorporating congestion data from multiple markets simultaneously to examine how increased transmission impacts prices in the real time market and linking this to the dynamics of generation investment in the long-run market. The work advances the field by combining the considerations made by \cite{gonzales2022dynamic} for transmission in short-run electricity markets with a capacity adoption model with a dynamic game similar to the long-run model found in \cite{elliott2022investment}. In estimation, the work takes its inspiration from recent advances in the estimation of capacity games from \cite{gowrisankaran2024computable} and \cite{pakes1998empirical}. Combined, these frameworks allow for a more realistic analysis of transmission's impacts.
+ 
+The literature related to the question of how transmission impacts generator investment in electricity markets falls along three interrelated threads: long-run capacity investment decisions by firms, the role of transmission and congestion in shaping market outcomes, and the modeling of electricity markets undergoing a changing resource mix.
+ 
+A central challenge in the literature on electricity market investment is modeling how firms choose to add or retire generation capacity over time. \cite{butters2021soaking} develops a dynamic competitive equilibrium model of battery storage adoption and operations using California data, linking short-run arbitrage in the day-ahead and real-time markets to the long-run market for storage capacity. The paper finds that California's storage mandate modestly increases social welfare even before accounting for reliability benefits, though equilibrium effects sharply diminish the marginal value of additional storage units. \cite{elliott2022investment} extends this type of framework to a setting with strategic interaction, building a dynamic oligopoly model of investment in the Western Australian electricity market. Elliott's model distinguishes between strategic firms, firms with entry and exit decisions influence price, and fringe firms. \cite{elliott2022investment} uses this structure to evaluate the impacts of carbon taxes and capacity payments on the generation mix. Both papers demonstrate the importance of modeling the feedback between short-run market operations and long-run capacity decisions, a feature my model shares.
+ 
+A separate strand examines how the composition of the generation fleet responds to changing fuel economics and policy. \cite{gowrisankaran2016intermittency} quantifies the social costs of solar intermittency in southeastern Arizona, finding that intermittency accounts for a substantial share of the costs associated with renewable generation and represents a significant barrier to a grid powered primarily by renewables. \cite{gowrisankaran2024energy} examines why regulated utilities have retired coal more slowly than their counterparts in restructured markets despite the growing price advantage of natural gas. That paper uses an estimation approach developed by \cite{gowrisankaran2024computable}, which provides a computationally tractable method for solving dynamic oligopoly models with many ordered capacity levels. My estimation strategy draws on this computational approach but embeds it within a dynamic game that considers multiple generation companies simultaneously, accounts for the shift toward renewables, and integrates transmission constraints into the model.
+ 
+The role of transmission in electricity markets has received growing attention but remains underexplored in the investment context. \cite{holland2022decarbonization} provides one of the first models to consider multiple wholesale markets simultaneously, using EIA data on generation mix and load to evaluate how policies including transmission expansion affect renewables adoption and social welfare. However, the model treats regional markets as homogeneous and equates increased transmission with universal access by all generators to all load---a strong assumption that abstracts from the nodal structure of actual wholesale markets. The current work relaxes this assumption by modeling transmission and congestion with equilibria determined at the node level.
+ 
+\cite{arkolakis2023clean} builds a spatial macroeconomic model of clean energy adoption in which electricity transmission plays a role, incorporating learning-by-doing and regional comparative advantage in renewable resources. While the model captures the aggregate and spatial implications of the energy transition, it does not endogenize the process by which individual generators make investment decisions in response to market signals---a mechanism that is central to my analysis.
+ 
+The closest antecedent to my work is \cite{gonzales2022dynamic}, which estimates the investment effects of grid expansion connecting the northern and southern regions of Chile on the entry and exit of renewable and fossil fuel generators. That paper makes an important contribution by linking transmission infrastructure to investment incentives. However, its short-run model relates transmission to prices through a framework that does not allow for simultaneous settlement at multiple nodes, and it relies on generation data that are not available at comparable granularity for the United States. Moreover, \cite{gonzales2022dynamic} does not model the strategic interdependence of generators in its long-run investment stage. My model addresses these limitations by using a dynamic game for the long-run stage, which captures the fact that within a transmission-constrained network, capacity choices are fundamentally interdependent: the decision to invest in solar in Nebraska alters the competitive landscape facing coal plant owners in Indiana.
+ 
+My work synthesizes and extends several of these contributions. It combines the attention to transmission found in \cite{gonzales2022dynamic} with a dynamic oligopoly investment model in the spirit of \cite{elliott2022investment}, using the computational methods of \cite{gowrisankaran2024computable} and building on the estimation framework of \cite{pakes1998empirical}. By incorporating congestion data from multiple markets simultaneously and linking real-time price formation to long-run capacity dynamics, the model enables counterfactual analysis of how transmission expansion reshapes generator investment across the interconnected U.S. grid.
 
 
 \section{Setting and Data} \label{sec:data}
@@ -153,39 +155,41 @@ My work expands on prior work by incorporating congestion data from multiple mar
 \subsection{Setting}
 In most of the United States, the electricity market is divided between the wholesale and retail markets. In wholesale markets, generators sell electricity to utilities who then sell the electricity to end-users in the retail market. Wholesale market prices are generated through the locational marginal price (LMP) mechanism. Generators submit bids of price-quantity pairs that determine how much an individual generator is willing to supply at a series of set prices. The equilibrium price is thus the price at which the last economically dispatched generator bids for the final unit of electricity. This price is paid to all generators that are dispatched at a particular market location.
 
-I focus on the wholesale market for electricity in the Eastern Interconnection and ERCOT. I choose to focus on the regions with wholesale markets because wholesale markets have readily available price data and because vertically integrated retail markets function differently. The focus on the Eastern Interconnection comes from the fact that the majority of US ISOs are in the Eastern Interconnection. The addition of ERCOT provides the ability to perform counterfactuals examining expanded interconnection between ERCOT and the Eastern grid.
+I focus on the wholesale market for electricity in the Eastern Interconnection and ERCOT (Electric Reliability Council of Texas). I choose to focus on the regions with wholesale markets because wholesale markets have readily available price data and because vertically integrated retail markets function differently. The focus on the Eastern Interconnection comes from the fact that the majority of US ISOs are in the Eastern Interconnection. The addition of ERCOT provides the ability to perform counterfactuals examining expanded interconnection between ERCOT and the Eastern grid.
 
 \subsection{Dataset Creation}
 
-Data for the short-term model came from EIA form 923, EIA form 860, EIA form 930 data, EPA's Power Markets Data, the individual ISOs, S\&P capital IQ Global, Homeland Infrastructure Foundation Level Database (HIFLD), and Meteostat. The model was estimated on data from 2018 to 2023 at the zonal level. The zonal level was chosen to increase the proportion of binding transmission constraints in the data and to increase granularity of the dataset in terms of both generators and load sources.
+Figure \ref{DataSetCreation} shows a full diagram of the creation of the dataset for analysis. Data for the short-term model came from EIA Form 923, EIA Form 860, EIA Form 930 data, EPA's Power Markets Data, the individual ISOs, S\&P capital IQ Global, Homeland Infrastructure Foundation Level Database (HIFLD), and Meteostat. The model was estimated on data from 2018 to 2023 at the zonal level. The zonal level was chosen to increase the proportion of binding transmission constraints in the data and to increase granularity of the dataset in terms of both generators and load sources.
 
-From each individual ISO, I took price and load data at the zonal level. I then took hourly fuel mix data at the zonal to estimate generation by generator by hour. For fossil fuel generators covered by CAMPD, the generation by hour was available. However, for other generators, the generation needed to be estimated. In order to estimate generation by hour by generator, EIA Forms 923 and 860 were combined with ISO data on fuel mix. Percentage of generation by the generator was found by taking the percentage of total generation for the zone by month by generation owner from Form 923. The value was then multiplied by the generation for the fuel type for the hour. If generation by the generator was greater than generation capacity, the generation was reduced to the generation capacity, and generation was redistributed to the remaining generators.
+From each ISO individually, I took price and load data at the zonal level. I then took hourly fuel mix data at the zonal to estimate generation by generator by hour. For fossil fuel generators covered by EPA's CAMPD (Clean Air Markets Program Data), the generation by hour was available. However, for other generators, the generation needed to be estimated. In order to estimate generation by hour by generator, EIA Forms 923 and 860 were combined with ISO data on fuel mix. Percentage of generation by the generator was found by taking the percentage of total generation for the zone by month by generation owner from Form 923. The value was then multiplied by the generation for the fuel type for the hour. If generation by the generator was greater than generation capacity, the generation was reduced to the generation capacity, and generation was redistributed to the remaining generators.
 
-In order to estimate transmission capacity and line losses between zones, the HIFLD data on the electricity grid was utilized. The data allowed me to build a full dataset of transmission capacity and line losses in 2022. A line was considered to connect two zones if the line started at a substation in one zone and ended at a substation in another. Using this approach for connection estimation has the downside of neglecting flows that went between multiple substations and zones. However, this works well with the assumption of the grid as a bipartite network from the model. The HIFLD data contained information on type of line, voltage, length, and location. This was used to estimate flow limits and line losses based on engineering assumptions according to the technique discussed in Appendix \ref{sec:appendixc} following \cite{arkolakis2023clean}. To get historical changes in transmission capacity and line losses, I solved for transmission capacity additions and retirements based on S\&P Capital IQ's transmission projects dataset. These were added to the transmission capacity and losses from the HIFLD data to get the transmission capacity from 2001 to 2024.
+In order to estimate transmission capacity and line losses between zones, the HIFLD data on the electricity grid was utilized. The data allowed me to build a full dataset of transmission capacity and line losses in 2022. A line was considered to connect two zones if the line started at a substation in one zone and ended at a substation in another. Using this approach for connection estimation has the downside of neglecting flows that went between multiple substations and zones. However, this works well with the assumption of the grid as a bipartite network from the model. The HIFLD data contained information on type of line, voltage, length, and location. This was used to estimate flow limits and line losses based on engineering assumptions according to the technique discussed in Appendix \ref{sec:appendixc} following \cite{arkolakis2023clean}. To get historical changes in transmission capacity and line losses, I solved for transmission capacity additions and retirements based on S\&P Capital IQ's transmission projects dataset. Calculated additions and retirements were added to the transmission capacity and losses from the HIFLD data to get the transmission capacity from 2001 to 2024.
 
-With the approximate generation data for generators that did not report to the EPA and the exact costs for generators that did report to the EPA, the exports from each zone to each other zone were estimated. To estimate exports, I first added net exports to zones outside of the area of interest. Net exports to outside areas by hour were taken from EIA form 930, which provides data on flows between balancing authorities at an hourly level. Where a balancing authority outside of the dataset connected to multiple zones in the dataset, net exports are added to load proportionately to load in each of the connected regions. 
+With the approximate generation data for generators that did not report to the EPA and the exact costs for generators that did report to the EPA, the exports from each zone to each other zone were estimated. To estimate exports, I first added net exports to zones outside of the area of interest. Net exports to outside areas by hour were taken from EIA Form 930, which provides data on flows between balancing authorities at an hourly level. Where a balancing authority outside of the dataset connected to multiple zones in the dataset, net exports are added to load proportionately to load in each of the connected regions. 
 
 Given data on load and approximate generation, an optimal dispatch problem was solved for each hour based on the generation by generator, transmission capacity and line losses. Generation was dispatched from zones with low LMP to zones with high LMP in order of marginal cost based on heat rate and fuel cost until all load was satisfied and all generation was distributed. Marginal cost was estimated using fuel cost data from EIA Form 860 and heat rate data from EPA CAMPD data. For resources without marginal cost data from EIA, an order of dispatch was provided by resource type with solar, hydro, geothermal, and wind dispatched first with ties distributed based on capacity size. Nuclear was then distributed followed by fossil fuel resources for which marginal cost data at the monthly level was available. Firms with lower marginal costs per unit of generation were dispatched to regions earlier. I use these export data to estimate hourly marginal cost curves in the short-term model.
 
-The characteristics of the zones impacting marginal cost of the generators were taken from EIA form 860, Meteostat, and S\&P Capital IQ Global. EIA provided information about the generation companies in terms of ownership and characteristics of generators. Meteostat provided data on weather hourly in the zones. In order to get an average weather for the zones, a centroid was taken from each zone. Weather data thus represent the data at the weather station closest to the centroid of the zone.
+The characteristics of the zones impacting marginal cost of the generators were taken from EIA Form 860, Meteostat, and S\&P Capital IQ Global. EIA provided information about the generation companies in terms of ownership and characteristics of generators. Meteostat provided data on weather hourly in the zones. In order to get an average weather for the zones, a centroid was taken from each zone. Weather data thus represent the data at the weather station closest to the centroid of the zone.
 
 Data for the long-term model came from EIA Form 860, EIA's Annual Energy Outlook (AEO), NREL's Standard Scenarios, and S\&P Capital IQ Global. The long-term model was estimated on historical data going back to 2001 with forward-looking generators basing capacity decisions on revenues estimated until 2050 after which the fuel mix and load profile are assumed constant and an infinite sum is taken. The year 2050 was chosen because it was the last year of projections from AEO and because it is a date at which most pledges for energy transition are based.
 
-EIA form 860 provided data on capacity of generators between 2001 and 2024. These data were aggregated by owner, zone, and resource type to get capacity for long-term model estimation. For resources of types not modelled such as nuclear and hydroelectric, the capacity was taken from the aggregate capacity by zone. Meteostat and Prism provided historical long-term weather data. S\&P Capital IQ Global and EIA provided data on historical natural gas prices and coal prices.
+EIA Form 860 provided data on capacity of generators between 2001 and 2024. These data were aggregated by owner, zone, and resource type to get capacity for long-term model estimation. For resources of types not modelled such as nuclear and hydroelectric, the capacity was taken from the aggregate capacity by zone. Meteostat and Prism provided historical long-term weather data. S\&P Capital IQ Global and EIA provided data on historical natural gas prices and coal prices.
 
 Most data from the projections for years in the future come from EIA's Annual Energy Outlook (AEO) for 2023 and NREL's Standard Scenarios with Cambium. The AEO has data on projected load by region, projected natural gas and coal price, and projected capacity and generation for nuclear and other generation types. In order to get projections for long-term changes in transmission capacity for the long-term model, NREL's Standard Scenarios were utilized. The Standard Scenarios also provided long-run data on transmission and distribution losses, load growth, and future capacity for fuels not in the model.
 
-The current study will consider data only from Independent System Operators in the Eastern Interconnection and the Electric Reliability Council of Texas (ERCOT). For a map of the zones of interest, refer to Figure \ref{fig:ZoneMap}. The process of constructing the zone map is described in Appendix \ref{sec:appendix_zonal_maps}.This includes the Southwest Power Pool (SPP) which governs parts of the Midwest from Oklahoma to Wyoming. The Eastern Interconnection also includes the Midcontinent Independent System Operator (MISO) which governs the Midwest east of Mississippi to Nebraska as well as Pennsylvania-New Jersey-Maryland Interconnection (PJM), New York Independent System Operator (NYISO), and ISO New England, which governs all states on the Eastern Seaboard North of New York. Outside of the Eastern Interconnection, data are also provisioned from the ERCOT, which includes much of Texas.
+The current study will consider data only from Independent System Operators in the Eastern Interconnection and the Electric Reliability Council of Texas (ERCOT). For a map of the zones of interest, refer to Figure \ref{fig:ZoneMap}. The process of constructing the zone map is described in Appendix \ref{sec:appendix_zonal_maps}. This includes the Southwest Power Pool (SPP) which governs parts of the Midwest from Oklahoma to Wyoming. The Eastern Interconnection also includes the Midcontinent Independent System Operator (MISO) which governs the Midwest east of Mississippi to Nebraska as well as Pennsylvania-New Jersey-Maryland Interconnection (PJM), New York Independent System Operator (NYISO), and ISO New England, which governs all states on the Eastern Seaboard North of New York. Outside of the Eastern Interconnection, data are also provisioned from the ERCOT, which includes much of Texas.
 
 \subsection{Descriptive Statistics}
 
-Table \ref{priceData} shows how prices and loads differ between the different Independent system operators. There is significant variation with ISO-NE having the highest mean price and SPP having the lowest. Load also varies by ISO with PJM, the largest ISO also having the highest load. Figures \ref{fig:PriceMap} and \ref{fig:PriceLoad} show how load varies across the sample by zone. Load differs both within a time dimension and across the spatial dimension with peaks in load profiles in differing by time zone and weather conditions and larger more densely populated zones having more load. Table \ref{ShortTermStats1} provides descriptive statistics on the estimated features of the hourly dispatch model including hourly exports by generator and hourly generation by generator type. Table \ref{ShortTermStats2} provides descriptive statistics for the short run characteristics and the variables that feed into the short-run model.
+Table \ref{priceData} shows how prices and loads differ between the different Independent system operators. There is significant variation across ISOs with ISO-NE having the highest mean price and SPP having the lowest. Load also varies by ISO with PJM, the largest ISO also having the highest load. Figures \ref{fig:PriceMap} and \ref{fig:PriceLoad} show how load varies across the sample by zone. Load differs both within a time dimension and across the spatial dimension with peaks in load profiles in differing by time zone and weather conditions and larger more densely populated zones having more load. Table \ref{ShortTermStats1} provides descriptive statistics on the estimated features of the hourly dispatch model including hourly exports by generator and hourly generation by generator type. Table \ref{ShortTermStats2} provides descriptive statistics for the short run characteristics and the variables that feed into the short-run model.
 
 Figure \ref{fig:CapacityFactorbyISO} shows how estimated capacity factor differs by ISO. Capacity factor is the ratio between total generation and total capacity and indicates the efficiency of a particular generator or generators in a particular location.
 
-\section{Model} \label{sec:Model}\subsection{Preliminaries}The modelling framework borrows substantially from \cite{butters2021soaking}, \cite{elliott2022investment}, and \cite{gonzales2022dynamic}. The model consists of a static short-run model and a dynamic long-run model. The primary source of variation arises from the introduction of location-specific prices and spatial heterogeneity in generators, as well as the introduction of a dynamic game into a model with transmission constraints.
+\section{Model} \label{sec:Model}
 
-While previous models typically assumed either a single price for all locations or prices varying only by broad regions, this model allows all markets to clear interdependently. Although allowing many settlement locations increases the size of the state space—making a short-run dynamic model intractable for considering complex phenomena like curtailment—this tradeoff is necessary to capture granular transmission effects. Because decreasing curtailment is a benefit of transmission expansion, excluding it likely leads only to an conservative estimate of the benefits of increasing transmission.
+\subsection{Preliminaries}The modelling framework borrows substantially from \cite{butters2021soaking}, \cite{elliott2022investment}, and \cite{gonzales2022dynamic}. The model consists of a static short-run model and a dynamic long-run model. The primary source of variation arises from the introduction of location-specific prices and spatial heterogeneity in generators, as well as the introduction of a dynamic game into a model with transmission constraints.
+
+While previous models typically assumed either a single price for all locations or prices varying only by broad regions, this model allows all markets to clear interdependently. Allowing many settlement locations increases the size of the state space and makes a short-run dynamic model intractable for considering complex phenomena like curtailment; however, the tradeoff is necessary to capture granular transmission effects. Because decreasing curtailment is a benefit of transmission expansion, excluding it likely leads only to an conservative estimate of the benefits of increasing transmission.
 
 Within the short-run, a combined Independent System Operator (ISO) solves an optimal dispatch problem, choosing how much electricity to offer and at what nodes to minimize costs. In the long-run, a capacity game occurs where generator owners choose optimal capacity based on profit expectations derived from the short-run model's prices. While the short-run model functions primarily as an engineering problem solved by a social planner and estimated using econometrics, the long-run model is solved by competitive equilibrium.
 
@@ -193,17 +197,17 @@ Within the short-run, a combined Independent System Operator (ISO) solves an opt
 
 The network is modelled as a bipartite graph consisting of demand nodes indexed by $i$ and generation nodes indexed by $j$. Electricity flows from generation nodes $j$ to demand nodes $i$. Figure \ref{fig:NetworkTopology} illustrates the mechanics of this network. The adjacency matrix $A$ represents the transmission capacity, where $A_{ij}$ is the maximum electricity that can flow between node $j$ and node $i$. Line losses, governed by the particular technologies used at locations, are represented by the matrix $B$, where $B_{ij}$ represents the proportion of electricity lost during transmission from $j$ to $i$. At each generation node $j$, there are various fuel resources indexed by $k$ (e.g., wind, solar, coal, natural gas) with individual generators indexed by $g$.
 
-Fuel resources are divided into endogenous and exogenous categories in the long-run investment model. Wind, solar, coal, and natural gas are modeled endogenously. The ``other major fuel sources" category—primarily hydroelectricity and nuclear—is taken as exogenous to reduce the state space. This is consistent with historical data, where year-to-year variation is much higher in fossil and renewable sources than in hydro or nuclear, which are more heavily influenced by government investment and regulatory constraints than by short-run market forces.
+Fuel resources are divided into endogenous and exogenous categories in the long-run investment model. Wind, solar, coal, and natural gas are modeled endogenously. The ``other major fuel sources" category, primarily hydroelectricity and nuclear, is taken as exogenous to reduce the state space. This is consistent with historical data, where year-to-year variation is much higher in fossil and renewable sources than in hydro or nuclear, which are more heavily influenced by government investment and regulatory constraints than by short-run market forces.
 
 \subsection{Short-run Operations Model}
 
 Under certain conditions, the generator's profit maximization problem is identical to the social planner's cost minimization problem. Following \cite{gilbert2004allocating} and \cite{cramton2017electricity}, the conditions for equivalency include: no market power among generators, no gamesmanship or non-competitive bidding, increasing and continuous marginal cost curves without jumps, and linear constraints.
 
-The assumption of increasing marginal cost curves is consistent with both economic theory and bid offer data provided by generators. While gamesmanship is strictly policed by the Federal Energy Regulatory Commission, the assumption of no market power is the strongest. As \cite{gilbert2004allocating} notes, transmission constraints can engender market power; however, due to competitive pressures and bidding regulations, sustained market power in the electricity market proves elusive. Given the value of this equivalency for solvability, I proceed by solving the problem as a social planner's problem.
+The assumption of increasing marginal cost curves is consistent with both economic theory and bid offer data provided by generators. While gamesmanship is strictly policed by the Federal Energy Regulatory Commission, the assumption of no market power is the strongest. As \cite{gilbert2004allocating} notes, transmission constraints are the main source of market power; however, due to competitive pressures and bidding regulations, sustained market power in the electricity market proves elusive. Given the value of this equivalency for tractability, I proceed by solving the problem as a social planner's problem.
 
-The ISO solves a static problem each hour $t$, choosing the quantity $q_{ijkt}$ to send to each individual demand node $i$ from each resource $k$ at supply node $j$. The ISO minimizes the total cost of generation subject to system constraints, which is equivalent to maximizing the negative of the cost function:
+The ISO solves a static problem each hour $t$, choosing the quantity $q_{ijkgt}$ to send to each individual demand node $i$ from each resource $k$ at supply node $j$ for generator g. The ISO minimizes the total cost of generation subject to system constraints, which is equivalent to maximizing the negative of the cost function:
 
-\begin{equation} \pi_{t}=\max_{{q_{ijkgt}}{i,j,k,g,t\in I,J,K,G,T}} \left[- \sum_{I=1}^I \sum_{j=1}^J \sum_{k=1}^K \sum_{g=1}^G c_{jkgt}(x_{jkgt},q_{ijkgt},\epsilon_{ijkgt})\right]. \end{equation}
+\begin{equation} \pi_{t}=\max_{\{q_{ijkgt}\}_{i,j,k,g,t\in I,J,K,G,T}} \left[- \sum_{I=1}^I \sum_{j=1}^J \sum_{k=1}^K \sum_{g=1}^G c_{jkgt}(x_{jkgt},q_{ijkgt},\epsilon_{ijkgt})\right]. \end{equation}
 
 The cost of dispatching a generator, $c_{jkgt}$, depends on resource characteristics $x_{jkgt}$, the quantity dispatched, and an error term $\epsilon_{ijkgt}$ representing incorrect specification of the cost function visible to the ISO but not the econometrician.
 
@@ -227,6 +231,7 @@ The Locational Marginal Price (LMP) at any node is equal to the marginal cost of
 
 I rely on the following assumptions for the solution:
 \begin{enumerate}
+    \item Cost functions are continuous without jumps and quadratic with respect to inputs.
     \item Blackouts are not allowed; there is sufficient electricity to satisfy all load at every node at any time.
     \item No resource is ever transmission-constrained at \textit{all} locations simultaneously.
     \item Within each generation node $j$, at least one resource is not at maximum capacity at any given time.
@@ -245,7 +250,7 @@ The structural equation is given by:
      $\underbrace{\sum_{j=1}^J\sum_{k=1}^K \sum_{g=1}^G (1-B_{ij})q_{ijkgt}=L_{it}}_\text{Resource constraint} \mspace{18mu} \forall i$
  \end{center}
  \begin{center}
-    $\underbrace{\sum_{k=1}^k \sum_{g=1}^G q_{ijkgt}\leq A_{ij}}_\text{Transmission constraint} \mspace{18mu} \forall i,j,t$
+    $\underbrace{\sum_{k=1}^K \sum_{g=1}^G q_{ijkgt}\leq A_{ij}}_\text{Transmission constraint} \mspace{18mu} \forall i,j,t$
  \end{center}
    \begin{center}
      $\underbrace{0<\sum_{i} q_{ijkgt}\leq O_{jkgt}^{MAX}}_\text{Capacity constraint} \mspace{18mu} \forall j,k,g,t.$
@@ -258,12 +263,12 @@ To identify the error terms, consider generator $jg'k$. For any nodes $ijk'$ wit
 
 For nodes $i'jk'$ that are neither transmission nor capacity constrained:
 \begin{equation}\label{cap2}
-\tilde{\epsilon}_{i'jk't}=\epsilon_{i'jk't}.
+\tilde{\epsilon}_{i'jk'gt}=\epsilon_{i'jk'g't}.
 \end{equation}
 
-By assumption, each $j$ node has one resource not capacity constrained, and each resource has at least one $i$ node with which it is not transmission constrained. Plugging Equation \ref{cap2} into \ref{cap3} allows us to solve for each $\epsilon_{ijkt}$
+By assumption, each $j$ node has one resource not capacity constrained, and each resource has at least one $i$ node with which it is not transmission constrained. Plugging Equation \ref{cap2} into \ref{cap3} allows us to solve for each $\epsilon_{ijkgt}$
 
-Define $P_t$ as a multivariate normal probability density function with mean zero and variance $\Omega_1$ from which the errors $\epsilon_{ijkt}$ are drawn. This yields the likelihood function for the set of resources excluding the marginal resource:
+Define $P_t$ as a multivariate normal probability density function with mean zero and variance $\Omega_1$ from which the errors $\epsilon_{ijkgt}$ are drawn. This yields the likelihood function for the set of resources excluding the marginal resource:
 
 \begin{equation}\label{likelihoodFunction} L_1= \prod_{t=1}^{t=T} P_t(\tilde{V}_{111t},...,\tilde{V}_{IJKt}). \end{equation}
 
@@ -271,13 +276,13 @@ By maximizing this likelihood function, I estimate the parameters $\nu_k$ and $\
 
 \subsubsection{Resource Dynamics in the Short-Run}
 
-In this framework, renewable resources (wind, solar) have marginal costs averaging to zero, reflecting that their fuel inputs are free. Conversely, fossil fuel resources have consistently positive marginal costs and control the marginal generation, choosing when to burn fuel.
+In my framework, renewable resources, such as wind and solar, have marginal costs averaging to zero, reflecting that their fuel inputs are free. There is an added mean-zero error to prevent stochastic degeneracy in estimation. Conversely, fossil fuel resources have consistently positive marginal costs and control the marginal generation. They choose when to burn fuel.
 
-In the long run, these differences drive market entry and exit. Fossil fuel resources face increasing fixed costs due to regulation and maintenance, while renewables experience decreasing entry costs due to technological improvement. As transmission expands, prices equalize spatially: prices paid to fossil resources generally decrease, while those paid to renewables increase. These short-run profit signals drive the long-run transition, leading to increased renewable capacity and fossil fuel exit.
+In the long run, these differences drive market entry and exit. Fossil fuel resources face increasing fixed costs due to regulation and maintenance, while renewables experience decreasing entry costs due to technological improvement. As transmission expands, prices equalize spatially: prices paid to fossil resources generally decrease, while those paid to renewables increase. As the market moves from autarky to trade, prices decrease on average due to dispatch of cheaper resources and an insurance effect. These short-run profit signals drive the long-run transition, leading to increased renewable capacity and fossil fuel exit.
 
 \subsection{Long-run Model}
 
-The short-run and long-run models interact through prices and capacity. Figure \ref{fig:ModelTimeline} illustrates this relationship: the ISO solves the optimal dispatch problem hourly, which generates prices and costs that feed into generators' expected profits. These expected profits then drive long-run capacity investment decisions, which in turn affect future dispatch outcomes.
+The short-run and long-run models interact primarily through prices and capacity. Figure \ref{fig:ModelTimeline} illustrates this relationship: the ISO solves the optimal dispatch problem hourly, which generates prices and costs that feed into generators' expected profits. These expected profits then drive long-run capacity investment decisions, which in turn affect future dispatch outcomes.
 
 In the short run, expanding transmission capacity leads to price convergence between regions through spatial arbitrage. Figure \ref{fig:StaticEffects} illustrates this mechanism: low-cost regions (net exporters) see prices rise as they gain access to distant markets, while high-cost regions (net importers) experience price declines as cheaper power flows in. The welfare effects include producer surplus gains in exporting regions and consumer surplus gains in importing regions.
 
@@ -346,12 +351,12 @@ The long-run model estimation utilizes the dynamic game investment estimation me
 
 Following the methodology from \cite{gowrisankaran2024computable}, I compute the equilibrium through a nested fixed point procedure where I iterate start with a belief of each generation company of the probability of rival actions, solve the value function iteratively for the belief, and iterate until all beliefs are correct. Diverging from the framework, I use an oblivious equilibrium concept, so the beliefs must only be correct with regards to the beliefs of generation companies about rival competitive capacity.
 
-The state space is discretized as follows. Fixed cost is divided into 20 bins for from zero to the maximum revenue per megawatt of a resource type. Entry cost is divided into 20 bins from zero to ten times the maximum revenue per megawatt of a resource type. Demand state space is divided into 5 bines from .75 to 1.5 times previously seen max load. The own capacity state space is divided into 15 bins from 0 to 1.5 times max generation of a generation owner. The alternative capacity state space is divided into ten bins from 0 to 1.5 times the maximum load. The average price state space is divided into 10 bins from 0 to 1.1 times the maximum average price in the data. 
-The possible investments are restricted to blank with 10 possible investment choices. Investment is restricted, so negative capacity is not permitted.
+The state space is discretized as follows. Fixed cost is divided into 20 bins for from zero to the maximum revenue per megawatt of a resource type. Entry cost is divided into 20 bins from zero to ten times the maximum revenue per megawatt of a resource type. Demand state space is divided into 5 bins from .75 to 1.5 times previously seen max load. The own capacity state space is divided into 15 bins from 0 to 1.5 times max generation of a generation owner. The alternative capacity state space is divided into ten bins from 0 to 1.5 times the maximum load. The average price state space is divided into 10 bins from 0 to 1.1 times the maximum average price in the data. 
+The possible investments are restricted to between zero new investments and investment that would meet half zonal capacity for 10 possible investment choices. Investment is restricted, so negative capacity is not permitted.
 
 In order to estimate the model, the parameters from the short-term model are estimated via maximum likelihood. These parameters are used within the marginal cost function to solve the linear program to get quantities and prices in the short-run with expected changes to the grid in the future. A subset of dates are solved using the parameters for all elements of the state space. The results are then fed into the long-run model, which uses the short-run results for profits for each year.
 
-The long-term model has 32 parameters to estimate including the integrated and auto-regressive terms in the fixed cost and entry cost, the initial fixed cost and initial entry cost, and the standard deviation for both errors. Each parameter needed to be estimated for all four resource types. In order to estimate the 32 parameters, at least 32 moments must be used. I follow \cite{gowrisankaran2024energy} in choice of moments to get 36 total moments for an overidentified model. For natural gas, solar, and wind, the moments include an indicator for positive investment interacted with quantity built, total quantity squared, and an indicator for investments in capacity of large size, which is specific to resource based on the data. I interact these moments with total capacity and also include investment variance as a moment. I add one additional moment, which is the amount of capacity retired to help identify fixed cost parameters. For coal, I do the same but focus on moments related to retirements instead of investment with one investment-related moment.
+The long-term model has 32 parameters to estimate including the integrated and auto-regressive terms in the fixed cost and entry cost, the initial fixed cost and initial entry cost, and the standard deviation for both errors. Each parameter needed to be estimated for all four resource types. In order to estimate the 32 parameters, at least 32 moments must be used. I largely follow \cite{gowrisankaran2024energy} in choice of moments to get 36 total moments for an overidentified model. For natural gas, solar, and wind, the moments include an indicator for positive investment interacted with quantity built, total quantity squared, and an indicator for investments in capacity of large size, which is specific to resource based on the data. I interact these moments with total capacity and also include investment variance as a moment. I add one additional moment, which is the amount of capacity retired to help identify fixed cost parameters. For coal, I do the same but focus on moments related to retirements instead of investment with one investment-related moment.
 
 
 \section{Results} \label{sec:result}
@@ -429,13 +434,13 @@ A major HVDC connection between ERCOT and the Eastern Interconnection would allo
 
 %[PLACEHOLDER: Add description and results for the ERCOT interconnection counterfactual]
 
-\subsection{Federal Legislation}
+\subsection{Federal Legislation}\label{LegCounts}
 
-The final set of counterfactuals evaluates three pieces of federal legislation affecting electricity markets. These counterfactuals and their relationships are described in Table \ref{tab:factorialDesign}. I implement these policies as \textit{policy wedges}---time-varying modifications to model primitives that activate at each policy's enactment date while holding all estimated parameters fixed. This approach isolates the causal effect of each policy from the underlying structural relationships estimated from pre-policy data. To ensure comparability across scenarios, I use identical random seeds and shock draws for all simulations, so that differences across scenarios reflect only the policy treatment and not sampling variation. I run four scenarios: (i) both policies as enacted, (ii) IRA only, (iii) BIL only, and (iv) neither policy (the baseline).
+The final set of counterfactuals evaluates three pieces of federal legislation affecting electricity markets. These counterfactuals and their relationships are described in Table \ref{tab:factorialDesign}. I implement these policies as \textit{policy wedges}. \textit{Policy wedges} are time-varying modifications to model primitives that activate at each policy's enactment date while holding all estimated parameters fixed. This approach isolates the causal effect of each policy from the underlying structural relationships estimated from pre-policy data. To ensure comparability across scenarios, I use identical random seeds and shock draws for all simulations, so that differences across scenarios reflect only the policy treatment and not sampling variation. I run four scenarios: (i) both policies as enacted, (ii) IRA only, (iii) BIL only, and (iv) neither policy (the baseline).
 
 \subsubsection{Big Wires Act}
 
-The BIG WIRES Act (S.2827, 118th Congress) would mandate that each FERC Order No.\ 1000 transmission planning region achieve a Minimum Interregional Transfer Capacity (MITC) equal to at least 30\% of its coincident peak electrical demand, or an increase of 15\% over current capacity, whichever is lower, by 2035 as decribed in \cite{hickenlooper2023s}. The legislation is motivated by the widening gap between planned interregional transmission builds and anticipated need documented in the DOE's \cite{DOENationalTransmissionNeedsStudy}, driven by barriers including insufficient coordination across planning regions, cost allocation disputes, and local opposition \cite{joskow2021facilitating, pfeifenberger2021transmission}.
+The BIG WIRES Act (\cite{big_wires_act_2023}) would mandate that each FERC Order No.\ 1000 transmission planning region achieve a Minimum Interregional Transfer Capacity (MITC) equal to at least 30\% of its coincident peak electrical demand, or an increase of 15\% over current capacity, whichever is lower, by 2035 as decribed in \cite{hickenlooper2023s}. The legislation is motivated by the widening gap between planned interregional transmission builds and anticipated need documented in the DOE's \cite{DOENationalTransmissionNeedsStudy}, driven by barriers including insufficient coordination across planning regions, cost allocation disputes, and local opposition as found in \cite{joskow2021facilitating, pfeifenberger2021transmission}.
 
 I follow the modeling approach of \cite{botterud2024evaluating}, who evaluate the BIG WIRES Act using the GenX capacity expansion model across 64 zones aggregated into 12 model regions that approximate the FERC Order No.\ 1000 planning regions. Their framework distinguishes interregional transmission (built between zones in different planning regions) from intraregional transmission (built within a region), and assumes that absent the Act, no new interregional transmission is built---reflecting the observed tendency of Balancing Authorities to prioritize investment within their own planning region. Under the Act, interregional capacity is expanded until each region satisfies the MITC requirement, with GenX determining the least-cost allocation of new capacity across corridors.
 
@@ -489,19 +494,19 @@ The results indicate that these policies are largely complementary: renewable su
 
 \subsection{Welfare Decomposition}
 
-I run a welfare decomposition where I demonstrate how gains accrue to producers and consumers at the zonal level. While the total system-wide surplus is obviously positive for both producers and consumers, the distribution of the surplus is significantly varied. In some regions, mainly ERCOT and specific zones within PJM, welfare is uniformly improved. This occurs because the insurance effect dominates with producers exporting more electricity during low-cost hours and importing during high-cost hours. For regions with significant renewable energy and low prices before transmission expansion, producer welfare increases while consumer welfare decreases. The opposite occurs in regions with fewer renewable resources and higher initial prices. I quantify these effects and provide useful intuition for policy-makers as to what transfers could be made to make the policy Pareto-improving.
+I run a welfare decomposition to demonstrate how gains accrue to producers and consumers at the zonal level. While the total system-wide surplus is obviously positive for both producers and consumers, the distribution of the surplus is significantly varied. In some regions, mainly ERCOT and specific zones within PJM, welfare is uniformly improved. This occurs because the insurance effect dominates with producers exporting more electricity during low-cost hours and importing during high-cost hours. For regions with significant renewable energy and low prices before transmission expansion, producer welfare increases while consumer welfare decreases. The opposite occurs in regions with fewer renewable resources and higher initial prices. I quantify heterogenous welfare effects and provide useful intuition for policy-makers as to what transfers could be made to make the policy Pareto-improving.
 
 \section{Conclusion} \label{sec:conclusion}
 
-This paper develops and estimates a dynamic model of generator behavior in electricity markets with transmission constraints, linking short-run dispatch decisions to long-run capacity investment. The model captures how transmission infrastructure shapes price formation across interconnected markets and how these prices influence firms' incentives to invest in different generation technologies.
+This paper develops and estimates a dynamic model of generator behavior in electricity markets with transmission constraints. I link short-run dispatch decisions by ISOs resulting from competitive equilibrium to long-run capacity investment by generators. The model captures how transmission infrastructure shapes price formation across interconnected markets and how these prices influence firms' incentives to invest in different generation technologies.
 
 Three main findings emerge from the analysis. First, transmission constraints impose substantial costs on electricity consumers: upgrading existing infrastructure to modern HVDC standards would reduce wholesale prices by 6\% and generate \$4 billion in annual welfare gains. Second, the benefits of transmission investment are regionally heterogeneous, with the largest gains accruing to transmission-constrained regions in the Northeast. Third, in the long run, expanded transmission capacity accelerates the renewable energy transition by allowing generators in renewables-rich regions to access distant markets, increasing solar and wind adoption by over 10\% by 2050 under scenarios including major projects like the Grain Belt Express.
 
 The policy counterfactuals indicate that transmission investment and renewable energy subsidies act as complements rather than substitutes. Policies like the Inflation Reduction Act increase the supply of renewable generation, while transmission investments under the Bipartisan Infrastructure Law and Big Wires Act ensure this generation can reach consumers. Implementing both types of policies together yields benefits exceeding the sum of their individual effects.
 
-Several limitations suggest directions for future research. The model operates at the zonal rather than nodal level, preventing analysis of specific substation-to-substation connections. This limitation makes the model better suited to evaluating large-scale interregional transmission than individual line additions. Additionally, the model treats demand as exogenous; long-run shifts in the geographic distribution of load in response to electricity price changes represent an important extension. Finally, the model does not incorporate storage, which may interact with transmission as alternative solutions to renewable intermittency.
+Several limitations suggest directions for future research. The model operates at the zonal rather than nodal level, preventing analysis of specific substation-to-substation connections. This limitation makes the model better suited to evaluating large-scale inter-regional transmission than individual line additions. Additionally, the model treats demand as exogenous; long-run shifts in the geographic distribution of load in response to electricity price changes represent an important extension. Finally, the model does not incorporate storage, which may interact with transmission as alternative solutions to renewable intermittency.
 
-Despite these limitations, the results provide evidence that transmission investment offers a cost-effective complement to direct renewable subsidies in accelerating the energy transition. As policymakers evaluate proposals to expand interregional transmission capacity, models that capture both the short-run operational benefits and long-run investment effects can inform the efficient allocation of infrastructure spending.
+Despite any limitations, the results provide evidence that transmission investment offers a cost-effective complement to direct renewable subsidies in accelerating the energy transition. As policymakers evaluate proposals to expand inter-regional transmission capacity, models that capture both the short-run operational benefits and long-run investment effects can inform the efficient allocation of infrastructure spending.
 
 \pagebreak
 
@@ -1325,6 +1330,92 @@ Complementarity & $\Delta W^{\text{joint}} - \bigl(\Delta W^{\text{IRA}} + \Delt
 \label{fig:NetworkTopology}
 \end{figure}
 
+\begin{figure}
+\begin{center}
+\begin{tikzpicture}[
+    node distance=1cm,
+    every node/.style={font=\footnotesize},
+    box/.style={draw, rounded corners, minimum height=0.7cm, minimum width=1.4cm, align=center},
+    dispatch/.style={box, fill=blue!12},
+    invest/.style={box, fill=orange!18},
+    constraint/.style={box, fill=yellow!25, minimum width=1.8cm},
+    signal/.style={box, fill=green!12, minimum width=2cm},
+    arrow/.style={-{Stealth}, thick},
+    dasharrow/.style={-{Stealth}, thick, dashed},
+    scale=0.72, transform shape
+]
+
+% === TRANSMISSION CONSTRAINTS (Top Left) ===
+\node (transmission) [constraint] {Transmission\\Constraints};
+
+% === SHORT-RUN ROW ===
+\node (st1) [dispatch, right=1.4cm of transmission] {Dispatch\\+ LMP};
+\node (st2) [dispatch, right=0.8cm of st1] {Dispatch\\+ LMP};
+\node (st3) [dispatch, right=0.8cm of st2] {Dispatch\\+ LMP};
+\node (dots1) [right=0.5cm of st3] {$\cdots$};
+
+% Short-run brace and label
+\draw [decorate, decoration={brace, amplitude=5pt}, thick] 
+    ([yshift=0.35cm]st1.north west) -- ([yshift=0.35cm]dots1.north east) 
+    node[midway, above=0.4cm, align=center] {
+        \textbf{Short-run Model} {\scriptsize (Hours)}\\[-1pt]
+        {\scriptsize ISO solves optimal dispatch}
+    };
+
+% Arrows between dispatch periods
+\draw[arrow] (st1) -- (st2);
+\draw[arrow] (st2) -- (st3);
+\draw[arrow] (st3) -- (dots1);
+
+% Transmission constraints feed into all dispatch nodes
+\draw[dasharrow, color=blue!60] (transmission.east) -- (st1.west);
+\draw[dasharrow, color=blue!60] (transmission.east) to[out=15, in=165] (st2.west);
+\draw[dasharrow, color=blue!60] (transmission.east) to[out=20, in=165] (st3.west);
+
+% === AGGREGATION NODE (Bridge) ===
+\node (signal) [signal, below=1.3cm of st2] {
+    Prices, Costs\\[-1pt]
+    $\rightarrow$ Expected $\pi$
+};
+
+% Arrows from dispatch to signal (aggregating short-run outcomes)
+\draw[arrow, color=blue!50] (st1.south) to[out=-90, in=135] (signal.north west);
+\draw[arrow, color=blue!50] (st2.south) -- (signal.north);
+\draw[arrow, color=blue!50] (st3.south) to[out=-90, in=45] (signal.north east);
+
+% === LONG-RUN ROW ===
+\node (lt1) [invest, below=1.3cm of signal, xshift=-2.2cm] {Capacity\\Investment};
+\node (lt2) [invest, right=1cm of lt1] {Capacity\\Investment};
+\node (lt3) [invest, right=1cm of lt2] {Capacity\\Investment};
+\node (dots2) [right=0.5cm of lt3] {$\cdots$};
+
+% Long-run brace and label
+\draw [decorate, decoration={brace, mirror, amplitude=5pt}, thick] 
+    ([yshift=-0.35cm]lt1.south west) -- ([yshift=-0.35cm]dots2.south east) 
+    node[midway, below=0.4cm, align=center] {
+        \textbf{Long-run Model} {\scriptsize (Years)}\\[-1pt]
+        {\scriptsize Competitive equilibrium in capacity}
+    };
+
+% Arrows between investment periods
+\draw[arrow] (lt1) -- (lt2);
+\draw[arrow] (lt2) -- (lt3);
+\draw[arrow] (lt3) -- (dots2);
+
+% Signal feeds into investment decisions
+\draw[arrow, color=orange!70!black] (signal.south) -- (lt2.north);
+
+% Feedback loop: capacity updates affect future dispatch
+\draw[dasharrow, color=gray] (lt3.north east) to[out=45, in=-30] 
+    node[pos=0.5, right, font=\scriptsize, align=left] {Capacity\\updates} 
+    ([xshift=0.3cm]st3.south east);
+
+\end{tikzpicture}
+\end{center}
+\caption{\textbf{Short-run}: A combined ISO minimizes dispatch costs subject to transmission constraints (engineering problem). \textbf{Long-run}: Generators choose capacity to maximize profits given expected prices (equilibrium).}
+\label{fig:ModelTimeline}
+\end{figure}
+
 \begin{figure}[H]
 \centering
 \begin{tikzpicture}[econAxis, scale=0.9, transform shape]
@@ -1478,6 +1569,62 @@ Complementarity & $\Delta W^{\text{joint}} - \bigl(\Delta W^{\text{IRA}} + \Delt
 \end{figure}
 
 \begin{figure}[H]
+        \centering
+        \includegraphics[width=0.9\linewidth]{images/Estimates.png}
+        \caption{Intercept and Export Sensitivity Estimates by Resource.}
+        \label{fig:placeholder}
+\end{figure}
+
+\begin{figure}
+    \centering
+    \begin{tikzpicture}
+        \begin{axis}[
+            ybar,
+            width=0.95\textwidth,
+            height=0.75\textheight,
+            bar width=12pt,
+            % X-axis configuration
+            symbolic x coords={Fuel Price, Dewpoint, Temp, Heat Rate, Capacity, Off Prev Hr},
+            xtick=data,
+            xticklabel style={font=\footnotesize, text width=1.5cm, align=center},
+            % Y-axis configuration
+            ylabel={Coefficient Estimate},
+            ymajorgrids=true,
+            grid style=dashed,
+            ymin=-5, ymax=8, % Adjusted to fit your specific data range
+            % Legend configuration
+            legend style={at={(0.5,-0.15)}, anchor=north, legend columns=-1},
+            % Value labels on bars
+            nodes near coords,
+            nodes near coords style={font=\tiny, /pgf/number format/.cd, fixed, precision=2}
+        ]
+
+        % Dataset 1: Natural Gas (Blue by default)
+        \addplot coordinates {
+            (Fuel Price, 6.93)
+            (Dewpoint, 2.46)
+            (Temp, -3.58)
+            (Heat Rate, -3.00)
+            (Capacity, 0.03) % Rounded .029024 for visibility
+            (Off Prev Hr, 2.77)
+        };
+
+        % Dataset 2: Coal (Red by default)
+        \addplot coordinates {
+            (Fuel Price, -4.15)
+            (Dewpoint, 2.46)
+            (Temp, 4.00)
+            (Heat Rate, 2.33)
+            (Capacity, 2.97)
+            (Off Prev Hr, 1.21)
+        };
+
+        \legend{Natural Gas, Coal}
+        \end{axis}
+    \end{tikzpicture}
+\end{figure}
+
+\begin{figure}[H]
 \centering
 % The resizebox only wraps the tikzpicture
 \resizebox{0.98\textwidth}{!}{%
@@ -1606,39 +1753,33 @@ I aggregate to the resource and ISO level due to data limitations: hourly genera
 
 \subsubsection{Notation}
 
-Let $i \in \{1, \ldots, I\}$ index demand nodes, $j \in \{1, \ldots, J\}$ index supply (generation) nodes, $k \in \{1, \ldots, K\}$ index resources at each supply node, and $t \in \{1, \ldots, T\}$ index time periods (hours). Define:
+Let $i \in \{1, \ldots, I\}$ index demand nodes, $j \in \{1, \ldots, J\}$ index supply (generation) nodes, $k \in \{1, \ldots, K\}$ index resources at each supply node, $g \in \{1, \ldots, G\}$ index generators, and $t \in \{1, \ldots, T\}$ index time periods (hours). Define:
 \begin{itemize}
-    \item $q_{ijkt}$: Quantity of electricity sent from resource $k$ at supply node $j$ to demand node $i$ at time $t$
-    \item $c_{jkt}(\cdot)$: Cost function for resource $k$ at supply node $j$ at time $t$
-    \item $x_{jkt}$: Observable cost shifters for resource $jk$ at time $t$
-    \item $\epsilon_{ijkt}$: Unobserved cost shock
+    \item $q_{ijkgt}$: Quantity of electricity sent from resource $k$ at supply node $j$ to demand node $i$ by generator $g$ at time $t$
+    \item $c_{jkgt}(\cdot)$: Cost function for resource type $k$ and generator $g$ at supply node $j$ at time $t$
+    \item $x_{jkgt}$: Observable cost shifters for resource $jk$ and generator $g$ at time $t$
+    \item $\epsilon_{ijkgt}$: Unobserved cost shock
     \item $A_{ij}$: Transmission capacity between nodes $i$ and $j$
-    \item $O_{jkt}^{MAX}$: Maximum generation capacity of resource $k$ at node $j$ at time $t$
+    \item $O_{jkgt}^{MAX}$: Maximum generation capacity of resource $k$ for generator $g$ at node $j$ at time $t$
     \item $L_{it}$: Load (demand) at node $i$ at time $t$
     \item $B_{ij}$: Transmission loss factor between nodes $i$ and $j$
 \end{itemize}
 
 \subsubsection{The Optimization Problem}
 
-The ISO solves a static cost minimization problem each hour, choosing dispatch quantities $q_{ijkt}$ to minimize the total cost of meeting demand:
-\begin{equation}\label{eq:objective}
-    \pi_{t} = \max_{\{q_{ijkt}\}} \left[ -\sum_{j=1}^{J} \sum_{k=1}^{K} c_{jkt}\left(x_{jkt}, \sum_{i=1}^{I} q_{ijkt}, \sum_{i=1}^{I} \epsilon_{ijkt}\right) \right]
-\end{equation}
+The ISO solves a static cost minimization problem each hour, choosing dispatch quantities $q_{ijkgt}$ to minimize the total cost of meeting demand:
+\begin{equation} \pi_{t}=\max_{\{q_{ijkgt}\}_{i,j,k,g,t\in I,J,K,G,T}} \left[- \sum_{I=1}^I \sum_{j=1}^J \sum_{k=1}^K \sum_{g=1}^G c_{jkgt}(x_{jkgt},q_{ijkgt},\epsilon_{ijkgt})\right]. \end{equation}
 subject to three constraints.
 
+\paragraph{Resource Constraint (Kirchhoff's Law).} Supply must equal demand at each node, accounting for transmission losses:
+\begin{equation} \label{Budget_Constraint} \sum_{j=1}^J\sum_{k=1}^K \sum_{g=1}^G (1-B_{ij})q_{ijkgt}=L_{it} \quad \forall i. \end{equation}
+
 \paragraph{Transmission Constraint.} Flows between any two nodes cannot exceed line capacity:
-\begin{equation}\label{eq:transmission}
-    \sum_{k=1}^{K} q_{ijkt} \leq A_{ij} \quad \forall \, i, j, t.
-\end{equation}
+\begin{equation} \sum_{k=1}^K \sum_{g=1}^G q_{igjkt}\leq A_{ij} \quad \forall i,j,t. \end{equation}
 
-\paragraph{Capacity Constraint.} Total dispatch from each resource cannot exceed its maximum capacity:
-\begin{equation}\label{eq:capacity}
-    0 \leq \sum_{i=1}^{I} q_{ijkt} \leq O_{jkt}^{MAX} \quad \forall \, j, k, t.
-\end{equation}
-
-\paragraph{Load Balance Constraint.} Supply must equal demand at each node, accounting for transmission losses:
-\begin{equation}\label{eq:load_balance}
-    \sum_{j=1}^{J} \sum_{k=1}^{K} (1 - B_{ij}) q_{ijkt} = L_{it} \quad \forall \, i, t.
+\paragraph{Capacity Constraint.} Total dispatch from each generator cannot exceed its maximum capacity:
+\begin{equation}
+0\leq \sum_{i} q_{igjkt}\leq O_{jkgt}^{MAX} \quad \forall j,k,g,t.
 \end{equation}
 
 Three maintained assumptions ensure the problem is well-defined: (i) no blackouts, meaning sufficient generation capacity exists to serve all load at every node; (ii) no resource is transmission-constrained to all destinations; and (iii) at least one resource at each generation node has slack capacity at any given time.
@@ -2003,7 +2144,7 @@ where $G = \partial m(\theta) / \partial \theta'$ is the Jacobian of moments wit
 
 \subsubsection{Integration with Short-Run Model}\label{subsec:integration}
 
-The long-run investment model is estimated conditional on parameters from the short-run operations model. The short-run model parameters—demand elasticities, cost function parameters, and market clearing conditions—are estimated first and held fixed during long-run estimation. This sequential approach is computationally necessary given the nested structure of the model, where long-run investment decisions depend on expectations of short-run market outcomes.
+The long-run investment model is estimated conditional on parameters from the short-run operations model. The short-run model parameters including demand elasticities, cost function parameters, and market clearing conditions, are estimated first and held fixed during long-run estimation. This sequential approach is computationally necessary given the nested structure of the model, where long-run investment decisions depend on expectations of short-run market outcomes.
 
 The derivatives of dispatch, prices, and costs with respect to capacity changes are computed from the short-run model. Since the short-run operations model consists of linear programs, these derivatives are well-defined almost everywhere and can be computed efficiently using sensitivity analysis of the LP solutions.
 
@@ -2206,7 +2347,7 @@ The transmission dataset relies on several simplifying assumptions. First, condu
 The methodology produces a consistent panel of interregional transmission capacity and losses from 2000 to 2024, along with economically interpretable counterfactual scenarios. These data allow the analysis to isolate the role of transmission constraints and technology choice in shaping electricity market outcomes.
 
 \section{Calculating the Cost of Line Additions}
-\label{sec:appendixc}
+\label{sec:appendixLineAdditions}
 \addcontentsline{toc}{section}{Appendix E: Calculating the Cost of Line Additions}
 
 Estimating the cost of new transmission line additions is central to evaluating the welfare implications of network expansion. Transmission investment costs vary substantially with voltage class, conductor type, terrain, right-of-way acquisition, and regional labor markets, making any single estimation approach subject to considerable uncertainty. To address this, I employ four complementary methods: a hedonic regression using project-level data, a bottom-up engineering cost model, a synthesis of estimates drawn from the literature and announced projects, and an ensemble method that combines the preceding three. This appendix details each approach.
@@ -2216,7 +2357,7 @@ Estimating the cost of new transmission line additions is central to evaluating 
 \label{sec:hedonic_regression}
 %% ============================================================
 
-The first method applies a hedonic pricing framework to estimate the cost of transmission line additions as a function of observable project characteristics. Hedonic regression, originally developed in the context of housing markets \citep{rosen1974hedonic}, decomposes the price of a differentiated good into the implicit prices of its constituent attributes. In this application, the ``good'' is a transmission line project and the attributes include engineering specifications, geographic characteristics, and temporal factors.
+The first method applies a hedonic pricing framework to estimate the cost of transmission line additions as a function of observable project characteristics. Hedonic regression, originally developed in the context of housing markets as discussed in \cite{tauchen2001estimating}, decomposes the price of a differentiated good into the implicit prices of its constituent attributes. In this application, the ``good'' is a transmission line project and the attributes include engineering specifications, geographic characteristics, and temporal factors.
 
 \subsubsection{Data}
 
@@ -2236,7 +2377,7 @@ I estimate the following hedonic regression:
 \label{eq:hedonic}
 \end{equation}
 
-\noindent where $\text{Cost}_i$ is the estimated cost of project $i$ (in \$\textsubscript{TODO: base year} per mile, or total---specify), and the regressors are organized into three groups:
+\noindent where $\text{Cost}_i$ is the estimated cost of project $i$ (in \$\textsubscript{2022} per mile, or total---specify), and the regressors are organized into three groups:
 
 \paragraph{Engineering characteristics ($\mathbf{X}^{\text{eng}}$).} These include voltage class (kV), line length (miles), and line type indicators (overhead AC, overhead DC, underground AC, underground DC). % TODO: List all engineering variables actually used.
 
@@ -2430,7 +2571,7 @@ I report the distribution of $\text{ERM}_{it}^{(s)}$ across zones and hours for 
 
 \subsubsection{Monte Carlo Generator Outage Simulation}
 
-To directly assess how transmission expansion affects reliability under realistic contingencies, I conduct a Monte Carlo exercise in which generators experience forced outages. For a representative sample of high-stress hours---defined as hours in which the aggregate capacity shadow price exceeds its 90th percentile---I randomly derate generator capacity according to technology-specific forced outage rates from NERC's Generating Availability Data System (GADS).
+To directly assess how transmission expansion affects reliability under realistic contingencies, I conduct a Monte Carlo exercise in which generators experience forced outages. For a representative sample of high-stress hours, I randomly derate generator capacity according to technology-specific forced outage rates from NERC's Generating Availability Data System (GADS). I choose these hours as hours in which the aggregate capacity shadow price exceeds its 90th percentile.
 
 Specifically, for each simulation draw $d$ and each generator $g$, the available capacity is:
 \begin{equation}
@@ -2449,7 +2590,7 @@ Comparing $\widehat{\text{LOLP}}^{(s)}$ across counterfactual scenarios provides
 
 \subsection{Alternative State Space Discretizations}\label{app:robustness:discretization}
 
-The long-run model relies on discretization of the continuous state space (Table~\ref{tab:statespace}). If results are sensitive to the choice of grid density, this would suggest that the discretization introduces artifacts into the counterfactual predictions.
+The long-run model relies on discretization of the continuous state space as described in Appendix Section \ref{sec:state_space}. If results are sensitive to the choice of grid density, this would suggest that the discretization introduces artifacts into the counterfactual predictions.
 
 I re-estimate the long-run model under two alternative discretization schemes. The first uses a coarser grid with approximately half the number of bins for each state variable ($F_k$: 10 bins, $E_k$: 10 bins, demand: 3 bins, own capacity: 8 bins, rival capacity: 5 bins, price: 5 bins). The second uses a finer grid with approximately 50\% more bins ($F_k$: 30 bins, $E_k$: 30 bins, demand: 8 bins, own capacity: 22 bins, rival capacity: 15 bins, price: 15 bins).
 
@@ -2507,7 +2648,7 @@ The long-run counterfactuals use load projections from EIA's Annual Energy Outlo
 
 \subsection{Alternative Equilibrium Concepts}\label{app:robustness:equilibrium}
 
-The long-run model uses an oblivious equilibrium concept in which firms condition investment decisions on their own state and aggregate rival capacity rather than the full joint distribution of competitor states (Appendix~B.3.2). While this approximation substantially reduces computational burden, it may miss strategic interactions that matter for investment dynamics.
+The long-run model uses an oblivious equilibrium concept in which firms condition investment decisions on their own state and aggregate rival capacity rather than the full joint distribution of competitor states as described in Appendix Section \ref{subsec:equilibrium_concept}. While this approximation substantially reduces computational burden, it may miss strategic interactions that matter for investment dynamics.
 
 I implement two checks. First, I increase the dimensionality of the rival capacity state by splitting it into ``same-fuel rival capacity'' and ``other-fuel rival capacity,'' allowing firms to condition investment on the composition of competitive supply. This tests whether the aggregation of rivals into a single state variable obscures economically important variation.
 
@@ -2523,7 +2664,7 @@ To assess the magnitude of this concern, I construct bootstrap confidence interv
 
 \subsection{Sensitivity of Counterfactual Policy Parameters}\label{app:robustness:policy}
 
-The policy counterfactuals in Section~7.3 require assumptions about the magnitude of IRA tax credits, the timing of BIL transmission expansions, and the corridor-level allocation of new capacity under the BIG WIRES Act. I assess sensitivity to each of these inputs.
+The policy counterfactuals in Section \ref{LegCounts} require assumptions about the magnitude of IRA tax credits, the timing of BIL transmission expansions, and the corridor-level allocation of new capacity under the BIG WIRES Act. I assess sensitivity to each of these inputs.
 
 \subsubsection{IRA Credit Magnitude}
 
@@ -2540,7 +2681,7 @@ Policy wedges are phased in using a ramp function $\rho(t; t_0, R)$ with baselin
 
 \subsection{Exclusion of Individual ISOs}\label{app:robustness:iso}
 
-To verify that the results are not driven by the idiosyncratic characteristics of any single ISO, I re-estimate the short-run model excluding each ISO in turn and report the resulting parameter estimates and counterfactual price effects. ISOs differ substantially in resource mix, congestion patterns, and market size (Table~1), so parameter stability across these leave-one-out samples would provide evidence that the estimates reflect general features of the dispatch technology rather than market-specific artifacts.
+To verify that the results are not driven by the idiosyncratic characteristics of any single ISO, I re-estimate the short-run model excluding each ISO in turn and report the resulting parameter estimates and counterfactual price effects. ISOs differ substantially in resource mix, congestion patterns, and market size as shown in Table \ref{ShortTermStats1}, so parameter stability across these leave-one-out samples would provide evidence that the estimates reflect general features of the dispatch technology rather than market-specific artifacts.
 
 For the long-run model, full re-estimation excluding individual ISOs is computationally intensive. Instead, I compute the counterfactual welfare effects and renewable adoption paths excluding each ISO's zones from the simulation while holding parameters fixed. This tests whether the aggregate results are driven disproportionately by investment dynamics in any single market.
 
