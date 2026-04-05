@@ -400,6 +400,10 @@ Variable & Mean & SD \\
 \end{table}
 \end{comment}
 
+
+\newpage
+
+
 \section{Model}
 In this section, we present a dynamic model of firm entry, technology adoption, exit, and production. Time is discrete and a period is a year, denoted as $t$. There are two types of technologies, with $n=1$ denotes c-Si and $n=2$ denotes thin-film solar panels. The global market is divided into $m=1,...,m$ economic regions, including China, EU, India, Japan, US, and rest of the world (ROW). In any given period, there exist $j = 1,...,J_{nt}$ firms in the world that produce solar panels using technology $n$. 
 
@@ -414,9 +418,10 @@ The aggregate inverse demand for technology-$n$ solar panel is expressed as:
 \begin{equation}
 Q_{nmt}=Q_{nm}(P_{1mt},P_{2mt},X_{mt}), \label{eq:model_demand}
 \end{equation}
-where $Q_{nmt}$ is the total quantity of technology-$n$ solar panel products demanded by consumers in region $m$ during time period $t$. The vector $X_{mt}$ includes various demand shifters, such as overall economic activity indicators, regional fixed effects, and year  fixed effects. The variable $P_{nmt}$ is the price faced by  consumers to install a technology $n$ solar panel system, encompassing both the retail panel  price and installation costs. This consumer price may differ from the global price $P_{nt}$ due to region-technology-specific tariffs and installation subsidies. Specifically, the consumer price is given by:
-\[P_{nmt} = P_{nt}\times (1 + \text{tariff}_{nmt}) + P^{I}_{mt} - \text{subsidy}_{mt},\]
-where $\text{tariff}_{nmt}$ is the tariff rate, which applies only to c-Si technology, $P^{I}_{mt}$ is the installation costs, and $\text{subsidy}_{mt}$ is the subsidy amount provided by region $m$ in period $t$.
+where $Q_{nmt}$ is the total quantity of technology-$n$ solar panels demanded by consumers in region $m$ during period $t$. The vector $X_{mt}$ includes a range of demand shifters, including measures of aggregate economic activity, regional fixed effects, and demand-side subsidies. The variable $P_{nmt}$ is the price consumers pay to install a technology $n$ solar panel system, incorporating both the retail panel price and installation expenses. This consumer price may differ from the global price $P_{nt}$ because of tariffs and installation subsidies that vary by region and technology. Specifically, the consumer price is given by:
+\[P_{nmt} = P_{nt}\times (1 + \text{tariff}_{nmt}) + P^{I}_{mt} - \text{demand subsidy}_{mt},\]
+where $\text{tariff}_{nmt}$ is the tariff rate, which applies only to c-Si technology, $P^{I}_{mt}$ is the installation expenses, and $\text{demand subsidy}_{mt}$ is the amount of demand-subsidies provided by region $m$ in period $t$.
+
 
 \subsection{Incumbents: Production and Exit}
 At the beginning of each period, incumbents observe their private scrap values that are drawn from a technology-specific distribution, and then decide to either exit or continue operations. We denote the scrap value for technology-$n$ incumbent $j$ as $\phi_{jnt}$ and its distribution as $F_{\phi,n}$. If a firm exits, it receives its scrap value. If it remains active, it observes its marginal cost shocks across all regions, denoted as $\mathbf{\omega}_{jnt} =\{\omega_{jnmt}\}_{m=1}^M$. Remaining active, firms engage in Cournot competition while considering how their current output decisions will influence future production costs. They simultaneously decide the quantity of solar panels to produce for each region, $\mathbf{q}_{jnt} = \{q_{jnmt}\}_{m=1}^M$, to maximize their discounted profit, taking as given the production decisions of rival firms. This new output, $\sum_{m=1}^M q_{jnmt}$, is added to the next period's accumulated experience, which in turn affects its future production costs.
@@ -424,9 +429,9 @@ At the beginning of each period, incumbents observe their private scrap values t
 \paragraph{Production Cost}
 The production cost for firm $j$ using technology $n$, when choosing a vector $\mathbf{q}_{jnt}$, consists of two parts:
 \begin{eqnarray}
-   TC_{n}(\mathbf{q}_{jnt},s_{jnt},\mathbf{\omega}_{jnt})&=& C_0(\sum_{m=1}^M q_{jnmt}, s_{jnt}) + \sum_{m=1}^M C_m(q_{jnmt},\omega_{jnmt}) \label{eq:model_c_q},
+   TC_{n}(\mathbf{q}_{jnt},s_{jnt},\mathbf{\omega}_{jnt})&=& C_0\!\left(\sum_{m=1}^M q_{jnmt},\; s_{jnt}\right) + \sum_{m=1}^M C_m\!\left(q_{jnmt},\; \omega_{jnmt}\right) \label{eq:model_c_q},
 \end{eqnarray}
-where the first component, $C_0(\sum_{m=1}^M q_{jnmt}, s_{jnt})$, represents the total production cost of $\sum_{m=1}^M q_{jnmt}$, which depends on a vector of state variables $s_{jnt}$. These state variables include the firm's accumulated experience $e_{jnt}$, and firm characteristics such as capital, age, location, ownership status, as well as aggregate cost shifters affecting all firms (e.g., input price), and policy dummies that reflect the impact of industrial policies on production costs, including indicators for specific time periods and provinces. The second component, $C_m(q_{jnmt},\omega_{jnmt})$, accounts for the additional cost of transporting $q_{jnmt}$ to region $m$ in year $t$.
+where the first component, $C_0\!\left(\sum_{m=1}^M q_{jnmt},\; s_{jnt}\right)$, represents the total production cost of $\sum_{m=1}^M q_{jnmt}$, which is a function of the current output and a vector of state variables $s_{jnt}$. These state variables include the firm's accumulated experience $e_{jnt}$, aggregate cost shifters common to all firms (e.g., input price), firm characteristics, and policy indicators that capture the effects of industrial policies on production costs. The second component, $C_m\!\left(q_{jnmt},\; \omega_{jnmt}\right)$, accounts for the additional cost of delivering $q_{jnmt}$ to destination $m$ in year $t$.
 
 The experience of firm $j$, denoted as $e_{jnt}$, can potentially reduces production costs in the future, incentivizing the firm to increase output to gain more experience in the current period.  This experience is defined as the cumulative past production:
 \[e_{jnt} = \sum_{\tau<t} \sum_m q_{jnm\tau},\]
@@ -447,7 +452,7 @@ Here, $\mathbf{q} = \{q_m\}_{m=1}^M$ is a vector of output choice for each regio
 \paragraph{Optimal Exit Decision}
 The optimal decision to exit follows a threshold structure. A firm exits the market if the scrap value exceeds the continuation value; otherwise, it remains active. Therefore, the probability of exiting is:
 \begin{eqnarray}
-    p_n^x(s_{jnt}) & \equiv & Pr(\phi_{jnt} > CV_n(s_{jnt})) = 1-F_{\phi,n}(CV_n(s_{jnt})). \label{eq:exit_policy_fn}
+    p_n^x(s_{jnt}) & \equiv & Pr\!\left(\phi_{jnt} > CV_n(s_{jnt})\right) = 1-F_{\phi,n}\!\left(CV_n(s_{jnt})\right). \label{eq:exit_policy_fn}
 \end{eqnarray}
 
 \paragraph{Optimal Production Decision}
@@ -469,31 +474,31 @@ where $\pi_{nm}(s_{jnt},\omega_{jnmt})$ is firm $j$'s equilibrium profit from re
 \end{comment}
 
 \paragraph{Equilibrium Global Price}
-In each period, the global price of technology-$n$ solar panels, denoted as $P_{nt}$, equates the aggregate demand and supply, where the aggregate demand is described by equation (\ref{eq:model_demand}) and the aggregate supply is the sum of $q_{jnmt}^*$ defined in equation (\ref{eq:model_foc_q}) across all firms using technology $n$.  
+In each period, the global price of technology-$n$ solar panels, denoted as $P_{nt}$, equates the aggregate demand and supply, where the aggregate demand is described by equation \eqref{eq:model_demand} and the aggregate supply is the sum of $q_{jnmt}^*$ defined in equation \eqref{eq:model_foc_q} across all firms using technology $n$.  
 %\textcolor{blue}{We only have data on the Chinese firms, rather than all firms in the world. It is biased to use a subset of firms to compute the global price that equalizes the total supply and total demand.}
 
 \subsection{Potential Entrants: Entry and Technology Selection}
-At the end of each period $t$, a total of $\bar N$ potential entrants observe their profit shocks $\zeta_{j0t}$ for not entering, as well as entry costs $\kappa_1(s_{jnt})-\zeta_{j1t}$ for entering with c-Si technology, and $\kappa_2(s_{jnt})-\zeta_{j2t}$ for entering with thin film technology. The terms $\kappa_1(s_{jnt})$ and $\kappa_2(s_{jnt})$ denote the expected entry costs associated with the two technologies. The vector $s_{jnt}$ includes policy dummies to capture the impact of industrial policies on the decisions regarding entry and technology selection.
+At the end of each period $t$, a total of $\bar N$ potential entrants observe their payoff $\zeta_{j0t}$ for not entering, as well as entry costs $\kappa_1(s_{jnt})-\zeta_{j1t}$ for entering with c-Si technology, and $\kappa_2(s_{jnt})-\zeta_{j2t}$ for entering with thin film technology. The terms $\kappa_1(s_{jnt})$ and $\kappa_2(s_{jnt})$ denote the expected entry costs associated with the two technologies. The vector $s_{jnt}$ includes policy dummies to capture the impact of industrial policies on the decisions regarding entry and technology selection.
 
-Upon observing their profit shocks $\zeta$'s, potential entrants make a decision about entering the market and, if they choose to enter, select a technology. Should they decide to enter, they incur the entry cost during the current period and start earning profit from the product market starting from the following period. Therefore, the potential entrant $j$'s maximization problem can be formulated as:
+After observing their entry payoff shocks $\zeta$'s, potential entrants decide whether to enter the market and, if they choose to enter, select a technology. If they opt to enter, they incur the entry cost during the current period and start earning profit from the product market starting from the following period. Therefore, the maximization problem of the potential entrant $j$ can be written as:
 \begin{eqnarray}
- && max\{\zeta_{j0t}, max_{n\in \{1,2\}} \{-\kappa_n(s_{jnt}) + \zeta_{jnt} + \beta \mathbb{E}[V_n(s_{jnt+1}) \mid s_{jnt}]\}\} \}
+ && max\Big\{\zeta_{j0t}, \; max_{n\in \{1,2\}} \{-\kappa_n(s_{jnt}) + \zeta_{jnt} + \beta \mathbb{E}[V_n(s_{jnt+1}) \mid s_{jnt}]\} \Big\}
 \end{eqnarray}
 
-A firm stays out of the market if its profit shock from not entering exceeds the expected profit of entering with either technology option. It chooses to enter with technology $n$ if this option provides the highest profit. We use $p^{e,n}(s_{jnt})$ to denote the probability that a potential entrant $j$ enters with technology $n$, given by
+A firm stays out of the market if its payoff from not entering exceeds the expected profit of entering with either technology option. It chooses to enter with technology $n$ if this option provides the highest profit. We use $p^{e,n}(s_{jnt})$ to denote the probability that a potential entrant $j$ enters with technology $n$, given by
 \begin{eqnarray}
-  p^{e,n}(s_{jnt}) & \equiv & \text{Pr}\{\zeta_{jnt} - \zeta_{jn't}  > \kappa_n(s_{jnt})-\kappa_{n'}(s_{jn't}) + \beta \mathbb{E}[V_{n'}(s_{jn't+1}) \mid s_{jn't}] - \beta \mathbb{E}[V_n(s_{jnt+1}) \mid s_{jnt}] \nonumber \\
-  & & \quad  \& \  \zeta_{jnt}-\zeta_{j0t} + >\kappa_n(s_{jnt})-\beta \mathbb{E}[V_n(s_{jnt+1}) \mid s_{jnt}] \} \label{eq:entry_policy_fn}
+  p^{e,n}(s_{jnt}) & \equiv & \text{Pr}\Big\{\zeta_{jnt} - \zeta_{jn't}  > \kappa_n(s_{jnt})-\kappa_{n'}(s_{jn't}) + \beta \mathbb{E}[V_{n'}(s_{jn't+1}) \mid s_{jn't}] - \beta \mathbb{E}[V_n(s_{jnt+1}) \mid s_{jnt}] \nonumber \\
+  & & \quad  \& \  \zeta_{jnt}-\zeta_{j0t} + >\kappa_n(s_{jnt})-\beta \mathbb{E}[V_n(s_{jnt+1}) \mid s_{jnt}] \Big\} \label{eq:entry_policy_fn}
 \end{eqnarray}
 
 \subsection{Markov-Perfect Equilibrium}
-A Markov-Perfect Equilibrium is characterized by policy function, $q^*_{nm}(s_{jnt}$,$\omega_{jnmt})$, $p_n^x(s_{jnt})$, $p_n^e(s_{jnt})$, value function $V_n(s_{jnt})$, and global price $P_{nt}$, such that production policy function $q^*_{nm}(s_{jnt},\omega_{jnt})$ satisfies (\ref{eq:model_foc_q}), exit policy function $p_n^x(s_{jnt})$ satisfies (\ref{eq:exit_policy_fn}), entry policy function $p_n^e(s_{jnt})$ satisfies (\ref{eq:entry_policy_fn}), global price $P_{nt}$ ensures that aggregate demand and aggregate supply are in balance, while the incumbent's value function $V_n(s_{jnt})$ satisfies (\ref{eq:incumbent_value_fn}).
+A Markov-Perfect Equilibrium is characterized by policy function, $q^*_{nm}(s_{jnt}$, $\omega_{jnmt})$, $p_n^x(s_{jnt})$, $p_n^e(s_{jnt})$, value function $V_n(s_{jnt})$, and global price $P_{nt}$, such that production policy function $q^*_{nm}(s_{jnt},\omega_{jnt})$ satisfies \eqref{eq:model_foc_q}, exit policy function $p_n^x(s_{jnt})$ satisfies \eqref{eq:exit_policy_fn}, entry policy function $p_n^e(s_{jnt})$ satisfies \eqref{eq:entry_policy_fn}, global price $P_{nt}$ ensures that aggregate demand and aggregate supply are in balance, while the incumbent's value function $V_n(s_{jnt})$ satisfies \eqref{eq:incumbent_value_fn}.
 
 \subsection{Discussion of Model Assumptions}
 
 Before moving on to the estimation, we discuss two key simplifying assumptions made by our model. 
 %First, we assume that solar panels are homogeneous conditional on their production technology. This assumption is consistent with the highly commoditized nature of solar panels. In addition, \cite{bollinger2025strategic} analyze a dataset of solar panel shipments to the United States, constructed from quarterly IHS Markit data, and document very little price dispersion across manufacturers at any given time.
-First, cost shocks $\omega_{jnmt}$ are assumed to be i.i.d., because allowing for a persistent time-varying unobserved state variable in a dynamic model would introduce substantial computational complexity. Nonetheless, our model does incorporate persistent effects through the accumulation of experience. When firms receive positive demand shocks, they increase quantity, which in turn increases their stock of experience.  Since experience is a state variable, firms with more experience have lower production costs and thus choose higher output levels, further building experience and reducing long-run costs. This feedback mechanism is the key driver of why firms that are ex-ante identical can exhibit divergent growth paths over time.
+First, production cost shocks $\omega_{jnmt}$ are assumed to be i.i.d., because allowing for a persistent time-varying unobserved state variable in a dynamic model would introduce substantial computational complexity. Nonetheless, our model does incorporate persistent effects through the accumulation of experience. When firms receive positive demand shocks, they increase quantity, which in turn increases their stock of experience.  Since experience is a state variable, firms with more experience have lower production costs and thus choose higher output levels, further building experience and reducing long-run costs. This feedback mechanism is the key driver of why firms that are ex-ante identical can exhibit divergent growth paths over time.
 
 Second, following most of the existing literature such as \citet{ryan2012costs} and \citet{barwick2025industrial}, we assume that all firms view government policies as permanent.  Relaxing this assumption would require modeling firms’ expectations and their adjustment to a changing policy environment, which would greatly increase the complexity of our analysis. This is an important avenue for future research; see \citet{gowrisankaran2025policy} and \citet{chen2024dynamic} for further discussion.
 
@@ -512,7 +517,7 @@ We estimate the dynamic parameters using the firms' observed choices of producti
 \label{subsec:est_specifications}
 
 \paragraph{Logit Demand.}
-We parameterize the solar panel demand, expressed in (\ref{eq:model_demand}), using a simple Logit model. To be specific, the demand of technology-$n$ solar panels in the region $m$ during the year $t$ is given by:
+We parameterize the solar panel demand, expressed in \eqref{eq:model_demand}, using a simple Logit model. To be specific, the demand of technology-$n$ solar panels in the region $m$ during the year $t$ is given by:
 \begin{eqnarray*}
 Q_{nmt} & = & \frac{M_{mt}\cdot exp(-\alpha_{m} P_{nmt} + X_{mt}\eta +\xi_{nmt})}{1+\sum_{n'}exp(-\alpha_{m} P_{n'mt} + X_{mt}\eta +\xi_{n'mt})}.  \label{eq:demand_specification}
 \end{eqnarray*}
@@ -531,26 +536,28 @@ To address the issue of price endogeneity, we follow \citet{bollinger2025strateg
 
 \paragraph{Production Costs.} 
 %We decompose a firm's cost shock into two components: one capturing the firm's overall efficiency shock $\bar{\omega}_{jnt}$ and the other one capturing the firm's shock in a specific region $\tilde{\omega}_{jnmt}$, that is $\omega_{jnmt} = \bar{\omega}_{jnt} + \tilde{\omega}_{jnmt}$.
-As shown in \ref{eq:model_c_q}, the production cost function for firm $j$ of technology-$n$ is decomposed into two components, specified as
+As shown in \eqref{eq:model_c_q}, the production cost function for firm $j$ of technology-$n$ is decomposed into two components, specified as
 \begin{eqnarray*}
-   C_0(\sum_m q_{jnmt},s_{jnt}) &=& (\gamma_{n}^0 + s_{jnt} \gamma_n^s) \cdot (\sum_m q_{jnmt}),
+   C_0\!\left(\sum_m q_{jnmt},s_{jnt}\right) &=& (\gamma_{n}^0 + s_{jnt} \gamma_n^s) \cdot (\sum_m q_{jnmt}) + \frac{\gamma^{scale}}{2} \cdot (\sum_m q_{jnmt})^2,
 \end{eqnarray*}
 and
 \begin{eqnarray*}
-   C_m(q_{jnmt},\omega_{jnmt}) &=& (\gamma_{m}^{ex}+\omega_{jnmt}) \cdot q_{jnmt},
+   C_m(q_{jnmt},\omega_{jnmt}) &=& (\gamma_{m}^{ex}+\omega_{jnmt}) \cdot q_{jnmt}.
 \end{eqnarray*}
-where $\gamma_{n}^0$ are technology-specific constants, parameters $\gamma_n^s$ measure the impact of state variables on the unit cost for a specific technology, $\gamma_{m}^{ex}$ are parameters particular to each region that capture the additional cost associated with shipping or exporting to that particular region, and $\omega_{jnmt}$ are cost shocks, which are assumed to follow an independent and identically distributed normal distribution with a mean of zero and a variance of $\sigma_\omega^2$.
+Here, $\gamma_{n}^0$ are technology-specific constants, while the parameters $\gamma_n^s$ capture how state variables affect the unit cost for a specific technology. The parameter $\gamma^{scale}$ captures the curvature of the production function. The parameters $\gamma_{m}^{ex}$ are region-specific and represent the additional cost associated with shipping or exporting to that region. Finally $\omega_{jnmt}$ are cost shocks, which are assumed to follow an independent and identically distributed normal distribution with a mean of zero and a variance of $\sigma_\omega^2$.
 
 As a result, the marginal cost that firm $j$ ships $q_{jnmt}$ to region $m$ is:
 \begin{eqnarray}
-  \frac{\partial TC_{jnt}}{\partial q_{jnmt}} &=&  \gamma_{n}^0 + s_{jnt} \gamma_n^s  +\gamma_{m}^{ex} +\omega_{jnmt}. \label{eq:est_mc_q}
+  \frac{\partial TC_{jnt}}{\partial q_{jnmt}} &=&  \gamma_{n}^0 + s_{jnt} \gamma_n^s + \gamma^{scale} q_{jnmt}  +\gamma_{m}^{ex}  +\omega_{jnmt}. \label{eq:est_mc_q}
 \end{eqnarray}
-Here, the vector of state variables $s_{jnt}$ includes the firm's cumulative experience $e_{jnt}$, along with other firm characteristics such as age, location, and ownership type. In addition, it includes technology-specific cost shifters that impact all firms, such as prices of major inputs, and policy variables that reflect the impact of industrial policies on production costs. As mentioned in Section \ref{subsec:inst_china_PV}, the central government has been directly supporting this industry \textcolor{blue}{since 2009}, and several provincial governments also provide generous support. To capture these policy impacts, we incorporate indicators for the year 2009 onward and for the Zhejiang province. 
+Specially, the vector of state variables $s_{jnt}$ includes the logarithm of one plus the firm's cumulative experience, $ln(e_{jnt}+1)$, the price of polysilicon (the primary input) relevant for c-Si technology, separate time trends for the pre-2010  and post-2010 periods, and the firm's ownership status.
+
+%Here, the vector of state variables $s_{jnt}$ includes the firm's cumulative experience $e_{jnt}$, along with other firm characteristics such as ownership status. In addition, it includes technology-specific cost shifters that impact all firms, such as prices of major inputs, and policy variables that reflect the impact of industrial policies on production costs. As mentioned in Section \ref{subsec:inst_china_PV}, the central government has been directly supporting this industry \textcolor{blue}{since 2009}, and several provincial governments also provide generous support. To capture these policy impacts, we incorporate indicators for the year 2009 onward and for the Zhejiang province. 
 
 
 \paragraph{Distributions of Scrap Value and Entry Costs.} 
-We assume that the scrap value $\phi_{jnt}$ follows an exponential distribution characterized by a parameter $1/\sigma_{\phi}$. \textcolor{blue}{(Note: we can allow the parameter to differ across the two technologies, $1/\sigma_{\phi,n}$)}.
-Additionally, we assume that the entry cost shocks $\zeta$ conform to an independent and identically distributed Type 1 Extreme Value (T1EV) distribution.
+We assume that the scrap value $\phi_{jnt}$ follows an exponential distribution characterized by a parameter $1/\sigma_{\phi}$. %\textcolor{blue}{(Note: we can allow the parameter to differ across the two technologies, $1/\sigma_{\phi,n}$)}.
+Additionally, we assume that the entry cost shocks $\zeta$ are independently and identically distributed according to a Type 1 Extreme Value (T1EV) distribution.
 
 \subsection{First Stage: Policy Functions and State Transition}
 \label{subsec:est_dynamic_first}
@@ -596,7 +603,7 @@ The equilibrium price for each type of solar panel clears the market by equalizi
 %where $t_0$ indexes the first year of the sample, $y_t$ refers to the state variable in year $t$ including the price of c-Si %solar panels, price of thin-film solar panels, price of inputs, and demand subsidies.
 %}
 
-\subsection{Second Stage: MLE}
+\subsection{Second Stage: GMM}
 \label{subsec:est_dynamic_second}
 
 \subsubsection{Value Function Approximation}
@@ -635,15 +642,7 @@ Let $\chi_{jnt}$ indicate that firm $j$ of technology $n$ exits in year $t$ in t
     log(f_n(s_{jnt};\theta)) &=& \Big[ (1-\chi_{jnt}) log(1-exp(-\frac{CV_n(s_{jnt};\rho)}{\sigma_\phi})) - \chi_{jnt} \frac{CV_n(s_{jnt};\rho)}{\sigma_\phi} \Big]. \label{eq:est_log_likelihood_exit}   
 \end{eqnarray}
 
-\paragraph{MLE}
-Let $\theta$ summarize the parameters associated with the distribution of scrap values and the production cost functions, where $\theta = (\sigma_\phi, \gamma)$. The maximum likelihood estimator for $\theta$ is determined by maximizing the joint log-likelihood of exiting and production:   
-\begin{eqnarray}
-        max_\theta L(\theta) & = & \sum_{j,n,t} log(f_n(\chi_{jnt};\theta)) + \sum_{j,n,m,t} log(g_{nm}(q_{jnmt};\theta)), \label{eq:log-likilihood}
-\end{eqnarray}
-where $f_n(\chi_{jnt};\theta)$ is the exit probability as described in equation (\ref{eq:est_log_likelihood_exit}), and
-$g_{nm}(q_{jnmt};\theta)$ is the output density as described in equation (\ref{eq:est_log_likelihood_output}).
-
-Equation (\ref{eq:est_value_func_approx}) is imposed as a constraint when estimating dynamic parameters. Specifically, for each guess of the dynamic parameters, we solve for coefficients $\rho$ that satisfy equation (\ref{eq:est_value_func_approx}) and use the estimated $\hat{\rho}$ to construct the sample log-likelihood described in equation (\ref{eq:log-likilihood}).
+%\paragraph{GMM}
 
 \subsubsection{Estimation of Entry Costs}
 The probability that potential entrant $j$ enters with technology $n$ is expressed as
@@ -795,6 +794,10 @@ Although thin-film solar panel firms exhibit cost estimates with the same signs 
 Finally, we turn to the estimates of these common parameters. Our estimates indicate that exporting to the EU and Japan is more costly than selling to the domestic market, while exporting to the US and India is actually less costly. This might be attributed to China’s export tax rebate policy, which effectively lowers exporters’ costs for shipments to the US (\cite{chandra2013vat}). We also find that state-owned firms incur higher costs. 
 
 
+%where $\gamma_{n}^0$ are technology-specific intercepts; $\gamma_n^{\text{exp}}$ measure the impact of learning-by-doing on marginal cost for each technology, with $e_{jt}^{GW} = \sum_{t' < t} q_{jt'} / 10^9$ denoting the firm's cumulative production experience in gigawatts; $\gamma^{\text{poly}}$ captures the elasticity of marginal cost with respect to the polysilicon spot price $P_t^{\text{poly}}$, which applies only to crystalline silicon firms; $\gamma^{\text{SOE}}$ captures the cost advantage of state-owned enterprises; $\gamma^{\text{time}}$ is a period adjustment for the years 2006--2008; $\gamma^{\text{trend}}$ captures secular annual cost decline beyond firm-specific learning (e.g., industry-wide technological progress and supply chain maturation); the Zhejiang province indicator reflects the cost advantage associated with the industry cluster in that province; $\gamma_{m}^{\text{ex}}$ are parameters capturing the cost differential associated with exporting to market $m$, weighted by the firm's export share $s_{jt}^m$ to that market; $\gamma^{\text{scale}}$ introduces a convex cost component reflecting firm-level capacity constraints, so that marginal cost is increasing in own output; and $\omega_{jt}$ are firm-level cost shocks assumed to follow an i.i.d.\ normal distribution with mean zero and variance $\sigma_\omega^2$.
+
+%The log specification for experience, $\ln(e_{jt}^{GW}+1)$, captures diminishing returns to learning-by-doing: early production experience yields larger cost reductions than later experience. An alternative linear specification is also tested, with the preferred specification selected via calibration.
+
 
 %The cost for firms located in Zhejiang is 0.128 lower, indicating substantial provincial subsidies.
  
@@ -808,30 +811,27 @@ Finally, we turn to the estimates of these common parameters. Our estimates indi
  & Est. & SE \\
 \midrule
 \underline{\textit{(i) c-Si Firms:}} & \\
-\quad Constant ($\gamma^{0}_n$) & 2*0.429 & (0.042) \\
-\quad Experience ($\gamma^{s,e}_n$) & -0.077& (0.005) \\
-%\quad Input price ($\gamma^{s,i}_n$) & \\
-%\quad\quad Polysilicon price & 0.256 & (0.006) \\
-\quad 2006-2008 ($\gamma^{s,s}_n$)  & \textcolor{red}{-0.016} & () \\
-%\quad 2010+&  -0.710 & (0.0125) \\
+\quad Constant ($\gamma^{0}_{poly}$) & 7.864 & (0.370) \\
+\quad Experience ($\gamma^{s,e}_{poly}$) & -10.068 & (0.257) \\
+\quad Input price ($\gamma^{s,i}_{n}$) & \\
+\quad\quad Polysilicon price & 0.144 & (0.045) \\
 \underline{\textit{(ii) Thin-Film Firms:}} \\
-\quad Constant ($\gamma^{0}_n$) & 0.732 & (0.107) \\
-\quad Experience ($\gamma^{s,e}_n$) & -0.097 & (0.0747) \\
-%\quad Input price ($\gamma^{s,i}_n$) & \\
-%\quad\quad Cadmium price &  0.056 & (0.024) \\
-%\quad\quad Tellurium price & -0.044 & (0.023) \\
+\quad Constant ($\gamma^{0}_{thin}$) & 5.000 & (0.163) \\
+\quad Experience ($\gamma^{s,e}_{thin}$) & -6.311 & (0.438) \\
 \underline{\textit{(iii) Common Variables:}} &  \\
 \quad Exporting ($\gamma_m^{ex}$) & \\
-\quad\quad EU & 0.0095 & (0.005) \\
-\quad\quad India & 0.085 & (0.008) \\
-\quad\quad Japan & 0.012 & (0.009) \\
-\quad\quad US & 0.010 & (0.012) \\
-\quad\quad ROW &  0.003 & (0.007) \\
+\quad\quad EU & 3.627 & (0.256) \\
+\quad\quad India & 4.117 & (1.510) \\
+\quad\quad Japan & -4.270 & (0.148) \\
+\quad\quad US & 1.849 & (0.993) \\
+\quad\quad ROW & 0.746 & (0.240) \\
 \quad Other state variables ($\gamma^{s,o}$) &  \\
-\quad\quad SOE & 0.247 & (0.012) \\
-%\quad\quad 2006-2010 & 0.215 & (0.011) \\
-% \quad\quad 2010+&  -0.570 & (0.010) \\
-\quad SD of shocks ($\sigma^{\omega}$) & 0.5*2.943 & (0.045) \\
+\quad\quad SOE & 3.882 & (0.860) \\
+\quad Trend ($\gamma^{trend}$) & \\
+\quad\quad Pre-2010 & -0.953 & (0.019) \\
+\quad\quad Post-2010 & -0.752 & (0.038) \\
+\quad Scale ($\gamma^{scale}$) & 5.960 & (0.155) \\
+\quad SD of shocks ($\sigma^{\omega}$) & 0.169 & (0.093) \\
 \bottomrule
 \end{tabularx}
 \begin{tablenotes}
@@ -840,10 +840,11 @@ Finally, we turn to the estimates of these common parameters. Our estimates indi
 \end{threeparttable}
 \end{table}
 
+
 \textcolor{blue}{Note: back of envelop calculation of the subsidy during 2006-2008. According to industrial reports, one unit (kT) of polysilicon can generate 115 units (MW) of solar panel on average during 2006-2008. The price of polysilicon increased by around \$250 per unit during this time. It suggests the MC of solar panel per unit is \$250/115 higher. The subsidy that makes the MC unchanged should be around 250/115 * 7.5 = 16 RMB per MW, which is 0.016 RMB per watt. }
 
 \paragraph{Scrap Value and Entry Cost Parameters.}
-Table \ref{tab:est_dyn_para_2} presents the estimated standard deviation of scrap value and the mean entry costs for the two technologies. As discussed in Section \ref{sec:institution_data}, the number of new entrants increases sharply after 2010, prompting us to differentiate c-Si firms' entry costs before and after 2010. Our estimates indicate that the entry cost for c-Si firms was roughly 6.362 \textcolor{blue}{million RMB} lower prior to 2010, representing an estimate of the overall entry subsidy before that year.
+Table \ref{tab:est_dyn_para_2} presents the estimated standard deviation of scrap value and the mean entry costs for the two technologies. As discussed in Section \ref{sec:institution_data}, the number of new entrants increases sharply after 2010, prompting us to differentiate c-Si firms' entry costs before and after 2010. Our estimates indicate that the entry cost for c-Si firms was roughly 1.75 \textcolor{blue}{million RMB} lower prior to 2010, representing an estimate of the overall entry subsidy before that year.
 Additionally, entrants in Zhejiang constitute \textcolor{blue}{XX\%} of all new solar panel firms over the sample period. To account for this locational variation, we allow for differing entry costs in Zhejiang province. Our analysis reveals that the entry cost in Zhejiang is 4.874 million RMB less than in other provinces, implying that the local government may offer substantial subsidies for the entry of solar panel firms.
 
 \begin{table}[!h]
@@ -855,17 +856,15 @@ Additionally, entrants in Zhejiang constitute \textcolor{blue}{XX\%} of all new 
 \toprule
  & Est. & SE  \\
 \midrule
-\multicolumn{3}{l}{\textit{Scrap Value ($\sigma_{\phi}$):}} \\
-% \quad Mean ($\sigma_{\phi}$) & 2.953 & (0.056) \\
-\quad\quad 2000--2009 & 1.2*2.953 & () \\
-\quad\quad 2010+ & 0.8*2.953 & () \\
+\multicolumn{3}{l}{\textit{Scrap Value:}} \\
+\quad Sigma phi ($\sigma_{\phi}$) & 1.000 & (0.000) \\
+\quad Phi bar ($\bar{\phi}$) & -2.148 & (0.000) \\
 \multicolumn{3}{l}{\textit{Entry Cost:}} \\
 \quad c-Si technology ($\kappa_{1}$) & & \\
-\quad\quad 2000--2009 & 1.2*8.218 & (1.784) \\
-\quad\quad 2010+ & 0.8*8.218 & (0.850) \\
-%\quad\quad Zhejiang & -5.00 & (0.00912) \\
-\quad Thin-film technology ($\kappa_{2}$) & 9.144& (2.218) \\
-\quad Zhejiang & -0.5*4.855 & (1.879)\\
+\quad\quad 2000-2009 & 5.217 & (0.027) \\
+\quad\quad 2010+& 3.467 & (0.000) \\
+\quad Thin-film technology ($\kappa_{2}$) & & \\
+\quad\quad 2011+& 3.711 & (0.008) \\
 \bottomrule
 \end{tabularx}
 \begin{tablenotes}
@@ -874,9 +873,11 @@ Additionally, entrants in Zhejiang constitute \textcolor{blue}{XX\%} of all new 
 \end{threeparttable}
 \end{table}
 
-\subsection{Model Fit}
-To assess how well our estimated model matches the data, we simulate the model's equilibrium and plot both the observed and predicted output and the number of active firms. Overall, our model fits the data well. Specially, it captures the rapid expansion in output during the sample period, and the rapid growth in the number of firms before 2011 as well as the subsequent slowdown.
 
+\subsection{Model Fit}
+To assess how well our estimated model matches the data, we simulate the model's equilibrium and plot both the observed and predicted output and the number of active firms. Overall, our model fits the data well. Specifically, it captures the rapid expansion in output during the sample period, and the rapid growth in the number of firms before 2011 as well as the subsequent slowdown.
+
+Figure \ref{} shows .
 
 \begin{itemize}
     \item output: (mean, SD) or draw a graph
@@ -884,6 +885,19 @@ To assess how well our estimated model matches the data, we simulate the model's
     \item number of active firms
 \end{itemize}
 
+\begin{figure}
+    \centering
+    \includegraphics[width=0.5\linewidth]{Figures/industry_fit_dynamic_foc.png}
+    \caption{Overall model fit.}
+    \label{fig:placeholder}
+\end{figure}
+
+\begin{figure}
+    \centering
+    \includegraphics[width=0.5\linewidth]{Figures/ModelFitProd.png}
+    \caption{Model fit specifically for production.}
+    \label{fig:placeholder}
+\end{figure}
 
 \section{LBD and Industrial Policies}
 In this section we quantify the welfare effects of both demand-side and supply-side policies with and without LBD incorporated. 
@@ -947,12 +961,10 @@ We expect to see that the policies in the presence of LBD can lead to much large
 In this section, we analyze two counterfactual policy configurations: (i)  a case where only demand-side subsidies (feed-in tariffs and tax credits) are in place, and (ii) a case where only c-Si tariffs are imposed. For each configuration, we simulate market outcomes and welfare, considering scenarios both with and without LBD. The subsequent figures and tables present the results, comparing simulated outcomes under these counterfactuals to those under the baseline scenario with no industrial policies, again both with and without LBD.
 
 \begin{itemize}
-    \item CF1-0: feed-in tariff + no LBD
-    \item CF1-1: feed-in tariff + LBD
-    \item CF2-0: tax credits + no LBD
-    \item CF2-1: tax credits + LBD
-    \item CF3-0: import tariffs + no LBD
-    \item CF3-1: import tariffs + LBD
+    \item CF1-0: feed-in tariff and tax credits + no LBD
+    \item CF1-1: feed-in tariff and tax credits + LBD
+    \item CF2-0: import tariffs + no LBD
+    \item CF2-1: import tariffs + LBD
 \end{itemize} 
 
 \begin{table}[tbh]
@@ -1002,10 +1014,8 @@ We focus on subsidies on the production cost.
 \begin{itemize}
     \item CF1-0: polysilicon price drop in 2008 + no LBD
     \item CF1-1: polysilicon price drop in 2008 + LBD
-    \item CF2-0: exporting subsidies + no LBD
-    \item CF2-1: exporting subsidies + LBD
-    \item CF3-0: other subsidies + no LBD
-    \item CF3-1: other subsidies + LBD
+    \item CF2-0: other production cost subsidies + no LBD
+    \item CF2-1: other production cost subsidies + LBD
 \end{itemize} 
 
 \begin{table}[tbh]
@@ -1055,8 +1065,6 @@ We focus on subsidies on entry cost.
 \begin{itemize}
     \item CF1-0: subsidy on entry cost of c-Si tech before 2011 + no LBD
     \item CF1-1: subsidy on entry cost of c-Si tech before 2011 + LBD
-    \item CF2-0: provincial subsidy on entry + no LBD
-    \item CF2-1: provincial subsidy on entry + LBD
 \end{itemize} 
 
 \begin{table}[tbh]
@@ -1097,6 +1105,13 @@ $\Delta$ in Environmental Benefits &  &  \\
 \end{tablenotes}
 \end{threeparttable}
 \end{table}
+
+\subsection{Timing of Policies}
+\label{subsec:cf_timing}
+
+We examine the effect of postponing the demand policies until 2010.
+
+We examine the effect of implementing the production policies earlier by five years (shifting it from 2010 on ward to 2005.
 
 \section{Conclusion}
 
