@@ -19,8 +19,17 @@
 \renewcommand{\author}[1]{}%
 \renewcommand{\date}[1]{}%
 
-% --- Suppress titlepage environment from the included file ---
-\SuppressTitlePage
+% --- Make titlepage transparent so the abstract inside it renders.
+%     \title/\author/\date/\maketitle above are no-ops, so only the
+%     \begin{abstract}...\end{abstract} block produces output. We also
+%     suppress \setcounter and \thispagestyle so the source's
+%     \setcounter{page}{0} and \thispagestyle{empty} (which appear
+%     inside the titlepage) don't disturb dissertation page numbering.
+\renewenvironment{titlepage}{}{}
+\let\origsetcounter\setcounter
+\renewcommand{\setcounter}[2]{}%
+\let\origthispagestyle\thispagestyle
+\renewcommand{\thispagestyle}[1]{}%
 
 % --- Suppress biblatex \printbibliography (we issue our own below) ---
 \renewcommand{\printbibliography}{}
@@ -38,8 +47,10 @@
 % --- Include the essay body (docmute strips preamble) ---
 \input{../JMP/main_revised_with_figures.tex}
 
-% --- Restore titlepage ---
+% --- Restore titlepage / page-style commands ---
 \RestoreTitlePage
+\let\setcounter\origsetcounter
+\let\thispagestyle\origthispagestyle
 \let\singlespacing\origsinglespacing
 \let\onehalfspacing\origonehalfspacing
 
