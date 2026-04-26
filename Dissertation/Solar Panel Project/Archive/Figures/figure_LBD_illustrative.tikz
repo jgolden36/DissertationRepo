@@ -1,0 +1,42 @@
+% Preamble (add if needed):
+% \usepackage{tikz}
+% \usetikzlibrary{arrows.meta,positioning,shapes.geometric}
+\begin{tikzpicture}[
+    node distance=1.8cm and 2.2cm,
+    box/.style={rectangle, draw, rounded corners, align=center, minimum width=3.2cm, minimum height=1cm},
+    bigbox/.style={rectangle, draw, very thick, rounded corners, align=center, minimum width=3.6cm, minimum height=1.1cm},
+    arrow/.style={->, thick}
+]
+
+% Top branch
+\node[box] (demand) {Demand-side\\subsidies};
+\node[box, right=of demand] (adopt1) {Higher solar panel\\adoption};
+\node[bigbox, right=of adopt1] (lbd) {More cumulative\\production experience\\(Learning-by-Doing)};
+\node[box, right=of lbd] (cost1) {Lower future\\production cost};
+\node[box, right=of cost1] (price1) {Lower panel price};
+
+% Bottom branch
+\node[box, below=2cm of demand] (prod) {Production-side policies\\and lower polysilicon price};
+\node[box, right=of prod] (output2) {Higher c-Si\\output};
+\node[box, right=of cost1, below=2cm] (share) {Greater c-Si adoption\\and market share};
+
+% Final outcome
+\node[bigbox, right=2.3cm of price1] (welfare) {Amplified long-run effects\\on output and welfare};
+
+% Arrows top
+\draw[arrow] (demand) -- (adopt1);
+\draw[arrow] (adopt1) -- (lbd);
+\draw[arrow] (lbd) -- (cost1);
+\draw[arrow] (cost1) -- (price1);
+\draw[arrow] (price1) -- (welfare);
+
+% Arrows bottom
+\draw[arrow] (prod) -- (output2);
+\draw[arrow] (output2) -- (lbd);
+\draw[arrow] (cost1) -- (share);
+\draw[arrow] (share) -- (welfare);
+
+% Feedback loop
+\draw[arrow, bend left=25] (price1.north) to node[above] {\small feedback} (adopt1.north);
+
+\end{tikzpicture}
