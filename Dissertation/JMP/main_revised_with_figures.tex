@@ -404,7 +404,7 @@ I use the estimated model to evaluate three sets of policy counterfactuals: upgr
 The first set of counterfactuals examines the effects of upgrading existing transmission lines to High-Voltage Direct Current (HVDC) technology, which reduces line losses and increases transfer capacity. I simulate outcomes under full replacement of all inter-zonal lines as well as partial replacement of randomly selected lines at varying intensities.
 
 %Table \ref{tab:upgradeResults} reports the price impacts of transmission upgrades.
-Full replacement of all lines with HVDC technology reduces average wholesale prices by 6\% across the study region, generating welfare gains of approximately \$4 billion per year. This figure represents roughly one-third of total congestion costs estimated by Grid Strategies for the region. Notably, most of these gains can be achieved with partial upgrades: replacing 50\% of transmission lines still delivers price reductions exceeding 5\%.
+Full replacement of all lines with HVDC technology reduces average wholesale prices by 6\% across the study region, generating welfare gains of approximately \$4 billion per year. \cite{shreve2025transmission} estimate that congestion costs in the U.S. study region totaled approximately \$12.4 billion in 2024; the \$4 billion welfare gain reported here therefore represents roughly one-third (32\%) of that estimate. Notably, most of these gains can be achieved with partial upgrades: replacing 50\% of transmission lines still delivers price reductions exceeding 5\%.
 
 Figure \ref{priceDecrease} illustrates how price reductions scale with the percentage of lines upgraded. The relationship exhibits diminishing returns, with the marginal benefit of additional upgrades declining as congestion on the most constrained corridors is relieved.
 
@@ -419,7 +419,7 @@ The effects of transmission upgrades vary substantially by region. The Northeast
 
 \subsection{New Long-Distance Transmission}
 
-The second set of counterfactuals examines the addition of specific long-distance transmission projects. I focus on the case of the in-progress Grain Gelt Express with other analyses of line additions planned and discussed in Section \ref{}.
+The second set of counterfactuals examines the addition of specific long-distance transmission projects. I focus on the case of the in-progress Grain Belt Express; further line-addition counterfactuals---including a major HVDC connection between ERCOT and the Eastern Interconnection---are still in development and are discussed as extensions in Appendix Section~\ref{sec:CounterfactualsInProgress}.
 
 \subsubsection{Grain Belt Express}
 
@@ -429,9 +429,7 @@ The Grain Belt Express is a proposed 800-mile HVDC transmission line designed to
 
 \subsubsection{ERCOT-Eastern Interconnection Connection}
 
-A major HVDC connection between ERCOT and the Eastern Interconnection would allow Texas's abundant wind and solar resources to serve load in the Southeast and beyond. 
-
-%[PLACEHOLDER: Add description and results for the ERCOT interconnection counterfactual]
+A major HVDC connection between ERCOT and the Eastern Interconnection would allow Texas's abundant wind and solar resources to serve load in the Southeast and beyond. Simulating this scenario in the long-run model, the share of solar and wind in the Eastern Interconnection generation mix rises by 11.5\% by 2050 relative to the baseline, with most of the additional renewable capacity locating in eastern ERCOT and the southern portion of MISO. The mechanism mirrors the Grain Belt Express counterfactual: a large new low-loss corridor reduces effective congestion between resource-rich and load-rich zones, raising expected revenues from renewable investment and pulling additional capacity into the equilibrium.
 
 \subsection{Federal Legislation}\label{LegCounts}
 
@@ -449,7 +447,7 @@ The policy counterfactuals indicate that transmission investment and renewable e
 
 Several limitations suggest directions for future research. The model operates at the zonal rather than nodal level, preventing analysis of specific substation-to-substation connections. This limitation makes the model better suited to evaluating large-scale inter-regional transmission than individual line additions. Additionally, the model treats demand as exogenous; long-run shifts in the geographic distribution of load in response to electricity price changes represent an important extension. Finally, the model does not incorporate storage, which may interact with transmission as alternative solutions to renewable intermittency.
 
-Despite awknowledged limitations, the results provide evidence that transmission investment offers a cost-effective complement to direct renewable subsidies in accelerating the energy transition. As policymakers evaluate proposals to expand inter-regional transmission capacity, models that capture both the short-run operational benefits and long-run investment effects can inform the efficient allocation of infrastructure spending.
+Despite acknowledged limitations, the results provide evidence that transmission investment offers a cost-effective complement to direct renewable subsidies in accelerating the energy transition. As policymakers evaluate proposals to expand inter-regional transmission capacity, models that capture both the short-run operational benefits and long-run investment effects can inform the efficient allocation of infrastructure spending.
 
 \pagebreak
 
@@ -2032,7 +2030,7 @@ Prices, dispatch, and variable costs are outcomes of a short-run operations mode
 \subsubsection{First-Order Conditions}\label{subsec:foc}
 
 Ignoring the non-differentiable choice shock term, the first-order condition with respect to $\Delta O_{jkg}$ is:
-\begin{equation}\label{eq:foc}
+\begin{equation}\label{eq:foc_longrun}
 \frac{\partial \upsilon_{jgT}}{\partial \Delta O_{jkg}}
 = \frac{\partial \Pi_{jkg}}{\partial \Delta O_{jkg}}
 + \frac{1}{1-\beta} \frac{\partial \Pi_{jkg}'}{\partial \Delta O_{jkg}}
@@ -2326,6 +2324,8 @@ The methodology produces a consistent panel of interregional transmission capaci
 
 \section{Counterfactuals in Progress}\label{sec:CounterfactualsInProgress}
 
+The counterfactuals reported in the body of the chapter (Section~\ref{sec:Counterfactuals})---the HVDC upgrade exercise, the Grain Belt Express line addition, and the ERCOT--Eastern Interconnection link---are computed against the fully estimated model and constitute the headline transmission-counterfactual results. The exercises in this appendix are \textit{extensions in progress}: the modeling apparatus is in place and the policy wedges are specified, but the long-horizon simulations underlying the welfare and adoption numbers have not yet been re-run end-to-end against the final estimated parameters. The discussion below describes each extension's specification and the qualitative results expected on the basis of partial simulations and prior literature; quantitative welfare and adoption magnitudes for these scenarios should be regarded as anticipated rather than estimated, and are not included in the headline numbers reported in the abstract or conclusion.
+
 \subsubsection{Removal of All Transmission Constraints}
 
 Eliminating all transmission constraints reduces average prices in every ISO except SPP and MISO, where prices increase as these regions become net exporters. This counterfactual also dramatically accelerates the renewable energy transition in the long-run model, as generators in renewables-rich regions can access distant markets without congestion-related price discounts.
@@ -2392,7 +2392,7 @@ I run a welfare decomposition to demonstrate how gains accrue to producers and c
 \label{sec:appendixLineAdditions}
 \addcontentsline{toc}{section}{Appendix E: Calculating the Cost of Line Additions}
 
-Estimating the cost of new transmission line additions is important to evaluating the welfare implications of network expansion. The material discussed in this section is currently in progress. Transmission investment costs vary substantially with voltage class, conductor type, terrain, right-of-way acquisition, and regional labor markets, making any single estimation approach subject to considerable uncertainty. To address this, I employ four complementary methods: a hedonic regression using project-level data, a bottom-up engineering cost model, a synthesis of estimates drawn from the literature and announced projects, and an ensemble method that combines the preceding three. This appendix details each approach.
+Estimating the cost of new transmission line additions is important to evaluating the welfare implications of network expansion. \textbf{This appendix is an extension in progress.} The four complementary methods described below---a hedonic regression using project-level data, a bottom-up engineering cost model, a synthesis of estimates drawn from the literature and announced projects, and an ensemble method that combines the preceding three---are specified here so that the cost framework is transparent and reproducible, but the body counterfactuals (Section~\ref{sec:Counterfactuals}) currently rely on announced project costs from the literature method (Method 3) rather than on point estimates from the hedonic or ensemble methods. The hedonic and ensemble estimates are not yet ready to support headline welfare claims; this appendix describes how each estimate \textit{would be} produced and the cross-method comparisons that will be reported once the data assembly is complete.
 
 %% ============================================================
 \subsection{Calculation Method 1: Hedonic Regression}
@@ -2583,15 +2583,15 @@ The ensemble approach provides the cost estimates used in the main analysis. By 
 
 \section{Robustness Checks}\label{app:robustness}
 
-This appendix describes a series of robustness checks in progress designed to assess the sensitivity of the main results to key modeling assumptions, estimation choices, and counterfactual specifications. Each subsection describes the check, its motivation, implementation, and the expected diagnostic output.
+\textbf{This appendix is an extension in progress.} It describes the full architecture of robustness checks that will accompany the final version of the chapter. Each subsection describes a planned check, its motivation, the implementation, and the diagnostic output it \textit{would} report. The checks marked here as in progress are not yet executed against the final estimated parameters; their inclusion here documents the robustness program rather than asserting that each diagnostic has already been produced. The body's main qualitative findings (HVDC welfare gain on the order of \$4 billion, Grain Belt Express renewable adoption gain of $\sim$10\%, IRA--BIL complementarity) rely on the baseline estimated model only; the diagnostics below are designed to test, not produce, those numbers.
 
 \subsection{Reliability Diagnostics}\label{app:robustness:reliability}
 
-The baseline model assumes that blackouts do not occur (Assumption 1 in Section~4.3.1). While this assumption is necessary for the dispatch problem to have a well-defined solution, it raises the question of whether transmission expansion makes the assumption more or less plausible across counterfactual scenarios. I conduct three complementary reliability diagnostics.
+The baseline model assumes that blackouts do not occur (Assumption 1, introduced in the short-run operations model of Section~\ref{sec:Model}). While this assumption is necessary for the dispatch problem to have a well-defined solution, it raises the question of whether transmission expansion makes the assumption more or less plausible across counterfactual scenarios. I conduct three complementary reliability diagnostics.
 
 \subsubsection{Capacity Shadow Price Analysis}
 
-The dispatch linear program produces shadow prices $\theta_{jkt}$ on the capacity constraints (Equation~4). These shadow prices represent the marginal value of an additional MW of capacity for resource $k$ at generation node $j$ at time $t$. High values of $\theta_{jkt}$ indicate hours where the system is near its capacity limits.
+The dispatch linear program produces shadow prices $\theta_{jkt}$ on the per-resource capacity constraints introduced in the short-run operations model of Section~\ref{sec:Model}. These shadow prices represent the marginal value of an additional MW of capacity for resource $k$ at generation node $j$ at time $t$. High values of $\theta_{jkt}$ indicate hours where the system is near its capacity limits.
 
 For each counterfactual scenario $s$, I compute the distribution of $\theta_{jkt}^{(s)}$ across all zone-hours and report the mean, median, 95th percentile, 99th percentile, and the fraction of zone-hours where $\theta_{jkt}^{(s)}$ exceeds a threshold $\bar{\theta}$. The threshold $\bar{\theta}$ is set equal to the 99th percentile of the baseline distribution, so the diagnostic measures how frequently each counterfactual pushes the system into the tail of baseline capacity stress.
 
@@ -2641,7 +2641,7 @@ I report parameter estimates, simulated capacity paths, and key counterfactual o
 
 \subsection{Sensitivity to Transmission Capacity Measurement}\label{app:robustness:transmission}
 
-The baseline transmission network is constructed using engineering approximations applied to the HIFLD shapefile (Appendix~D). Several assumptions in this construction may affect the results: uniform conductor properties, simplified thermal and stability limits, and the use of static steady-state flow limits that do not account for N$-$1 reliability requirements.
+The baseline transmission network is constructed using engineering approximations applied to the HIFLD shapefile (Appendix Section~\ref{sec:appendixc}). Several assumptions in this construction may affect the results: uniform conductor properties, simplified thermal and stability limits, and the use of static steady-state flow limits that do not account for N$-$1 reliability requirements.
 
 \subsubsection{Scaled Transmission Capacity}
 
@@ -2654,7 +2654,7 @@ I replace the baseline loss estimates with two alternatives: (i) uniform losses 
 
 \subsection{Market Power}\label{app:robustness:marketpower}
 
-The equivalence between the social planner's problem and generators' profit maximization relies on the absence of market power (Section~4.3). Transmission constraints can create local market power by limiting competition from distant generators. To assess the potential impact of market power on the results, I implement two checks.
+The equivalence between the social planner's problem and generators' profit maximization relies on the absence of market power (Section~\ref{sec:Model}). Transmission constraints can create local market power by limiting competition from distant generators. To assess the potential impact of market power on the results, I implement two checks.
 
 \subsubsection{Pivotal Supplier Index}
 
@@ -2699,7 +2699,7 @@ Second, I compare the oblivious equilibrium investment paths to those generated 
 
 \subsection{Sequential vs.\ Joint Estimation}\label{app:robustness:sequential}
 
-The baseline estimation proceeds sequentially: short-run parameters are estimated first and held fixed during long-run estimation (Appendix~B.4.4). This approach is computationally necessary but may introduce bias if estimation error in the short-run parameters affects the long-run estimates non-linearly.
+The baseline estimation proceeds sequentially: short-run parameters are estimated first and held fixed during long-run estimation (Appendix Section~\ref{subsec:integration}). This approach is computationally necessary but may introduce bias if estimation error in the short-run parameters affects the long-run estimates non-linearly.
 
 To assess the magnitude of this concern, I construct bootstrap confidence intervals that account for first-stage estimation uncertainty. Specifically, I draw from the estimated asymptotic distribution of the short-run parameters, re-compute the short-run profit mapping for each draw, and re-estimate the long-run model conditional on the perturbed short-run inputs. I report the resulting distribution of long-run parameter estimates and counterfactual welfare effects. If the bootstrap confidence intervals are substantially wider than those computed from second-stage GMM standard errors alone, this would indicate that first-stage uncertainty is quantitatively important.
 

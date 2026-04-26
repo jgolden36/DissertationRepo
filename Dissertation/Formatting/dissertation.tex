@@ -28,6 +28,9 @@
 % ========================== BIBLIOGRAPHY (per-chapter) =======================
 \usepackage[round, authoryear]{natbib}
 \usepackage[sectionbib]{chapterbib}
+% Make per-chapter bibliography heading match the TOC entry ("References").
+\renewcommand{\bibname}{References}
+\renewcommand{\bibsection}{\section*{\bibname}}
 
 % ========================== TOC / LISTS ======================================
 \usepackage{tocloft}

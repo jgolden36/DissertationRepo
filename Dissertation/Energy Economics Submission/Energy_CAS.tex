@@ -161,8 +161,8 @@ Artificial intelligence \sep Power grids \sep Electricity markets \sep Reliabili
 
 \maketitle
 
-\section{Introduction}
- 
+\section{Introduction}\label{sec:intro_aipower}
+
 \begin{wrapfigure}{H}{0.45\linewidth}
     \centering
     \vspace{-10pt}
@@ -186,10 +186,10 @@ The paper also contributes methodologically. Because proprietary operational dat
  
 This work connects four literatures. It contributes to the economics of electricity markets by documenting a new and rapidly growing source of demand-side pressure on wholesale prices and grid reliability \citep{borenstein2002trouble, joskow2008capacity}. It advances the literature on environmental externalities from industrial electricity consumption \citep{fowlie2012industrial, greenstone2014environmental} by showing that voluntary procurement instruments may fail to internalize the externalities they are designed to address. It engages the emerging literature on the energy and environmental footprint of AI \citep{strubell19, schwartz2020green, morrison2025holistically} by moving from facility-level accounting to system-level causal estimation. Finally, it informs the policy debate over renewable energy procurement design \citep{miller2022hourly} by providing both a theoretical framework and empirical evidence for evaluating alternative matching granularities.
  
-The remainder of the paper proceeds as follows. Section~2 reviews related work. Section~3 presents the game-theoretic model, including the toy model that illustrates core mechanisms and the full model with equilibrium characterization. Section~4 describes the empirical setting, data construction, and econometric methodology. Section~5 presents estimation results. Section~6 reports counterfactual analyses examining alternative AI development trajectories. Section~7 concludes.
+The remainder of the chapter proceeds as follows. Section~\ref{sec:relatedwork} reviews related work. Section~\ref{sec:model} presents the game-theoretic model, including the toy model that illustrates core mechanisms and the full model with equilibrium characterization. Section~\ref{sec:empirical} describes the empirical setting, data construction, and econometric methodology. Section~\ref{Sec::Results} presents estimation results. Section~\ref{sec:counterfactuals} reports counterfactual analyses examining alternative AI development trajectories. Section~\ref{sec:conclusion_aipower} concludes.
 
-\section{Related Work}
- 
+\section{Related Work}\label{sec:relatedwork}
+
 This paper contributes to four interrelated economics literatures: wholesale electricity market design, environmental externalities from industrial electricity consumption, renewable energy procurement and corporate carbon accounting, and the emerging empirical literature on data center grid impacts.
  
 \subsection{Wholesale Electricity Markets and Demand Shocks}
@@ -228,7 +228,7 @@ Our paper differs from this literature in three respects. First, our game-theore
 \section{Industry Background}
 % % \nb{One possibility is to roll this in with the problem definition in 3.1 if we need space.}
 % % \nb{We should also have related work in terms of what kinds of analysis has been done and explain what our work contributes hasnt been done or not easily inferrable from existing work.}
-U.S. data centers are expanding rapidly, nearly tripling from its 2008 levels to 1489 active sites in 2025, with another 1,359 on the horizon~\cite{aterio_us_data_centers_2025}. The market is dominated by \emph{hyperscalers}---vertically integrated datacenters---owned by AI heavy companies such as Amazon, Microsoft, and Google, alongside a long tail of smaller operators. Hyperscalers afford companies certain economies of scale but greatly increase the geographic concentration of power demand on the grids. Concentrated demand strains local grids in the area, raising congestion costs and sometimes degrading power quality for neighboring consumers. Large, inflexible loads from AI hyperscalers also reduce system reliability, elevate wholesale prices, and complicate renewable integration.
+U.S. data centers are expanding rapidly, nearly tripling from its 2008 levels to 1489 active sites in 2025, with another 1,359 on the horizon~\cite{aterio_us_data_centers_2025}. The market is dominated by \emph{hyperscalers}---vertically integrated data centers---owned by AI heavy companies such as Amazon, Microsoft, and Google, alongside a long tail of smaller operators. Hyperscalers afford companies certain economies of scale but greatly increase the geographic concentration of power demand on the grids. Concentrated demand strains local grids in the area, raising congestion costs and sometimes degrading power quality for neighboring consumers. Large, inflexible loads from AI hyperscalers also reduce system reliability, elevate wholesale prices, and complicate renewable integration.
 \subsection{Market Overview}
 
 The U.S. data center market has expanded rapidly, growing from 519 facilities in 2008 to 1,489 active sites in 2025, with another 1,359 announced or under construction \cite{aterio_us_data_centers_2025}. Electricity demand more than tripled over this period, rising from under 5 to over 15 GWh per hour (BNEF), while total U.S. capacity increased only 17.6\% \cite{EIA_2023_table4_2A} and dispatchable baseload capacity fell as coal retired.
@@ -281,7 +281,7 @@ These dynamics interact with broader shifts in the electricity market: greater e
 \end{wrapfigure}
 % Figure~\ref{fig:THD} illustrates the distortions in the power frequencies. The green line shows the \emph{clear} voltage curve, which is cleanly sinusoidal, whereas with huge loads can produce harmonic distortions shown as the dotted yellow curve. This \emph{dirtier} voltage can adversely affect the operation and lifetime of household appliances and other products that use electricity.
 
-\subsection{Background: Datacenter Concentration and Power-Quality}
+\subsection{Background: Data Center Concentration and Power-Quality}
 
 AI workloads affect power quality through three main mechanisms. First, data centers and AI computing facilities add substantial baseload demand that can strain grid capacity and compromise voltage regulation, especially during peak periods. Second, AI workloads fluctuate rapidly with computational needs, creating unpredictable load variations that challenge stability and frequency regulation. Third, the switching power supplies and electronics essential to AI hardware generate harmonic distortion, introducing waveform distortions that spread through distribution networks and degrade power quality. Figure~\ref{fig:THD} illustrates the distortions in the power frequencies. The green line shows the \emph{clear} voltage curve, which is cleanly sinusoidal, whereas with huge loads can produce harmonic distortions shown as the dotted yellow curve. This \emph{dirtier} voltage can adversely affect the operation and lifetime of household appliances and other products that use electricity.
 
@@ -312,9 +312,9 @@ Power purchase agreements (PPAs) offer a closer link between procurement and con
     \label{fig:PPAFigure}
 \end{figure}
 
-Colocation includes siting dedicated generation at or near a data center, often behind the meter and is increasingly pursued by hyperscale operators. By serving load locally, colocation can reduce transmission congestion and avoid incremental bulk system demand. However, FERC has scrutinized such arrangements for potential cost-shifting to remaining ratepayers, as in the Talen Energy--Amazon arrangement at the Susquehanna nuclear plant \citep{ferc2024}. The net environmental impact depends on the counterfactual: redirecting generation that would otherwise serve grid load may increase system-wide emissions.
+Colocation includes siting dedicated generation at or near a data center, often behind the meter and is increasingly pursued by hyperscale operators. By serving load locally, colocation can reduce transmission congestion and avoid incremental bulk system demand. However, FERC has scrutinized such arrangements for potential cost-shifting to remaining ratepayers, as in the Talen Energy--Amazon arrangement at the Susquehanna nuclear plant \citep{ferc2024_talen_amazon}. The net environmental impact depends on the counterfactual: redirecting generation that would otherwise serve grid load may increase system-wide emissions.
 
-\section{Game Theoretic Model}
+\section{Game Theoretic Model}\label{sec:model}
 
 \subsection{Model}
 
@@ -623,7 +623,7 @@ Four features of our setting complicate a textbook two-period DiD. First, traini
 
 We address the first two issues with a stacked event-study design that anchors treatment on observed release dates and builds clean control groups for each release cohort, developed in Section \ref{subsec:eventstudy}. We address the third through pre-trend tests, placebo exercises, and controls for fuel costs, temperature, and renewable output (Section \ref{Robustness}). The fourth is resolved in our data construction, described in Section \ref{sectionData}.
 
-\section{Estimation Strategy} 
+\section{Estimation Strategy}\label{sec:empirical}
 
 To address the inexact information about training windows and release times, we estimate dynamic treatment effects at multiple horizons relative to model release dates. This approach, referred to as an event study or \textbf{stacked difference-in-differences} in econometrics, offers three advantages over the standard pre/post comparison discussed earlier: (1) it does not require observing the true training start date, instead using release timing as the anchor; (2) it also provides a direct test of the parallel trends assumption through examination of pre-release coefficients; and (3) it allows the data to reveal the temporal profile of effects rather than imposing an arbitrary discontinuous treatment structure.
 
@@ -724,8 +724,7 @@ Second, we trace this shift through the supply curve. With linear supply $Q^s=a+
 
 \begin{equation}
 \% \Delta p = \frac{\% \Delta Q^d}{\varepsilon^s}
-\label{eq
-:price-impact-elasticity}
+\label{eq:price-impact-elasticity}
 \end{equation}
 
 We estimate $\varepsilon^s$ via IV regression of quantity on price in log-log form, using demand-side instruments (weather-driven load variation and industrial production indices).
@@ -1148,7 +1147,7 @@ A map of estimated supply chain elasticities can be found in Figure \ref{PJMPRic
 
 While we are not able to provide definite evidence of the impacts on retail price pass through, it should be noted that retail electricity prices have increased overall at a rate surpassing inflation since 2020 \cite{Nicoletti_Malik_Tartar_2024,horsley2025electricbill,spp2024stateofthemarket}. While it is possible that increased investment in electric generation through power purchase agreements by tech firms may in the long run lead to falling retail prices, it appears that at present data center power usage is increasing wholesale prices by raising total demand, which requires dispatching higher-cost generators and thus increases the market clearing price—a price paid by all retail consumers.
 
-Using estimates from the literature as documented in Appendix Subsection \ref{WholesaleRetailPassthrough}, we can provide an estimate on the expected price rise for retail consumers. Using the most relevant examples for PJM of retail elasticity of between .53 and .56 \cite{defeuilley2023pennsylvania}, \textbf{the expected consumer price rise in AEP would be $\sim 13\%$}. However, using recent long-run econometric estimates of full passthrough from \cite{mackay2024wholesale}, the long-run expected rise for consumers may be closer to the full 25\%.
+Using estimates from the literature as documented in Appendix Subsection \ref{WholesaleRetailPassthrough}, we can bracket the expected price rise for retail consumers. Two recent estimates apply but speak to different horizons. \cite{defeuilley2023pennsylvania} report short-run passthrough of roughly $0.53$--$0.56$ in PJM/Pennsylvania over a sample window dominated by short retail-rate refresh cycles and explicit fuel-cost-adjustment provisions; applying that passthrough to a 25\% wholesale shock in AEP implies a short-run consumer price rise of roughly 13\%. \cite{mackay2024wholesale} estimate long-run passthrough closer to one across U.S.\ retail markets, on the assumption that procurement contracts, default-service auctions, and rate-case filings eventually fully reflect sustained wholesale movements; under that estimate the long-run consumer price rise approaches the full 25\%. The two numbers therefore correspond to short-run vs.\ long-run passthrough rather than to competing estimates of the same object: the 13\% figure is the appropriate near-term magnitude for retail bills under existing PJM rate mechanics, while the 25\% figure is the appropriate long-run magnitude if the wholesale shock is sustained for several rate cycles. We report both and let the reader weight them according to the policy horizon of interest, rather than collapsing to a single point estimate.
 \section{Validating Assumptions and Robustness Checks}\label{Robustness}
 % \nb{refer to earlier mention of issues}
 We conduct several additional analyses to probe the robustness of our findings and explore effect heterogeneity in order to address issues highlighted in Subsection \ref{DCASSUmptions}. The formal testing helps provide evidence for the parallel trends assumption while the placebo tests address potential issues related to external confounds or lack of specific knowledge about training. Additional robustness analyses can be found in Appendix Subsection \ref{App:AdditionalRobustnessChecks}.
@@ -1246,7 +1245,7 @@ This analysis has the important caveat that shifting to one data center for all 
 % \end{itemize}
 % These extensions are left for future work.
 
-\section{Conclusion}
+\section{Conclusion}\label{sec:conclusion_aipower}
 
 This paper provides the first causal estimates of how AI-driven data center demand affects U.S.\ electricity markets. Exploiting the staggered release of frontier large language models as natural experiments, we find that AI workloads cause statistically and economically significant deterioration in power quality, increase fossil fuel generation on the order of hundreds of GWh, and raise wholesale electricity prices by up to 25\% in heavily treated zones. These effects are consistent with the predictions of our game-theoretic model of hyperscaler electricity procurement, which formalizes the \emph{timing wedge}---the temporal mismatch between when data centers consume electricity and when their contracted or credited renewable generation produces.
 
@@ -1422,7 +1421,7 @@ Gopher (280B)                  & Google     & -30.32 & 0.3113                & 0
 \bottomrule
 \end{tabular}
 \begin{tablenotes}
-\item Notes: Coefficients and p-values are taken from \texttt{post\_coefficient} and \texttt{post\_p\_value}. Aggregate impact uses \texttt{post\_aggregate\_demand\_increase}.
+\item Notes: Coefficients and p-values are taken from \texttt{post\_coefficient} and \texttt{post\_p\_value}. Aggregate impact uses \texttt{post\_aggregate\_demand\_increase}. The headline causal claim of the chapter is the pooled stacked-DiD coefficient reported in Table~\ref{tab:combined_results}; the model-by-model rows above are reported as \emph{descriptive} per-event estimates rather than as confirmatory tests, since each row identifies off a single release event with limited statistical power. The sign pattern is consistent with the scaling story discussed in Section~\ref{sec:counterfactuals}: smaller and earlier-generation models (Chinchilla, PaLM 540B, LaMDA, Gopher 280B) carry small or negative point estimates with wide confidence bands, while larger and later-generation models (GPT-4.5, Llama 4 Behemoth, Claude 3 Opus) carry substantially larger and more precisely estimated positive coefficients. We do not interpret negative point estimates on individual older or smaller models as evidence against the AI-induced demand effect.
 \end{tablenotes}
 \end{threeparttable}}
 \label{PostTreatment}
@@ -1462,7 +1461,7 @@ Gopher (280B)                  & Google     &  -8.12 & 0.6566               & 0.
 \bottomrule
 \end{tabular}
 \begin{tablenotes}
-\item Notes: Coefficients and p-values are taken from \texttt{pre\_coefficient} and \texttt{pre\_p\_value}. Aggregate impact uses \texttt{pre\_aggregate\_demand\_increase}. Dashes indicate missing values in the spreadsheet.
+\item Notes: Coefficients and p-values are taken from \texttt{pre\_coefficient} and \texttt{pre\_p\_value}. Aggregate impact uses \texttt{pre\_aggregate\_demand\_increase}. Dashes indicate missing values in the spreadsheet. As with Table~\ref{PostTreatment}, model-by-model rows are presented as \emph{descriptive} per-event estimates rather than confirmatory tests; the chapter's identifying inference comes from the pooled stacked-DiD specification.
 \end{tablenotes}
 \end{threeparttable}}
 \label{PreTreatment}
