@@ -34,12 +34,12 @@
 % --- Suppress CAS highlights environment ---
 \let\orighighlights\highlights
 \let\origendhighlights\endhighlights
-\renewenvironment{highlights}{\setbox\z@\vbox\bgroup}{\egroup}%
+\renewenvironment{highlights}{\setbox0\vbox\bgroup}{\egroup}%
 
 % --- Suppress CAS keywords environment ---
 \let\origkeywords\keywords
 \let\origendkeywords\endkeywords
-\renewenvironment{keywords}{\setbox\z@\vbox\bgroup}{\egroup}%
+\renewenvironment{keywords}{\setbox0\vbox\bgroup}{\egroup}%
 
 % --- Suppress bibliography commands (we issue our own below) ---
 \let\origbibliographystyle\bibliographystyle
