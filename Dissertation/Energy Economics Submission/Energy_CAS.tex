@@ -102,7 +102,7 @@
 \def\textpagefraction{.001}
 
 % Short title
-\shorttitle{AI Impacts on U.S.\ Power Grids}
+\shorttitle{Empirical Impacts from AI-Driven Power Demand}
 
 % Short author
 \shortauthors{Golden, Balasubramanian, Balasubramanian}
@@ -142,8 +142,8 @@
 \cortext[1]{Corresponding author}
 
 \begin{abstract}
-Data centers now account for 4.4\% of U.S. electricity demand, yet the grid-level effectiveness of the renewable energy certificates (RECs) and power purchase agreements (PPAs) hyperscalers use to claim carbon neutrality remains unclear. We develop a game-theoretic model in which a data center operator chooses among RECs, PPAs, and behind-the-meter colocation while generators make entry decisions under endogenous financing costs. The model identifies a timing wedge—the mismatch between consumption and credited renewable generation—as the central mechanism through which AI demand degrades reliability, raises prices, and increases emissions even when RECs cover 100\% of annual consumption. Colocation with storage addresses this wedge directly and induces the greatest renewable entry by eliminating generator revenue risk.
-We test these predictions by exploiting the staggered release of large language models as a natural experiment, using difference-in-differences on a novel dataset linking AI activity to local grid outcomes. AI demand significantly increases fossil generation, wholesale prices (up to 25\% in treated PJM zones), and outage frequency (0.5–1 additional outages per year) near data centers, with impacts scaling in model size. Data centers with on-site generation exhibit a sign reversal in power-quality effects, consistent with the model's prediction that behind-the-meter capacity absorbs demand spikes. Counterfactual analyses show that edge inference, spatial reallocation, and colocated storage each substantially mitigate grid impacts, while REC-only strategies do not. Together, our results demonstrate that the grid externalities of AI are tightly coupled to procurement design and the spatial organization of data center infrastructure.
+Data centers now account for 4.4\% of United States electricity demand, yet the grid-level effectiveness of the renewable energy certificates (RECs) and power purchase agreements (PPAs) hyperscalers use to claim carbon neutrality remains unclear. We develop a game-theoretic model in which a data center operator chooses among RECs, PPAs, and behind-the-meter colocation while generators make entry decisions under endogenous financing costs. The model identifies a timing wedge—the mismatch between consumption and credited renewable generation—as a central mechanism through which AI demand degrades reliability, raises prices, and increases emissions even when RECs cover 100\% of annual consumption. Colocation with storage addresses this wedge directly and induces the greatest renewable entry by eliminating generator revenue risk.
+We test these predictions by exploiting the staggered release of large language models as a natural experiment, using difference-in-differences on a novel dataset linking AI activity to local grid outcomes. AI demand significantly increases fossil generation, wholesale prices (up to 25\% in treated PJM zones), and outage frequency (0.5–1 additional outages per year) near data centers, with impacts scaling in model size. Data centers with on-site generation exhibit a sign reversal in power-quality effects, consistent with the model's prediction that behind-the-meter capacity absorbs demand spikes. Counterfactual analyses show that edge inference, spatial reallocation, and colocated storage each substantially mitigate grid impacts, while REC-only strategies do not. Together, our results demonstrate that the externalities of AI to the grid are tightly coupled to procurement design and the spatial organization of data center infrastructure.
 \end{abstract}
 
 % Research highlights
@@ -189,21 +189,46 @@ This work connects four literatures. It contributes to the economics of electric
 The remainder of the paper proceeds as follows. Section~2 reviews related work. Section~3 presents the game-theoretic model, including the toy model that illustrates core mechanisms and the full model with equilibrium characterization. Section~4 describes the empirical setting, data construction, and econometric methodology. Section~5 presents estimation results. Section~6 reports counterfactual analyses examining alternative AI development trajectories. Section~7 concludes.
 
 \section{Related Work}
+ 
+This paper contributes to four interrelated economics literatures: wholesale electricity market design, environmental externalities from industrial electricity consumption, renewable energy procurement and corporate carbon accounting, and the emerging empirical literature on data center grid impacts.
+ 
+\subsection{Wholesale Electricity Markets and Demand Shocks}
+ 
+The institutional foundations of U.S. wholesale electricity markets are well established. \citet{borenstein_bushnell2015} provide a comprehensive assessment of restructuring outcomes, documenting that wholesale price formation via locational marginal pricing remains sensitive to demand conditions due to the convex shape of the aggregate supply curve and limited short-run demand elasticity \citep{borenstein2002trouble}. In this setting, large demand increases---such as those from data center load---move clearing prices up the supply curve and may amplify market power rents \citep{borenstein2002measuring, borenstein_bushnell1999}. \citet{bushnell_mansur_saravia2008} show that vertical arrangements and forward contracting dramatically affect wholesale prices in restructured markets, a finding relevant to the bilateral power purchase agreements increasingly used by hyperscalers.
+ 
+Transmission constraints further shape how demand shocks propagate. \citet{borenstein_bushnell_stoft2000} analyze how limited transmission capacity creates localized price effects---precisely the mechanism through which geographically concentrated data center load elevates LMPs in constrained corridors. \citet{joskow2008capacity} identifies the ``missing money'' problem in capacity markets, directly relevant as PJM capacity prices rose from \$30 to \$270/MW-day between 2023 and 2024, partly driven by data center growth \citep{cmu2025}. \citet{joskow2019} further documents how intermittent renewable generation complicates wholesale market investment signals, a challenge amplified when new baseload demand from data centers coincides with coal retirements and renewable expansion.
+ 
+The merit-order literature provides the inverse mechanism to our analysis. While \citet{sensfuss2008} and \citet{cludius2014} show that zero-marginal-cost renewables shift supply rightward and depress wholesale prices, data center demand shifts demand rightward, moving clearing prices up the supply curve. This symmetry motivates our focus on wholesale price effects as a primary outcome.
+ 
+\subsection{Environmental Externalities and Marginal Emissions}
+ 
+A large literature documents how industrial electricity consumption generates environmental externalities that vary dramatically by location and time. \citet{siler_evans2012} provide the first systematic calculation of marginal emissions factors for the U.S. grid, revealing substantial regional variation. \citet{graff_zivin2014} extend this framework to show more than threefold variation in marginal emissions across regions, with direct implications for evaluating how data center siting decisions affect net emissions. \citet{holland2022pnas} demonstrate that despite declining \emph{average} grid emissions, \emph{marginal} CO$_2$ emissions from U.S. electricity generation have not decreased---a critical finding for assessing the true environmental impact of incremental data center demand. \citet{callaway_fowlie2018} quantify how the location of demand reduction or renewable generation affects emissions displacement, directly relevant to data center siting.
+ 
+The emissions leakage literature provides further context. \citet{fowlie2009} shows that incomplete cap-and-trade regulation achieves only a fraction of intended emissions reductions due to leakage across jurisdictional boundaries. \citet{fell_maniloff2018} provide empirical evidence that RGGI caused coal generation to shift to non-participating states. These mechanisms are directly applicable to data centers: load growth in one region can increase fossil fuel dispatch in neighboring regions, undermining the environmental benefits of local renewable procurement. \citet{holland2016aer} demonstrate that externalities from electricity-intensive activities in one state are substantially exported to others via the interconnected grid.
+ 
+\subsection{Renewable Energy Certificates and Corporate Procurement}
+ 
+A growing literature evaluates the environmental effectiveness of corporate clean energy procurement strategies. \citet{gillenwater2008a} establishes that unbundled RECs fail credible additionality tests, and \citet{gillenwater2014} shows empirically that the voluntary REC market has negligible influence on the economic feasibility of new wind projects. \citet{bjorn2022} find that when REC-based emission reductions are removed from corporate inventories, companies' scope~2 trajectories no longer align with climate targets. \citet{brander2018} identify fundamental problems with the GHG Protocol's market-based method that allows hyperscalers to claim zero scope~2 emissions via REC purchases.
+ 
+System-level modeling confirms this hierarchy. \citet{xu2024} provide the first comprehensive comparison of annual volumetric matching, hourly (24/7) matching, and emissions-based matching strategies, finding that annual matching via RECs does little to reduce system-level emissions while hourly matching is significantly more effective. \citet{riepin2024} find similar results in European markets, estimating that 98\% hourly carbon-free energy matching carries a 54\% cost premium over annual matching but substantially reduces system emissions. On the PPA side, \citet{backstrom2023} use U.S.\ county-level data with two-way fixed effects to show that corporate PPAs have influenced aggregate renewable capacity---unlike voluntary RECs---though effects are heterogeneous across contract types and regions.
+ 
+These findings motivate our game-theoretic procurement model. The empirical literature establishes a clear hierarchy of environmental effectiveness---unbundled RECs (lowest), annual volumetric matching, and 24/7 hourly matching (highest)---that maps onto the strategic choices available to hyperscalers in our framework.
+ 
+\subsection{Data Center Grid Impacts}
+ 
+Our paper contributes most directly to the emerging empirical literature on data center electricity market impacts. \citet{benetton2023} establish the template for studying how large, geographically concentrated computing loads create electricity price externalities: using Bitcoin price as an exogenous demand shifter in Upstate New York, they find that cryptocurrency mining raised electricity costs by \$92 million annually for small businesses and \$204 million for households. We extend this approach to AI-driven data center demand, using model releases rather than cryptocurrency prices as the demand shock.
+ 
+Several concurrent papers study data center grid impacts using complementary methods. \citet{mamkhezri2025} use difference-in-differences examining Virginia data center expansion on wholesale prices across census tracts, finding that interconnections raise wholesale prices by 7.3\% through congestion and marginal loss components. \citet{kay2026} develop an hourly least-cost dispatch model covering all U.S.\ wholesale markets, finding existing data centers have increased wholesale prices by 3--5\% nationally, with substantially larger effects in data center corridors and projected increases of 20--50\% under high-utilization scenarios. \citet{bogmans2025} use a multi-country CGE model to project U.S.\ electricity price increases of 8.6\% and carbon emissions increases of 5.5\% from AI-driven data center growth. \citet{knittel2025} model data center flexibility in PJM, ERCOT, and WECC, finding that flexible scheduling reduces system costs but has ambiguous emissions effects depending on the generation mix.
+ 
+On the political economy side, \citet{gargano2025} study state-level tax incentives for data centers using staggered DiD, finding that incentives increase development but with limited employment impacts. \citet{jacobs2025} documents \$4.3 billion in transmission connection costs passed to PJM ratepayers.
+ 
+Our paper differs from this literature in three respects. First, our game-theoretic procurement model connects the empirical findings on price and emissions externalities to the strategic incentives facing hyperscalers, bridging the gap between the market impact and corporate procurement literatures. Second, we use AI model releases as plausibly exogenous demand shocks, providing an identification strategy that does not rely on observing facility-level capacity additions. Third, we examine power quality degradation alongside price effects, capturing externalities beyond the wholesale market.
+ 
 
-This paper contributes to four interrelated literatures. First, techno-economic assessments document the scale of data center electricity demand: Lawrence Berkeley estimates U.S. data center consumption could reach 6.7–12\% of national electricity by 2030 \cite{shehabi2024}, while utility five-year peak demand forecasts jumped from 38 GW to 128 GW between 2023 and 2024, with approximately 90 GW attributable to data centers \cite{gridstrategies2025}. These assessments characterize aggregate trends but do not isolate causal mechanisms.
-
-Second, computer science research quantifies AI's computational and environmental costs, from training emissions \cite{strubell19, schwartz2020green} to debates over efficiency improvements \cite{RN2, RN8} and inference-time scaling \cite{kim2025cost}. This literature focuses on model- or facility-level accounting rather than system-wide market effects.
-
-Third, emerging evidence points to grid-level externalities from data center concentration. Sensor data reveals spatial correlation between data center proximity and power quality degradation \cite{nicoletti2024}, PJM capacity prices increased from $30 to $270/MW-day between 2023–2024 amid data center load growth \cite{cmu2025}, and transmission costs are increasingly socialized across ratepayers \cite{jacobs2025}. These studies establish correlational patterns but lack causal identification.
-
-Fourth, the econometric literature on electricity markets provides methodological foundations, including difference-in-differences for demand responses \cite{roth2024did} and event studies for policy interventions \cite{pnnl2022}, but has not applied quasi-experimental methods to AI deployment impacts.
-
-We address this gap by treating AI model releases as plausibly exogenous demand shocks, using difference-in-differences to estimate causal effects on locational marginal prices and power quality. Unlike prior work building from computational requirements or facility audits, we analyze grid-level impacts using wholesale market data, capturing full demand effects without requiring proprietary operational information.
-
-\section{Background: Datacenter Concentration and Power-Quality}
+\section{Industry Background}
 % % \nb{One possibility is to roll this in with the problem definition in 3.1 if we need space.}
 % % \nb{We should also have related work in terms of what kinds of analysis has been done and explain what our work contributes hasnt been done or not easily inferrable from existing work.}
-The U.S. data centers are expanding rapidly, nearly tripling from its 2008 levels to 1489 active sites in 2025, with another 1,359 on the horizon~\cite{aterio_us_data_centers_2025}. The market is dominated by \emph{hyperscalers}---vertically integrated datacenters---owned by AI heavy companies such as Amazon, Microsoft, and Google, alongside a long tail of smaller operators. Hyperscalers afford companies certain economies of scale but greatly increase the geographic concentration of power demand on the grids. Concentrated demand strains local grids in the area, raising congestion costs and sometimes degrading power quality for neighboring consumers. Large, inflexible loads from AI hyperscalers also reduce system reliability, elevate wholesale prices, and complicate renewable integration.
+U.S. data centers are expanding rapidly, nearly tripling from its 2008 levels to 1489 active sites in 2025, with another 1,359 on the horizon~\cite{aterio_us_data_centers_2025}. The market is dominated by \emph{hyperscalers}---vertically integrated datacenters---owned by AI heavy companies such as Amazon, Microsoft, and Google, alongside a long tail of smaller operators. Hyperscalers afford companies certain economies of scale but greatly increase the geographic concentration of power demand on the grids. Concentrated demand strains local grids in the area, raising congestion costs and sometimes degrading power quality for neighboring consumers. Large, inflexible loads from AI hyperscalers also reduce system reliability, elevate wholesale prices, and complicate renewable integration.
 \subsection{Market Overview}
 
 The U.S. data center market has expanded rapidly, growing from 519 facilities in 2008 to 1,489 active sites in 2025, with another 1,359 announced or under construction \cite{aterio_us_data_centers_2025}. Electricity demand more than tripled over this period, rising from under 5 to over 15 GWh per hour (BNEF), while total U.S. capacity increased only 17.6\% \cite{EIA_2023_table4_2A} and dispatchable baseload capacity fell as coal retired.
@@ -218,37 +243,19 @@ Power consumption has risen in parallel, though since 2018 growth in renewable g
     \vspace{-10pt}
 \end{wrapfigure}
 
-The market is geographically concentrated and dominated by hyperscalers—Amazon, Microsoft, and Google—who account for 38\% of capacity across five firms, and 64\% across twenty. Unlike colocation providers such as Equinix, hyperscalers are vertically integrated, owning facilities, long-term power contracts, fiber networks, and custom chips. These economies of scale lower costs but also create externalities: concentrated demand strains local grids, elevates congestion, and reduces reliability, though clustering also generates jobs, tax revenue, and services. Given hyperscalers’ role in AI training and their outsized grid impacts, our analysis focuses on them.
+The market is geographically concentrated and dominated by hyperscalers—Amazon, Microsoft, and Google—who account for 38\% of capacity across five firms, and 64\% across twenty. Unlike colocation providers such as Equinix, hyperscalers are vertically integrated, owning facilities, long-term power contracts, fiber networks, and custom chips.
 
 
 \begin{figure}[t!]
     \centering
     % First figure
-    \begin{minipage}[t]{0.45\linewidth}
-        \centering
-        \includegraphics[width=\linewidth]{Figures/Data Centers by State.png}
-        \caption{Data centers by state. Source: Aterio.io. \niranjan{Dont think this picture contributes much to the discourse. Move to appendix for space.}}
+    \includegraphics[width=\linewidth]{Figures/Data Centers by State.png}
+        \caption{Data centers by state. Source: Aterio.io.}
         \label{fig:DCbyState}
-    \end{minipage}
-    \hfill
-    % Second figure
-    \begin{minipage}[t]{0.45\linewidth}
-        \centering
-        \includegraphics[width=\linewidth]{Figures/HarmonicDistortion.png}
-        \caption{Total harmonic distortion representation.}%\aruna{this figure is not referenced in the text}}        
-        \label{fig:THD}
-    \end{minipage}
-    \vspace{-2.05em}
 \end{figure}
 
 These economies of scale, however, generate externalities. Concentrated demand in specific regions strains local grids, raising congestion costs and sometimes degrading power quality for neighboring consumers. Large, inflexible loads reduce system reliability, elevate wholesale prices, and complicate renewable integration. At the same time, clustering provides local benefits through jobs, tax revenues, and downstream services. Data centers thus act as both efficiency drivers and sources of regional externalities. It is important to consider the mitigation of the externalities to the grid when analyzing the impacts of AI. We focus on hyperscalers in our paper because hyperscalers perform the majority of AI training and also because larger facilities are more likely to cause power distortions.
 % \aruna{Is there a reason why we are talking about hyperscalers? Should we say therefore we focus on these hyperscalers?}
-
-AI workloads affect power quality through three main mechanisms. First, data centers and AI computing facilities add substantial baseload demand that can strain grid capacity and compromise voltage regulation, especially during peak periods. Second, AI workloads fluctuate rapidly with computational needs, creating unpredictable load variations that challenge stability and frequency regulation. Third, the switching power supplies and electronics essential to AI hardware generate harmonic distortion, introducing waveform distortions that spread through distribution networks and degrade power quality. See Figure \ref{fig:THD} in Appendix for an illustration of this harmonic distortion.
-
-AI workloads also affect wholesale electricity prices through the demand channel, with potentially indeterminate long-run retail market impacts. The U.S. electricity sector comprises both vertically integrated utilities and restructured markets featuring competitive wholesale generation alongside monopoly retail distribution. Wholesale prices are determined hourly in day-ahead markets via sealed-bid, uniform-price auctions subject to network constraints. Locational price variation reflects transmission limitations within the network. Increased demand raises wholesale prices by necessitating dispatch of higher-cost marginal generators.
-
-Wholesale prices are passed through to retail consumers with substantial lag. Retail rates typically reflect average procurement and distribution costs plus a state-regulated return on investment, calculated from historical data. This passthrough mechanism is indirect even absent investment-related dynamics. While new demand sources could theoretically dilute system-wide fixed costs and reduce average retail prices, increased demand more likely raises retail rates. Understanding wholesale demand and price shifts thus provides useful intuition regarding the direction and magnitude of retail price changes.
 
 The industry is also geographically concentrated. Texas, California, and especially Virginia dominate U.S. capacity. Virginia’s cluster reflects historic federal investments in internet infrastructure and the routing of early traffic through Northern Virginia. More recent growth in Texas stems from lower electricity costs and streamlined permitting.
 
@@ -263,7 +270,7 @@ The electricity market includes three separate components: generation, transmiss
 
 These dynamics interact with broader shifts in the electricity market: greater electrification and the transition from fossil fuels to renewables. Because renewables are intermittent and less dispatchable, rising data center loads coupled with greater renewable penetration place dual pressures on grids, shaping both market outcomes and policy debates. It is therefore crucial to quantify how much power AI uses, how it distorts quality and impacts prices, and the role of efficiency improvements and developments in computing.
 
-\subsection{Total Harmonic Distortion}
+% \subsection{Total Harmonic Distortion}
 \begin{wrapfigure}{r}{0.3\linewidth}
     \centering
     \vspace{-18pt}
@@ -272,23 +279,46 @@ These dynamics interact with broader shifts in the electricity market: greater e
     \label{fig:THD}
     \vspace{5pt}
 \end{wrapfigure}
-Figure~\ref{fig:THD} illustrates the distortions in the power frequencies. The green lie shows the \emph{clear} voltage curve, which is cleanly sinusoidal, whereas with huge loads can produce harmonic distortions shown as the dotted yellow curve. This \emph{dirtier} voltage can adversely affect the operation and lifetime of household appliances and other products that use electricity.
+% Figure~\ref{fig:THD} illustrates the distortions in the power frequencies. The green line shows the \emph{clear} voltage curve, which is cleanly sinusoidal, whereas with huge loads can produce harmonic distortions shown as the dotted yellow curve. This \emph{dirtier} voltage can adversely affect the operation and lifetime of household appliances and other products that use electricity.
 
 \subsection{Background: Datacenter Concentration and Power-Quality}
 
-AI workloads affect power quality through three main mechanisms. First, data centers and AI computing facilities add substantial baseload demand that can strain grid capacity and compromise voltage regulation, especially during peak periods. Second, AI workloads fluctuate rapidly with computational needs, creating unpredictable load variations that challenge stability and frequency regulation. Third, the switching power supplies and electronics essential to AI hardware generate harmonic distortion, introducing waveform distortions that spread through distribution networks and degrade power quality. See Figure \ref{fig:THD} in Appendix for an illustration of this harmonic distortion.
+AI workloads affect power quality through three main mechanisms. First, data centers and AI computing facilities add substantial baseload demand that can strain grid capacity and compromise voltage regulation, especially during peak periods. Second, AI workloads fluctuate rapidly with computational needs, creating unpredictable load variations that challenge stability and frequency regulation. Third, the switching power supplies and electronics essential to AI hardware generate harmonic distortion, introducing waveform distortions that spread through distribution networks and degrade power quality. Figure~\ref{fig:THD} illustrates the distortions in the power frequencies. The green line shows the \emph{clear} voltage curve, which is cleanly sinusoidal, whereas with huge loads can produce harmonic distortions shown as the dotted yellow curve. This \emph{dirtier} voltage can adversely affect the operation and lifetime of household appliances and other products that use electricity.
+
+\begin{wrapfigure}{r}{0.3\linewidth}
+    \centering
+    \vspace{-18pt}
+    \includegraphics[width=\linewidth]{Figures/HarmonicDistortion.png}
+    \caption{Total harmonic distortion representation.}%\aruna{this figure is not referenced in the text}}        
+    \label{fig:THD}
+    \vspace{5pt}
+\end{wrapfigure}
 
 AI workloads also affect wholesale electricity prices through the demand channel, with potentially indeterminate long-run retail market impacts. The U.S. electricity sector comprises both vertically integrated utilities and restructured markets featuring competitive wholesale generation alongside monopoly retail distribution. Wholesale prices are determined hourly in day-ahead markets via sealed-bid, uniform-price auctions subject to network constraints. Locational price variation reflects transmission limitations within the network. Increased demand raises wholesale prices by necessitating dispatch of higher-cost marginal generators.
 
 Wholesale prices are passed through to retail consumers with substantial lag. Retail rates typically reflect average procurement and distribution costs plus a state-regulated return on investment, calculated from historical data. This passthrough mechanism is indirect even absent investment-related dynamics. While new demand sources could theoretically dilute system-wide fixed costs and reduce average retail prices, increased demand more likely raises retail rates. Understanding wholesale demand and price shifts thus provides useful intuition regarding the direction and magnitude of retail price changes.
 
 \subsection{RECs, PPAs, and Colocation}
+Corporate electricity procurement takes several forms. Each procurement option entails distinct implications for grid externalities. The most common method is direct procurement, in which a facility draws power as a standard load-serving customer, inheriting the emissions profile of the local generation mix. Often but with increasing rarity and due to the structure of the market, data centers participate directly in the retail electricity market and only interact with utilities.
+
+Despite purchases of electricity with the same properties of that delivered to all other buyers, many hyperscalers claim that they use only renewable electricity. How can this be? To claim renewable attributes without altering physical electron flows, many data center operators purchase renewable energy certificates (RECs). RECs unbundle the environmental attributes of renewable generation into tradeable commodities representing one MWh of renewable output. RECs originated as compliance instruments for state renewable portfolio standards \citep{epa_rec_definition,wiser2004alternative}. REC markets are regulated at the local level with differing standards across markets. Some markets require retirement of RECs in the same geographic market to count. A data center in PJM cannot retire RECs from an ERCOT wind farm. However, this is mostly statutory and is less impactful for voluntary REC purchases. Other markets include voluntary purchases that impose no spatial or temporal constraints.  This disconnect underlies the ``timing wedge'' identified in this paper—annual 100\% renewable claims coexisting with fossil-heavy consumption during peak hours. Empirical evidence suggests the emissions-reduction value of unbundled RECs may be near zero in many markets \citep{bjorn2022recs,gillenwater2007recs}.
+
+Power purchase agreements (PPAs) offer a closer link between procurement and consumption. As shown in Figure \ref{fig:PPAFigure}, PPAs by data centers have risen precipitously since 2016 and have grown alongside data center power consumption. While most PPAs were historically wind-based, battery and solar PPAs are increasingly common, and nuclear PPAs are emerging as a favorite of industry leaders. Physical PPAs deliver contracted renewable power to the offtaker's node, while virtual (financial) PPAs provide contract-for-differences settlements without physical delivery, sharing the spatial mismatch limitations of unbundled RECs. The key distinction is whether procurement induces \textit{incremental} renewable capacity that is \textit{deliverable} to the relevant node \citep{taheri2025ppa,kobus2021ppa}.
+
+\begin{figure}
+    \centering
+    \includegraphics[width=0.5\linewidth]{Figures/PPA by Resource Type.png}
+    \caption{PPA agreements by data centers have risen dramatically since 2016.}
+    \label{fig:PPAFigure}
+\end{figure}
+
+Colocation includes siting dedicated generation at or near a data center, often behind the meter and is increasingly pursued by hyperscale operators. By serving load locally, colocation can reduce transmission congestion and avoid incremental bulk system demand. However, FERC has scrutinized such arrangements for potential cost-shifting to remaining ratepayers, as in the Talen Energy--Amazon arrangement at the Susquehanna nuclear plant \citep{ferc2024}. The net environmental impact depends on the counterfactual: redirecting generation that would otherwise serve grid load may increase system-wide emissions.
 
 \section{Game Theoretic Model}
 
 \subsection{Model}
 
-We present a model of the impacts of varying decision choices for carbon abatement by a large hyperscaler. We present a toy model to illustrate model functioning followed by a full model. We focus on marginal carbon intensity (MCI) and average carbon intensity (ACI). MCI represents the emissions from a particular hour while average carbon intensity represents the total emissions divided by the total generation.
+We present a model of the impacts of varying decision choices for carbon abatement by a large hyperscaler. We present a toy model to illustrate model functioning followed by a full model. We focus on marginal carbon intensity (MCI) and average carbon intensity (ACI). MCI represents the emissions from a particular hour while average carbon intensity represents the total emissions divided by the total generation. While we do not model system-level reliability directly, increases in load without corresponding investments in generation naturally contribute to greater reliability challenges.
 
 \subsection{Toy Model}
 
@@ -559,217 +589,6 @@ Given $(i,j)$ and the set of entrants from Stage 0b, a \emph{competitive two-per
 \]
 such that (i) dispatch \eqref{eq:dispatch} clears energy with $p_t=c_{g^*(t)}$; (ii) REC issuance/banking/retirements satisfy \eqref{eq:bank}, \eqref{eq:gran_req}--\eqref{eq:annual_req}, and REC prices satisfy \eqref{eq:rec_euler}; and (iii) backup and colocation quantities meet \eqref{eq:grid_draw}. A \emph{subgame-perfect equilibrium} of the full game consists of $(i^*,j^*)$ solving \eqref{eq:hyper_obj}, a set of entrants satisfying free-entry conditions, and a competitive operating equilibrium in each period.
 
-% \subsection{Hyperscaler Problem}
-
-% On the procurement side, the hyperscaler may rely on (a) renewable energy certificates (RECs) combined with retail market purchases, (b) power purchase agreements (PPAs) for contracted renewable output, or (c) colocation with dedicated renewable generation. In addition, the hyperscaler chooses an emergency backup arrangement: diesel, storage, or no provider. Backup power prevents outages but also affects carbon emissions. For instance, storage charged with colocated solar lowers the carbon intensity of operations, while diesel generators raise it.
-
-% The hyperscaler balances four components of cost: operational expenditures $C^{\mathrm{op}}_i$, capital costs $C^{\mathrm{cap}}_i$, expected outage costs $P_{ij} C^{\mathrm{out}}$, and reputational costs associated with emissions $\bar C^{\mathrm{env}}_{ij}$. The decision problem is:
-
-% \begin{equation}
-%   \pi_{\text{hyper}}=\min_{i\in\mathcal{I},\,j\in\mathcal{J}} 
-%     \Bigl[ C^{\mathrm{op}}_i + C^{\mathrm{cap}}_i 
-%     + P_{ij} \; C^{\mathrm{out}} 
-%     + \bar C^{\mathrm{env}}_{ij} \Bigr].
-% \end{equation}
-
-% The probability of an outage is the product of the probability that the contracted procurement source fails and the probability that backup power is unavailable:
-% \begin{equation}
-%     P_{ij}=P_{i}P_{j}.
-% \end{equation}
-
-% Reputational costs from emissions increase in the emissions difference created by the hyperscaler’s presence,
-% $\Delta E = E^{\text{with DC}} - E^{\text{without DC}}$. The mean reputational cost is:
-% \begin{equation}
-%     \bar C^{\mathrm{env}}_{ij}=\int f(\Delta E)\, C^{env}_{ij}\,d\Delta E.
-% \end{equation}
-
-% \subsection{Generators and Entry}
-
-% On the supply side, there exist incumbent renewable and fossil generators as well as potential entrants of both types. A potential entrant chooses to enter if expected revenues exceed discounted entry costs. Renewable revenue is composed of energy market revenue plus REC revenue (fossil units are ineligible for RECs).
-
-% Entrants face capital costs $C^{cap}$ and operating expenditures $C^{OPEX}$. The cost of capital depends on revenue variance $\sigma^2$, with borrowing rate $r(\sigma^2)$ strictly increasing in $\sigma^2$. The variance of revenue is determined by the distribution of electricity prices, REC prices, and quantities. Merchant renewable generator profits are:
-
-% \begin{equation}
-%     \pi_i=\sum_{t=1}^T f_p(p_i)f_q(q_i)+f_{REC_i}(REC_i)
-% \end{equation}
-% \begin{center}
-%         $-\sum_{t=0}^T (1+r(\sigma^2))^tC^{cap} 
-%     +\sum_{t=1}^T\frac{C^{OPEX}}{(1+r(\sigma^2))^{t}}.$
-% \end{center}
-
-% \subsection{Contract Structures}
-
-% A PPA fixes quantity $\bar q$ at price $\bar p$, reducing exposure to price and REC risk:
-% \begin{equation}
-%     \pi_i=\sum_{t=1}^T \bar{p}\bar{q}+f_p(p_i)f_q(q_i-\bar{q})+f_{REC_i}(REC_i)
-% \end{equation}
-% \begin{center}
-%     $-\sum_{t=0}^T (1+r(\sigma^2))^tC^{cap} 
-%     +\sum_{t=1}^T\frac{C^{OPEX}}{(1+r(\sigma^2))^{t}}.$
-% \end{center}
-
-% Colocation provides a full guarantee of revenue and REC payments, eliminating variance ($\sigma^2=0$). The financing rate is then $r(0)$, and generator profits satisfy:
-% \begin{equation}
-% \pi^{\text{colo}} > \pi^{\text{PPA}} > \pi^{\text{REC/merchant}}.
-% \end{equation}
-
-% \subsection{Market Operations}
-
-% Each period $t$ features two sources of demand: hyperscaler demand $D^M_t$ and outside demand $D^O_t$.  
-% Total system demand is thus
-% \begin{equation}
-%     D_t = D^M_t + D^O_t.
-% \end{equation}
-
-% \paragraph{Generator availability}  
-% Generators of type $g$ are characterized by their capacity $O^{MAX}_g$, variable cost $c_g$, and emissions rate $e_g$.  
-% For simplicity, each generator is available at full capacity with probability $0.5$ and otherwise produces zero:
-% \begin{equation}
-%     x_{g,t} =
-%     \begin{cases}
-%         O^{MAX}_g & \text{with probability } 0.5, \\
-%         0 & \text{with probability } 0.5.
-%     \end{cases}
-% \end{equation}
-
-% \paragraph{Dispatch and energy prices}  
-% Energy is dispatched according to a merit order based on variable cost. Let $\mathcal{G}_t$ denote the set of available generators in period $t$. Dispatch solves
-% \begin{equation}
-%     \min_{\{x_{g,t}\}} \sum_{g \in \mathcal{G}_t} c_g x_{g,t}
-%     \quad \text{s.t.} \quad
-%     \sum_{g \in \mathcal{G}_t} x_{g,t} + Q^{\text{colo}}_{t} + B_{j,t} = D_t,
-% \end{equation}
-% where $Q^{\text{colo}}_{t}$ is colocated renewable production and $B_{j,t}$ is backup supply (diesel or storage).  
-% The locational marginal price (LMP) in period $t$ is set by the marginal unit, i.e.\ $p_t = c_{g^*(t)}$, where $g^*(t)$ is the last unit dispatched.
-
-% \subsection{REC Market: Issuance, Banking, Matching, and Clearing}
-
-% \paragraph{Issuance.}
-% Each MWh of renewable generation creates one renewable energy certificate (REC).
-% For generator $g$ with technology $l\in\{R,F\}$,
-% \begin{equation}
-%   r_{g,t} = \mathbf{1}\{l=R\}\, x_{g,t}, \qquad r_{g,t}\ge 0.
-% \end{equation}
-% Let aggregate REC supply in period $t$ be $S_t \equiv \sum_{g} r_{g,t}$.
-
-% \paragraph{Ownership and retirement.}
-% RECs are transferable claims that can be retired by buyers $b\in\mathcal{B}$:
-% load-serving entities (compliance) and the hyperscaler (voluntary).
-% Let $R^{\text{ret}}_{b,t}$ be retirements by $b$ in period $t$ and
-% $R^{\text{ret}}_{t}\equiv\sum_{b} R^{\text{ret}}_{b,t}$.
-% Retired RECs cannot be traded again.
-
-% \paragraph{Banking and vintages.}
-% RECs can be banked intertemporally subject to attrition and bounds.
-% Let $K_t$ denote the stock of banked RECs available at the start of period $t$.
-% With decay $\delta\in[0,1)$ and inventory cap $\bar K$,
-% \begin{equation}
-%   K_{t+1} = (1-\delta)K_t + S_t - R^{\text{ret}}_{t}, 
-%   \qquad 0\le K_t \le \bar K.
-% \end{equation}
-
-% \paragraph{Matching rules (timing wedge).}
-% Define $h\in[0,1]$ as the \emph{granularity requirement}:
-% $h=0$ is annual bucket matching; $h=1$ is hour-for-hour matching
-% within the qualifying zone.\footnote{Geographic eligibility (tiers/zones) can be
-% imposed by restricting $g$ to zones deliverable to the hyperscaler’s node.}
-% Let $R^{M,\text{ret}}_t$ denote the hyperscaler’s REC retirements in period $t$
-% and $R^{M,\text{ret}} \equiv \sum_t R^{M,\text{ret}}_t$ its total.
-% Granular matching imposes the feasibility constraints
-% \begin{align}
-%   % &\textbf{(Hourly availability)} 
-%   && R^{M,\text{ret}}_t \;\le\; h\, S^{\text{qual}}_t && \forall t, \label{eq:hourly-availability}\\
-%   % &\textbf{(Annual bucket for the remainder)} 
-%   && \sum_{t} R^{M,\text{ret}}_t \;\le\; (1-h)\sum_{t} S^{\text{qual}}_t, \label{eq:annual-bucket}
-% \end{align}
-% where $S^{\text{qual}}_t\le S_t$ is the supply of RECs that qualify for the hyperscaler
-% (e.g.\ correct zone/tier). For $h=0$, only \eqref{eq:annual-bucket} binds (pure annual);
-% for $h=1$, only \eqref{eq:hourly-availability} binds (hourly matching).
-% These constraints formalize the \emph{timing wedge}:
-% with $h<1$, retirements used to make annual claims need not coincide with load hours.
-
-% \paragraph{Demand for retirements (obligations).}
-% Let $\Xi_t$ denote exogenous compliance obligations of LSEs (RPS),
-% and let the hyperscaler target $\phi\in[0,1]$ be the share of its consumption it
-% wishes to cover with (qualifying) RECs. Then its target retirements satisfy
-% \begin{equation}
-%   \sum_t R^{M,\text{ret}}_t \;\ge\; \phi \sum_t D^M_t,
-% \end{equation}
-% while compliance entities must retire at least $\Xi_t$ each period.
-% (If compliance is annual, replace period $t$ with vintage sums.)
-
-% \paragraph{Clearing and prices.}
-% The REC market clears by minimizing the present value of meeting obligations
-% using available (issuable) certificates, banking, and (if needed) shortfalls penalized
-% at an alternative compliance payment (ACP) $\overline{p}^{\text{ACP}}$:
-% \begin{equation}
-% \begin{aligned}
-%   \min_{\{R^{\text{ret}}_{b,t}\},\,\{K_t\},\,\{\text{short}_{b,t}\}} 
-%   &\quad \sum_{t} \beta^t \Big[ p^{REC}_t \, R^{\text{ret}}_{t} 
-%         + \sum_{b} \overline{p}^{\text{ACP}}_t \, \text{short}_{b,t} \Big] \\
-%   \text{s.t.}\quad 
-%   & K_{t+1} = (1-\delta)K_t + S_t - R^{\text{ret}}_t, \quad 0\le K_t \le \bar K, \\
-%   & R^{M,\text{ret}}_t \text{ satisfy }\eqref{eq:hourly-availability}\text{--}\eqref{eq:annual-bucket}, \\
-%   & R^{\text{ret}}_{\text{LSE},t} + \text{short}_{\text{LSE},t} \;\ge\; \Xi_t, \quad \text{short}_{\text{LSE},t}\ge 0, \\
-%   & \sum_t R^{M,\text{ret}}_t \;\ge\; \phi \sum_t D^M_t, \quad R^{M,\text{ret}}_t \ge 0, \\
-%   & R^{\text{ret}}_{b,t} \ge 0 \ \forall b,t.
-% \end{aligned}
-% \end{equation}
-% The \emph{REC price} $p^{REC}_t$ is the shadow value of the system-wide REC balance
-% constraint (issuance $\to$ retirement/banking). With banking interior, the
-% Euler condition implies intertemporal arbitrage:
-% \begin{equation}
-%   p^{REC}_t \;=\; \beta (1-\delta)\,\mathbb{E}_t\!\left[p^{REC}_{t+1}\right]
-%   \quad \text{if } 0 < K_t < \bar K,
-% \end{equation}
-% and $p^{REC}_t \le \overline{p}^{\text{ACP}}_t$ with equality if shortfalls occur.
-
-% \paragraph{REC revenues and generator entry.}
-% REC revenues for a merchant renewable generator are
-% \begin{equation}
-%   \mathbb{E}\!\left[\sum_{t=1}^T p^{REC}_t\, r_{g,t}\right]
-%   \;=\; \mathbb{E}\!\left[\sum_{t=1}^T p^{REC}_t\, x_{g,t}\right],
-% \end{equation}
-% which nests your $f_{\mathrm{REC}_i}(\mathrm{REC}_i)$ term.
-% Entry for renewables satisfies the zero-profit (or positive-profit) condition with
-% total revenue $p_t x_{g,t} + p^{REC}_t x_{g,t}$ and discounting at $r(\sigma^2)$.
-
-% \paragraph{Emissions accounting and the timing wedge.}
-% Operationally, RECs do not change real-time dispatch, so with annual matching ($h=0$)
-% the hyperscaler’s marginal emissions are
-% \begin{equation}
-%   \mathrm{MME}^{REC}(h{=}0) \;=\; \mathbb{E}\!\left[\mathrm{MCI}_t \cdot D^M_t\right].
-% \end{equation}
-% Granular matching ($h>0$) imposes \eqref{eq:hourly-availability},
-% tightening REC supply in high-$\mathrm{MCI}_t$ hours. This raises
-% $p^{REC}_t$ in those hours and increases the private value of storage or
-% generation profiles aligned with $D^M_t$, shrinking the timing wedge in equilibrium
-% (through entry and operational shifting), even though $G^M_t$ is still met via the grid.
-
-% \paragraph{Colocation and timing.}  
-% Colocated generation $Q^{\text{colo}}_{t}$ offsets hyperscaler load directly in real time, reducing grid demand to
-% \begin{equation}
-%     G^M_{t} = D^M_t - Q^{\text{colo}}_{t} - B_{j,t}.
-% \end{equation}
-% When renewables are colocated without storage, $Q^{\text{colo}}_{t}$ only offsets load when generation and demand coincide.  
-% With storage, colocated surplus can be shifted into high-demand or high-carbon hours, shrinking the ``timing wedge'' between hyperscaler load and renewable production.
-
-% \paragraph{Backup provision.}  
-% Emergency options $j \in \{\text{none}, \text{diesel}, \text{storage}\}$ affect both reliability and emissions.  
-% Diesel backup contributes directly to meeting $D^M_t$ during outages but increases emissions:
-% \begin{equation}
-%     E^{\text{diesel}}_t = e_{\text{diesel}} B_{\text{diesel},t}.
-% \end{equation}
-% Storage backup contributes without adding emissions, provided it is charged by colocated renewable production.  
-% Thus, backup choice enters both the outage probability $P_{ij}$ and the carbon intensity of operations.
-
-% \paragraph{Equilibrium concept.}  
-% In each period, the joint outcome consists of (i) dispatch and prices $(p_t, p^{REC}_t)$, (ii) hyperscaler net grid draw $G^M_t$, and (iii) emissions
-% \begin{equation}
-%     E_t = \sum_{g \in \mathcal{G}_t} e_g x_{g,t} + e_j B_{j,t}.
-% \end{equation}
-% These outcomes depend jointly on procurement and backup choices, generator availability, and the entry decisions of new renewable and fossil generators.
-
 
 \subsubsection{Mechanisms and Equilibrium Implications}
 
@@ -780,174 +599,29 @@ Second, contract type alters financing risk: PPAs reduce $\sigma^2$ relative to 
 
 Third, equilibrium carbon intensity reflects both the short-run operational effect and the long-run investment effect. 
 
-
-% \section{Model}
-
-% Data center power procurement has proven a remarkably complex beast with data centers balancing a tradeoff between purchasing power cheaply and fulfilling green objectives. Many AI providers state that they are firmly on the side of the angels with Meta, in particular, making claims that power is carbon-free. Claims of carbon neutrality however are greatly impacted by how the power procurement programs work in practice. We present an economic model of data center procurement in the face of multiple options for mitigation of carbon emissions. 
-
-% \subsection{Agents}
-
-% Our model focuses on a market with a large data center hyperscaler (Microsoft) and many generators indexed by owner $k$ and energy type $l$. The data center hyperscaler chooses how to procure power in order to minimize to total expected costs. Hyperscalers choose both a procurement option $i\in I$ and an emergency power option $j \in J$. Hyperscalers can choose to procure through a power purchase agreement (PPA), colocation, or a combination of renewable energy certificate purchases and purchases of power directly through the retail market. Hyperscalers can also procure emergency power through diesel, storage, or no provider. Emergency power acts as a way to prevent outages and also impacts the level of carbon emissions based on the type of power utilized for emergencies. If storage filled up with solar is used to procure power during outages, this reduces the carbon-intensity of the data center whereas a diesal generator increases the carbon-intensity of the data center.
-
-% Hyperscalers balance operational costs $C^{\mathrm{op}}_i$ and capital costs $C^{\mathrm{cap}}_i$ associated with energy procurement with outage costs weighted by probability $P_{ij} \; C^{\mathrm{out}} $ and reputational costs related to emissions $\bar C^{\mathrm{env}}_{ij}$. The decision problem of the hyperscaler can thus be stated:
-
-% \begin{equation*}
-%   \pi_{hyper}=\min_{i\in\mathcal{I},\,j\in\mathcal{J}} 
-%     \Bigl[ C^{\mathrm{op}}_i + C^{\mathrm{cap}}_i 
-%     + P_{ij} \; C^{\mathrm{out}} 
-%     + \bar C^{\mathrm{env}}_{ij} \Bigr]
-% \end{equation*}
-
-% The probability of an outage event is the probability of an outage by the power procurement option times the power from the emergency option fails to generate backup power:
-
-% \begin{equation*}
-%     P_{ij}=P_{i}P_{j}
-% \end{equation*}
-
-% The reputational costs from environmental emissions are randomly distributed but increasing in the difference between the baseline level of emissions with and without the data center $\Delta E$. The mean reputational cost is thus:
-
-% \begin{equation*}
-%     \bar C^{\mathrm{env}}_{ij}=\int f(\Delta E) C^{env}_{ij}d\Delta E.
-% \end{equation*}
-
-% On the supply side of the market exist current renewable generators, current fossil fuel generators, potential renewable entrants, and potential fossil fuel entrants. Potential entrants choose whether to enter based on whether or not revenue from entry is greater than cost of entry. Revenue is composed of revenue from the power market and revenue from the REC market. Fossil fuel generators are not eligible for RECs.
-
-% Entrants consider both the cost of capital $C^{cap}$ and operations expenditures $C^{OPEX}$ where the cost of capital requires borrowing at interest rate $r(\sigma^2)$, which is strictly increasing in the variance of revenue $\sigma^2$. The variance of revenue is determined by the distributions of REC revenue, prices, and quantities.
-
-%     \begin{equation*}
-%         \pi_i=\sum_{t=1}^T f_p(p_i)f_q(q_i)+f_{REC_i}(REC_i)-\sum_{t=0}^T (1+r(\sigma^2))^tC^{cap} 
-        
-%         +\sum_{t=1}^T\frac{1}{{(1+r(\sigma^2))}^{t}}C^{OPEX}
-%     \end{equation*}
-
-% A power purchase agreement is an agreement to guarantee a purchase of a certain amount of power $\bar{q}$ from the generator at a fixed cost $\bar{p}$, so the profit function of the generator becomes: 
-
-%     \begin{equation*}
-%         \pi_i=\sum_{t=1}^T \bar{p}\bar{q}+f_p(p_i)f_q(q_i-\bar{q})+f_{REC_i}(REC_i)-\sum_{t=0}^T (1+r(\sigma^2))^tC^{cap} 
-        
-%         +\sum_{t=1}^T\frac{1}{{(1+r(\sigma^2))}^{t}}C^{OPEX}
-%     \end{equation*}
-
-
-% Colocation in this framework can be represented as a full guarantee of both total revenue and REC payments, so no risk is incurred in financing ($\sigma^2=0$), so the firm receives interest rate $r(0)$. Colocation is equivalent to a PPA where the full price and 
-
-% When generators enter into Power Purchase Agreements (PPAs), the variability of price and REC price decreases while when generators agree to colocation agreements, the variability of price, REC price, and quantity sold all goes to zero. All else being equal then and assuming non-degenerate distributions, generators receive more profit from colocation than PPAs and more profit from PPAs than selling RECs on the open market. 
-
-% In the operations market, generators supply electricity in two periods to meet total demand including Microsoft demand $D^M$ and other demand $D^O$. In each period, generators generate electricity $O^{MAX}$ with probability .5 and 0 generation with probability .5. The price of RECs is set by an LMP-style auction where the marginal generator providing RECs to the market sets the price of the REC.
-
-% Renewable entrants can choose to build generation with and without storage. 
-
-%\subsection{Timing}
-
-
-
 \subsubsection{Implications}
 
 Our model provides a set of empirical predictions about how hyperscalers’ procurement choices affect both costs and carbon intensity. On the demand side, as the spread between the cost of procuring electricity from renewable sources and from the open market widens, hyperscalers are more likely to turn to the open market and less likely to contract renewables. At the same time, as hyperscaler demand for electricity grows, the environmental cost of their consumption rises, and the benefits of carbon-free procurement mechanisms such as PPAs and colocation increase. These benefits scale with both the overall carbon intensity of grid electricity and the size of the hyperscaler’s load: the dirtier and larger the load, the greater the incentive to secure clean and reputationally valuable supply.
 
 On the supply side, the model emphasizes that because renewable generation is intermittent, incremental data center demand tends to raise fossil generation unless there is sufficient storage to shift renewable energy across periods. The timing mismatch between hyperscaler load and renewable output—the “timing wedge”—is therefore central to understanding operational emissions outcomes. Colocation with storage can shrink this wedge by re-timing renewable production to high-carbon hours, while diesel backup increases emissions during outages.
 
-These mechanics give rise to several testable implications. First, REC purchases on their own do not alter short-run carbon intensity, since they are purely financial transfers. Their effect arises only in the medium run, if REC demand raises REC prices and induces new renewable capacity to come online. PPAs without firming behave similarly in operational terms, but they reduce generators’ revenue risk and financing costs, which increases renewable entry relative to REC-only arrangements. Colocation has a more immediate impact: behind-the-meter renewable output reduces a hyperscaler’s net grid draw exactly when the colocated plant is producing, lowering local marginal emissions exposure. The effect is strongest when renewable output is correlated with hyperscaler load. Adding storage to colocation further enhances this benefit by shifting surplus renewable production to periods when demand is high and marginal carbon intensity is greatest, sharply reducing emissions attributable to the data center. By contrast, reliance on diesel backup increases operational emissions whenever it is deployed.
+These mechanics give rise to several testable implications. First, REC purchases on their own do not alter short-run carbon intensity, since they are purely financial transfers. Their effect arises only in the medium run, if REC demand raises REC prices and induces new renewable capacity to come online. PPAs without firming behave similarly in operational terms, but they reduce generators’ revenue risk and financing costs, which increases renewable entry relative to REC-only arrangements. Colocation has a more immediate impact: behind-the-meter renewable output reduces a hyperscaler’s net grid draw exactly when the colocated plant is producing, lowering local marginal emissions exposure. The effect is strongest when renewable output is correlated with hyperscaler load. Adding storage to colocation further enhances this benefit by shifting surplus renewable production to periods when demand is high and marginal carbon intensity is greatest, sharply reducing emissions attributable to the data center. This also can an emissions effect as the reduced timing wedge better matches power, and the behind-the-meter power can add resilience to the grid. By contrast, reliance on diesel backup increases operational emissions whenever it is deployed.
 
 Finally, the model predicts an investment hierarchy driven by financing risk: colocation, by fully eliminating revenue variance, induces the largest increase in renewable entry, followed by PPAs, and then REC purchases. This creates a long-run ordering in expected carbon reductions. Moreover, because colocated renewables reduce grid purchases at the hyperscaler’s node, emissions fall locally, though congestion and flow adjustments may increase carbon intensity in neighboring nodes unless total renewable capacity expands.
 
 Together, these predictions imply that (i) REC purchases yield little immediate emissions reduction but may encourage new renewable entry; (ii) PPAs accelerate renewable deployment by reducing financing risk, though without firming they do not improve operational carbon intensity in the short run; and (iii) colocation—especially when paired with storage—directly lowers hyperscaler-attributable emissions by addressing the timing wedge between renewable generation and hyperscaler demand.
 
-\section{Problem and Challenges}\label{Sec::Methods}
+\section{Empirical Overview}\label{Sec::Methods}
 
-%\subsection{Problem}
+We estimate the causal effect of AI workloads on four outcomes in wholesale electricity markets: local power quality, fossil fuel demand, wholesale prices, and the differential response across training versus inference phases. The central identification problem is that the objects of interest such as the timing, location, and intensity of compute activity at individual data centers, are proprietary. We observe neither training start dates nor facility-level load; instead, we observe publicly announced model release dates, the geographic footprint of hyperscaler data centers, and zonal market outcomes. Our strategy exploits model releases as the observable shock and uses difference-in-differences to recover treatment effects from the remaining variation.
 
-% \nb{Compress to a single paragraph with the list of questions.}
-% \nb{Note to self: some terminology can be expanded or replaced with more obvious descriptors (}
-%\nb{The first three paragraphs can go away in the interest of space or be greatly compressed.}
-%The U.S. data centers are expanding rapidly, nearly tripling from its 2008 levels to 1489 active sites in 2025, with another 1,359 on the horizon~\cite{aterio_us_data_centers_2025}. The market is dominated by \emph{hyperscalers}---vertically integrated datacenters---owned by AI heavy companies such as Amazon, Microsoft, and Google, alongside a long tail of smaller operators. 
+\subsection{Identification}\label{EconometricModel}
 
-%Hyperscalers afford companies certain economies of scale but greatly increase the geographic concentration of power demand on the grids. Concentrated demand strains local grids in the area, raising congestion costs and sometimes degrading power quality for neighboring consumers. Large, inflexible loads from AI hyperscalers also reduce system reliability, elevate wholesale prices, and complicate renewable integration.
+Let $Y_{it}$ denote an outcome (power quality, fossil generation, or price) for zone $i$ in period $t$, and let model release $m$ occur at date $r_m$. Zones linked to the releasing firm's data center footprint constitute the treated group for event $m$; zones without exposure to that firm's AI activity in the event window form the control group. Under the standard parallel-trends and no-anticipation assumptions, differencing outcomes across treated and control zones before and after $r_m$ identifies the average treatment effect on the treated. Because our outcomes, wholesale prices, fossil generation, voltage distortion, are transmitted through markets and the physical grid rather than through proprietary firm-level data, this approach follows a long tradition of recovering unobservable inputs from observable market equilibria \citep{fowlie2012industrial, card1994minimum, greenstone2014environmental}.
 
-%These dynamics interact with broader shifts in the electricity market: greater electrification and the transition from fossil fuels to renewables. Because renewables are intermittent and less dispatchable, rising data center loads coupled with greater renewable penetration place dual pressures on grids, shaping both market outcomes and policy debates. It is therefore crucial to quantify how much power AI uses, how it distorts quality and impacts prices, and the role of efficiency improvements and developments in computing.
+Four features of our setting complicate a textbook two-period DiD. First, training windows are unobserved: we know when a model was released but not when its training began, so the ``treatment date'' is imprecise. Second, releases are staggered across firms and calendar time, which under treatment-effect heterogeneity causes two-way fixed effects estimators to weight already-treated units as implicit controls for later-treated units \citep{goodman2021difference, sun2021treatment, callaway2021difference, borusyak2024revisiting}. Third, parallel trends is not innocuous in electricity markets, where fuel prices, weather, and secular load growth move outcomes in ways potentially correlated with data center siting. Fourth, treatment exposure itself must be constructed: no dataset directly links model releases to zonal load, and assigning generators and facilities to market zones requires substantial preprocessing (see Appendix \ref{zonalMappingEfforts}).
 
-Our goal is to investigate four primary effects of AI data centers on power markets: First, we quantify whether the deployment of frontier AI models—which require extraordinary computational resources—coincides with measurable declines in regional power quality indices and frequency distortions near data centers. Second, we analyze how training and inference workloads differentially affect local power demand, given that training produces sharp, episodic spikes while inference generates steadier ongoing consumption. Third, we estimate how wholesale electricity prices have responded to LLM development, using price elasticities and treatment effects to approximate demand sensitivity and geographic price differentials across zones. Finally, we conduct counterfactual analyses that could inform policy: assessing different scenarios of parameter size, training versus inference proportions, edge compute preference, relocation to low-population areas etc.
-
-
-%we relate model parameter counts to grid impacts and how this relationship has evolved; estimate how AI efficiency gains could reduce power quality and demand effects; compare scenarios where AI compute is dominated by training versus inference; and evaluate geographic redistribution of compute—from cloud concentration to edge computing near population centers, or relocation to low-population areas with greater supply capacity. We also assess behind-the-meter generation as a potential grid relief mechanism.
-
-%The main challenge in answering these questions is that the key variables of interest are not directly observable, either because they are proprietary or are prohibitively expensive. To address this we can use Difference-in-Differences, an econometric model that allows us to make causal inferences about impacts of model training and inference, even when direct observation is not feasible. However, applying this method is not without difficulties. First, the direct application of this idea requires that we know the exact start times for training and release dates for inference. Further, release dates can often be staggered. Last, the idea fundamentally relies on a \textit{parallel trends} assumption and robustness to confounds; we need to test if this assumption actually holds in our setting and check for other factors of influence. 
-
-%The rest of this section lays out our methodology as follows: \autoref{EconometricModel} describes the econometric analysis model, presents the assumptions and the types of evidence needed to validate its use. \autoref{subsec:eventstudy} lays out the specific Event-Study design framework we use to address the staggered nature of our problem, and present its application for power quality, harmonic distortions, and fossil demand. \autoref{PriceEffects} presents our method for inferring price effects from power demand shifts.  \autoref{subsec:robustness} presents how we validate the use of the econometric models above. 
-
-%Throughout the methods section, we describe the details of the econometric analysis, present assumptions and evidence that defend our choice to make them, and lay out the counterfactual analyses that will provide the key policy relevance of the paper. The section proceeds as follows. Subsection \ref{EconometricModel} describes the underlying logic behind the DiD econometric modelling techinque. Succeeding is Subsection \ref{subsec:eventstudy} where we detail the specific framework for the analysis of power quality, harmonic distortions, and fossil demand. We provide details on the event-study framework as a way to handle inability to see exact treatment periods. We continue with a discussion of how we identify data centers and link models to data centers in \ref{subsec:treatment}. We provide descriptions of the formal evidence we have demonstrating experimental validity and robustness in Subsection \ref{subsec:robustness}. This is directly anteceded by a description of the rationale between the difference between the power demand and power quality analysis in subsection \ref{subsec:differences}. We give insight into the estimation of price effects in Subsection \ref{PriceEffects}. We complete our tour of econometric methodology in the data center energy space with a look at our counterfactuals using evidence from previous results in Subsection \ref{counterfactuals} and a short digression about data center assumptions in Subsection \ref{DCASSUmptions}. 
-
-% We analyze four primary effects of artificial intelligence (AI) data centers on the power market, with a focus on how their presence and operations interact with grid stability and demand.
-
-% First, we consider the effects of AI models on the index of power quality and power frequency distortions in the vicinity of data centers. Power quality reflects the stability and reliability of the grid, particularly in terms of voltage and frequency deviations. The intensive and often irregular power draw of data centers—especially during periods of large-scale training runs—can generate fluctuations that degrade local power quality. Frequency stability is a central component of reliable electricity supply, and distortions can indicate imbalances between supply and demand. Because AI training loads are highly concentrated in time and location, they may create stress points in the grid that elevate the risk of such distortions. 
- 
-%  To this end, we evaluate whether the deployment of new frontier models, which require extraordinary computational resources, coincides with measurable declines in regional power quality indices, thereby signaling potential challenges for grid operators. Similarly, by linking model release timelines to observed patterns in frequency deviations, we assess the extent to which the roll-out of individual models exacerbates local power quality issues beyond baseline fluctuations.
-
-% Second, we consider the effects of both training and inference workloads on overall power demand in the vicinity of data centers. Training runs, while episodic, are energy-intensive and can produce sharp spikes in consumption, whereas inference tends to generate a steadier but still substantial level of ongoing demand. Both activities alter local load profiles, raising questions about the adequacy of transmission capacity, the role of long-term contracts for renewable energy procurement, and the broader implications for regional electricity markets. By distinguishing between training and inference, we highlight how different stages of the AI lifecycle place unique and evolving pressures on power systems.
-
-% Third, we analyze how wholesale electricity prices have been impacted by the development of LLMs. While we are unable to perform structural price analysis of LMP formation, we are able to use estimated price elasticities from our regressions alongside treatment effects to provide a ballpark estimate of the sensitivity of price to shifts in demand at the zonal level and how demand specifically from AI has contributed to differential price changes geographically across regions. We provide preliminary intuition on whether these wholesale price impacts have been transferred to the retail market to date and how these wholesale effects may in the future impact the retail market.
-
-% Finally, we perform counterfactuals to inform stakeholders and policymakers about the potential impacts of differential evolution of LLM training, inference, and compute for AI at scale. We utilize data on parameter counts and specific features of AI models combined with our econometric estimates to provide evidence on the relationship between model size and grid impacts and how this relationship has changed over time. We then provide a back-of-the-envelope calculation relating AI efficiency to meaningful improvements in effects on power quality and demand. AI efficiency represents the main lever computer scientists have at their disposal to reduce the power consumption of AI models. 
-
-% We further use our estimates to examine how AI impacts would differ in a world dominated by training with inference being less costly and mostly done on local devices and a world dominated by inference where training levels off as models plateau. We also utilize our econometric estimates to examine system level impacts of shifting compute geographically. We consider first a shift from cloud to edge computing wherein inference moves from concentration within hyperscalers to distributed inference closer to population centers. We contrast with a scenario where training and inference both move to low population areas with less load and more electricity supply better equipped to handle the influx of power demand. Finally, we analyze the role of behind-the-meter power generation as a potential alleviant to the grid. Together, our counterfactuals provide insight into how changes in the industry will shape the future of grid impacts and potentially directions the AI industry and policymakers could pursue to make impacts less palpable.
-\subsection{An Econometric Model}\label{EconometricModel}
-% \nb{change example to power quality}
-
-%The main challenge in answering these questions is that the key variables of interest are not directly observable, either because they are proprietary or are prohibitively expensive. To address this we can use Difference-in-Differences, an econometric model that allows us to make causal inferences about impacts of model training and inference, even when direct observation is not feasible.
-
-We want to quantify the effects of running AI models on the power grid but we only have overall observational data about power demand, power quality, prices, exogenous controls, locations of data centers, and dates of model activity. We do not have access to data that specifically isolates the effects with respect to running the AI models because these require proprietary knowledge. 
-
-To address this challenge, we can turn to Difference-in-differences (DiD), a widely-used statistical estimation technique in econometrics for causal inference with observational data. This approach has been used to answer a wide range of empirical economics questions from observational data such as telecom demand from price and quantity variation, \citet{fowlie2012industrial} evaluate environmental regulation in electricity using emissions and price data, and \citet{card1994minimum} study minimum wage effects via cross-state employment variation.
-
-%To directly quantify the effects of training or running a specific AI model on the power grid requires access to highly specific data. 
-%Quantifying these effects is difficult given limited data on key variables. To overcome this, we draw on econometric methods, which allow credible inference even when proprietary data are unavailable. %We utilize the publicly announced dates of training and release as exogenous shocks. 
-\begin{wrapfigure}{r}{0.45\linewidth}
-    
-    \vspace{-10pt} % adjust vertical position relative to the text
-    \centering
-    \includegraphics[width=0.98\linewidth]{Figures/gblog-difference-in-differences-march-2019.png}
-    \caption{Difference-in-differences estimation visualized.}
-    \label{fig:DIDFigure}
-    \vspace{-10pt} % tighten space below caption
-\end{wrapfigure}
-
-%For example, \citet{hausman1997valuation} infers telecom demand from price and quantity variation, \citet{fowlie2012industrial} evaluate environmental regulation in electricity using emissions and price data, and \citet{card1994minimum} study minimum wage effects via cross-state employment variation. Similarly, \citet{greenstone2014environmental} analyze Indian pollution policy using ambient monitors rather than industry disclosures. These show that when markets transmit the mechanisms of interest, public data can yield the only feasible evidence. Our study follows this tradition: by exploiting observable shifts in prices, load, and capacity, we infer data center impacts that would otherwise remain opaque.
-
-%\niranjan{Can we make this a more forceful paragraph by showing other solid papers that use this type of methodology? The following paragraph shows one paper, but lets add use cases where this is the only feasible approach.}
-%The particular econometric tool we use to analyze the impacts of specific AI models is \textit{Difference-in-Differences} (DiD). Originally popularized in empirical economics through applications such as \cite{card2022design} on training programs and \cite{card1994comment} on minimum wages, difference-in-differences has become one of the most widely used methods for causal inference with observational data. 
-
-The key idea behind this technique is to estimate treatment effects by comparing the change in outcomes over time for a treated group to the change for a control group, as illustrated in Figure~\ref{fig:DIDFigure}. 
-
-For power quality, as an example, this translates to estimating the change in utility-level power quality within the geographically-defined utility area before and after the release of a major AI model. The treated group in this case would be utility areas containing data centers engaged in model training or inference during the time period of activity, and the control group would be utilities without AI activity in the same time period. The outcome variable, power quality in our example, is modeled as a function of the treatment (i.e. the running of the AI model), and other contributing factors. Formally, we can specify the power quality effect as:
-\begin{equation}
-    Y_{it} = \alpha + \beta \,(\text{Treatment}_i \times \text{Post}_t) + \gamma_i + \delta_t + \varepsilon_{it},
-    \label{eq:DiD}
-\end{equation}
-where $Y_{it}$ is power quality for utility $i$ at time $t$, $\text{Treatment}_i$ indicates proximity to a data center, and $\text{Post}_t$ captures periods after the release of a major AI model. The coefficient of interest, $\beta$, measures the causal impact of model releases on local power quality. $\gamma_i$ captures unobserved factors common across all utilities, $\delta_t$ captures unobserved factors that remain fixed across time, and $\varepsilon_{it}$ is an error term that captures random disturbances or shocks. 
-
-We can learn the co-efficients, given appropriate data about the outcome variables over time --- in this case with data about the power-quality values over time across a range of utilities containing AI data centers, and the knowledge of when and where the AI models of interest are run.
-%By differencing across both groups and periods, DiD controls for unobserved factors that are constant over time or shared across groups, with validity relying on the ``parallel trends'' assumption. The data learns the coefficient of interest by taking the difference between the average change from the initial baseline between treated and untreated regions. 
-
-
-
-\subsection{Technical Challenges and Validating Model Assumptions}\label{DCASSUmptions}
-The validity of this basic DiD approach for our problem is affected by the following issues:
-\begin{enumerate}
-    \item \textit{Lack of specific information about when and where models are trained and released} The model as described requires knowing specifics of the training windows, e.g., when training began, and when it was released. It is not always possible to obtain such specific information. 
-    \item \textit{Staggered Events} The model also assumes a single temporal event of interest to capture pre and post treatment effects. However, models are not always released at a single time point and are often staggered.    
-    \item \textit{Parallel Trends Assumption} The effects of running a model on an AI data center is estimated by the difference from what would have been in the model were not run on that data center. This assumes that we have a fair estimate of the trend that the variable of interest would have over time but for the training and inference of the AI models. 
-   
-    \item \textit{External Confounds} The effects we observe and attribute to AI models could be due to other confounds such as random weather events, pre-existing trends in load, or variation in fuel price.
-    \item \textit{Data Engineering Challenge} No single clean dataset contains all variables needed for analysis. Data often exist at different scales, lack linking tables, or require substantial preprocessing—sometimes necessitating manual mapping, combination, and labeling. An example is the zonal mapping effort used to assign generators to zones, detailed in Appendix Subsection \ref{zonalMappingEfforts}.
-    %\item \textit{Data Disparity and Relevance} Not all available observational data may be relevant to the treatment groups in our context. For example, \nb{Dana write an example here?}. 
-    %\nb{write a few.} \nb{Also not sure if this is relvant}
-\end{enumerate}
-    
-To address the first two challenges, we use a stacked modification of the DiD model (\autoref{subsec:eventstudy}). We address the next two challenges through appropriate statistical tests and robustness checks (\autoref{subsec:robustness}) and the final issue through our data creation (section \ref{sectionData}). 
-
-%\dana{Will add this to appendix. We could also add data center fixed effects.}
-%\niranjan{This last point seems like }
-%Finally, we directly state the limitations of our analysis and where the analysis could be improved with better data.
+We address the first two issues with a stacked event-study design that anchors treatment on observed release dates and builds clean control groups for each release cohort, developed in Section \ref{subsec:eventstudy}. We address the third through pre-trend tests, placebo exercises, and controls for fuel costs, temperature, and renewable output (Section \ref{Robustness}). The fourth is resolved in our data construction, described in Section \ref{sectionData}.
 
 \section{Estimation Strategy} 
 
@@ -960,26 +634,22 @@ Formally, we define treatment exposure relative to each model's release date $r_
 
 \subsubsection{Stacked Difference-in-Difference}
 
-Model releases occur at different calendar dates, creating a staggered adoption setting. Recent econometric literature has demonstrated that conventional two-way fixed effects (TWFE) estimators as is the case in the estimates from Equation \ref{eq:DiD}. 
-%\nb{is this referring to the standard DiD estimtor we have in Eq 1?} 
+Model releases occur at different calendar dates, creating a staggered adoption setting. Recent econometric literature has demonstrated that conventional two-way fixed effects (TWFE) estimators as is the case in the estimates from traditional difference-in-differences. 
 can produce biased estimates under treatment effect heterogeneity 
-%\nb{don't know what treatment effect heterogenity means} in staggered designs 
 \cite{goodman2021difference, sun2021treatment, callaway2021difference, borusyak2024revisiting}. Treatment effect heterogeneity means the policy works differently for different places or periods, which can distort standard difference-in-differences estimates. The bias arises because TWFE implicitly uses already-treated units as controls for later-treated units, and differences in treatment effects across cohorts or over time contaminate the estimated average effect. 
 
-In our setting, consider regions as units and AI model releases as treatments inducing increased data center power demand. A "cohort" comprises regions whose data centers began significant AI workloads at the same time. Suppose Region A adopted AI workloads in 2022 while Region B adopted in 2023. When estimating treatment effects for Region B, TWFE implicitly uses Region A as a control—but Region A in 2023 is not untreated; its data centers have been running AI workloads for a year. If treatment effects evolve over time (e.g., power demand grows as AI infrastructure scales), comparing Region B's outcomes against Region A's already-treated outcomes introduces bias. Staggered design provides heterogeneity-robust estimators that solve for this exact issue.
+In our setting, consider regions as units and AI model releases as treatments inducing increased data center power demand. A ``cohort" comprises regions whose data centers began significant AI workloads at the same time. Suppose Region A adopted AI workloads in 2022 while Region B adopted in 2023. When estimating treatment effects for Region B, TWFE implicitly uses Region A as a control—but Region A in 2023 is not untreated; its data centers have been running AI workloads for a year. If treatment effects evolve over time (e.g., power demand grows as AI infrastructure scales), comparing Region B's outcomes against Region A's already-treated outcomes introduces bias. Staggered design provides heterogeneity-robust estimators that solve for this exact issue.
 
 %\nb{Can you explain the previous sentence in terms of data centers and time wrt power demand? It is hard to know what already-treated, later-treated units, cohorts etc mean.}
 
-%We implement two complementary approaches to address this concern:
 To address this, we use a stacked DiD model~\cite{cengiz2019effect, deshpande2019screened}, where we construct a stacked dataset where each model release defines a separate ``sub-experiment.'' The idea here is to construct, for each treatment cohort, a separate sub-experiment using only units that are genuinely untreated at the time of that cohort's adoption. By stacking these sub-experiments—each with its own clean control group of not-yet-treated regions—we ensure that no already-treated unit ever serves as a control, thereby eliminating the bias that arises when treatment effects are heterogeneous across cohorts or time.
-%\nb{Dana, can you add a line that explains the idea and how it addresses the issue above}\nb{The idea here is to ....}
 
 Formally, for each release event $m$, we create a dataset containing: (i) Treated units -- Regions linked to the releasing company's AI data centers. (ii) Control units -- Regions with no AI data center exposure during the event window, or regions whose treatment occurs sufficiently far from event $m$ that they serve as clean controls.
 \begin{itemize}
     \item Time window: A symmetric window around $r_m$, e.g., $[r_m - K, r_m + K]$ for some horizon $K$.
 \end{itemize}
 
-Following \, we then stack these sub-experiments and estimate:
+Following \cite{wing2024stacked}, we then stack these sub-experiments and estimate:
 \begin{equation}
 Y_{i,t,m} = \sum_{k=-K}^{K} \beta_k \cdot D_{ut}^k  + \delta_t + \mathbf{X}_{ut}'\theta + \varepsilon_{ut}
 \label{eq:stacked}
@@ -1149,7 +819,7 @@ We examine whether treatment effects vary with observable model characteristics:
 Heterogeneity analysis both informs mechanisms and serves as a specification check: if effects are concentrated among larger models or models from companies with substantial AI infrastructure, this lends credibility to the AI-driven interpretation.
 \subsection{Counterfactual Analysis}\label{counterfactuals}%Efficiency Impact Model}\niranjan{Compress}
 
-We conduct three primary sets of counterfactual exercises to investigate how alternative evolutionary paths for AI compute might affect grid-level outcomes. Additional counterfactuals with results are highlighed in Appendix Subsection \ref{Appendix:Counterfactuals}.
+We conduct three primary sets of counterfactual exercises to investigate how alternative evolutionary paths for AI compute might affect grid-level outcomes. Additional counterfactuals with results are highlighted in Appendix Subsection \ref{Appendix:Counterfactuals}.
 
 \textbf{Model Scaling.} First, we examine the grid implications of continued growth in AI model size. Using the Epoch database to characterize trends in model parameters, we provide descriptive analysis of how increasing model scale translates into grid-level impacts. We then relate our estimated power demand coefficients to our power quality coefficients, enabling analysis of how changes in training and inference energy efficiency propagate to power quality outcomes.
 
@@ -1274,7 +944,7 @@ For the \textbf{power quality regressions}, we use a parsimonious specification 
 \subsection{Combining Data Sources}
 %\niranjan{Add a few lines about how these sources are combined for the problems at hand.}
 
-To integrate datasets, we harmonize spatial and temporal units across sources. Figure \ref{fig:DataDiagram} demonstrates the integration at each step for our modeling purposes. Data center locations from Aterio are mapped to ISO zones, EIA territories, and counties, enabling linkage with Whisker Labs reliability indexes (CPQI and THD) and CAMPD generator demand. We are the first study to integrate Aterio’s new field indicating which data centers are utilized in processing AI workloads. CPQI has 2,683 observations (mean 0.52, s.d. 0.42), while THD is more dispersed (mean 1.81, s.d. 6.77). CAMPD generator demand averages 218 MW (s.d. 158), and wholesale prices average \$51/MWh (s.d. 148). Weather data capture local conditions (mean temperature 17°C, precipitation 0.12 mm), and time series are aligned at hourly or monthly resolution. External controls—natural gas prices, weather, and ISO market data—are merged by geography and time, yielding a unified panel suitable for difference-in-differences and IV regressions.
+To integrate datasets, we harmonize spatial and temporal units across sources. Figure \ref{fig:DataDiagram} demonstrates the integration at each step for our modeling purposes. Data center locations from Aterio are mapped to ISO zones, EIA territories, and counties, enabling linkage with Whisker Labs reliability indexes (CPQI and THD) and CAMPD generator demand. We utilize newly released data on which data centers are utilized in processing AI workloads. This data improves identification significantly as previously, it was very difficult to determine a treated set for a particular kind of data center workload. CPQI has 2,683 observations (mean 0.52, s.d. 0.42), while THD is more dispersed (mean 1.81, s.d. 6.77). CAMPD generator demand averages 218 MW (s.d. 158), and wholesale prices average \$51/MWh (s.d. 148). Weather data capture local conditions (mean temperature 17°C, precipitation 0.12 mm), and time series are aligned at hourly or monthly resolution. External controls—natural gas prices, weather, and ISO market data—are merged by geography and time, yielding a unified panel suitable for difference-in-differences and IV regressions.
 
 Our demand model focuses on deregulated markets in the Eastern Interconnection and ERCOT, where data on zones and prices are readily available, while our power quality model draws on Whisker Labs data from 72 retail utilities nationwide (monthly, 2022–2025). The demand regressions use hourly data for several thousand generators (2021–2023). We concentrate on hyperscaler AI companies—including Meta, Microsoft, Amazon, and Google—with Anthropic linked to Google due to its cloud partnership. Appendix materials include maps, sample descriptions, and data tables. In order to determine which data centers should be considered AI data centers and should be included in our sample, we perform a linkage procedure described in appendix Subsection \ref{subsec:treatment}.
 
@@ -1471,7 +1141,7 @@ A map of estimated supply chain elasticities can be found in Figure \ref{PJMPRic
 
 \begin{figure}
     \centering
-    \includegraphics[width=0.75\linewidth]{Figures/pjm_ai_supply_impact_choropleth_hires (1).png}
+    \includegraphics[width=0.75\linewidth]{Figures/PJMMap3.png}
     \caption{Price Effects of AI in PJM.}
     \label{PJMPrice}
 \end{figure}
@@ -1485,7 +1155,7 @@ We conduct several additional analyses to probe the robustness of our findings a
 
 \subsubsection{Formal Testing for Parallel Trends}
 
- For power demand specifically, the formal joint test of pre-treatment coefficients yields a chi-squared statistic of 0.99 (df = 1) with p-value = 0.3196. \textbf{We cannot reject the null hypothesis of parallel pre-trends at conventional significance levels.} This provides support for our identification assumption: treated and control generators followed similar demand trajectories prior to AI model releases. Some of our samples demonstrate significant evidence against the the parallel trends test prior to propensity score matching. Howerver, in 100\% of our samples for both power quality and power demand after propensity score matching, we \textit{fail to reject the null hypothesis of }. This implies that the technique correctly handles the issue where it exists. 
+ For power demand specifically, the formal joint test of pre-treatment coefficients yields a chi-squared statistic of 0.99 (df = 1) with p-value = 0.3196. \textbf{We cannot reject the null hypothesis of parallel pre-trends at conventional significance levels.} This provides support for our identification assumption: treated and control generators followed similar demand trajectories prior to AI model releases. Some of our samples demonstrate significant evidence against the the parallel trends test prior to propensity score matching. However, in 100\% of our samples for both power quality and power demand after propensity score matching, we \textit{fail to reject the null hypothesis of }. This implies that the technique correctly handles the issue where it exists. 
  
  Additionally, We estimate the baseline specification via OLS to validate parallel trends prior to implementing our instrumental variables strategy. The OLS specification shows no significant effects in any period outside the training window, consistent with parallel trends holding in the pre-treatment period. Importantly, prior to treatment (excluding $t=-2$, which captures training demand), the trends are identical between treatment and control samples. Figure~\ref{fig:event_study_main} displays stacked DiD coefficients for both pre-treatment and post-treatment windows, with the reference period at $t=-1$.
 
@@ -1502,60 +1172,61 @@ Second, we implement random date and random location placebo tests. Both yield a
 
 % \subsubsection{Random Dates and Random Locations Placebos}
 
-% Both random dates and random locations yield a p-value of 1.00 for the coefficient in our fossil fuel demand, CPQI, and THD analyses. This suggests that our results are not the result of randmly chosen locations or dates.
+% Both random dates and random locations yield a p-value of 1.00 for the coefficient in our fossil fuel demand, CPQI, and THD analyses. This suggests that our results are not the result of randomly chosen locations or dates.
 
 \section{Counterfactual Analyses}
 \label{sec:counterfactuals}
 
-We conduct counterfactual exercises to inform stakeholders and policymakers about how alternative evolutionary paths for AI compute might affect grid outcomes. These exercises combine our econometric estimates with data on model characteristics and infrastructure configurations to explore three dimensions: model scaling, geographic redistribution, and workload composition.
+We present three main counterfactual exercises to inform stakeholders and policymakers about how alternative evolutionary paths for AI compute might affect grid outcomes. These combine our econometric estimates with data on model characteristics and infrastructure configurations to explore three dimensions: model scaling, geographic redistribution, and workload composition. Our counterfactual policies highly align with the implications of our theoretic model, particularly when considering the role of on-site generation as a solution to the challenges facing power procurement.\\
 
-\subsubsection{Model Scaling}
+\noindent\textbf{1) Model Scaling.} We combine data on model size (parameter counts) with our econometric estimates from our least conservative specification to extrapolate grid impacts at different scales.
 
-We combine data on model size (parameter counts) with our econometric estimates from our least conservative specification to extrapolate grid impacts at different scales.
+\noindent\textbf{(a) Power Quality.} Fitting a trend line to power quality impacts for Llama-3.1 (405B), PaLM (540B), and Llama 4 Behemoth (2T), we find that scaling from a 2 trillion parameter model to a 4 trillion parameter model would increase power quality impact from \textbf{0.321 to 0.434}---a deterioration of roughly 0.113 units, or just over 35\% relative to the 2 trillion baseline. The relationship is exponential over log parameter counts, implying that larger models require proportionally greater parameter reductions to achieve the same percentage improvement in power quality. \textbf{(b) Power Demand.} Using an analogous extrapolation, we find that \textbf{each 1\% parameter increase leads to approximately 0.15\% higher power demand} within three months of model release. Scaling from 540 billion to one trillion parameters would \textbf{increase total power demand by 10.5\%}. For DALL-E, halving parameters would \textbf{reduce inference demand by approximately 300 GWh}---equivalent to the annual consumption of 27,000--30,000 homes.\\
 
-\paragraph{Power Quality.} Fitting a trend line to power quality impacts for Llama-3.1 (405B parameters), PaLM (540B), and Llama 4 Behemoth (2T), we find that scaling from a 2 trillion parameter model to a 4 trillion parameter model would increase the power quality impact from \textbf{0.321 to 0.434}---a deterioration of approximately 0.113 units, or just over 35\% relative to the 2 trillion baseline. The relationship is exponential over log parameter counts, implying that larger models require proportionally greater parameter reductions to achieve the same percentage improvement in power quality.
+\noindent\textbf{2) Training Compute.} Training compute requirements also have measurable effects: a 1\% increase in training FLOPs is associated with a \textbf{0.1\% increase in power demand}. For GPT-3.5, halving training compute would reduce energy use by enough to power 8,000--10,000 U.S.\ homes for a year.\\
 
-\paragraph{Power Demand.} Using an analogous extrapolation, we find that \textbf{each 1\% parameter increase leads to approximately 0.15\% higher power demand} within three months of model release. Scaling from 540 billion to one trillion parameters would \textbf{increase total power demand by 10.5\%}. For DALL-E specifically, halving parameters would \textbf{reduce inference demand by approximately 300 GWh}---equivalent to the annual consumption of 27,000--30,000 homes.
+\noindent\textbf{3) Colocated On-site Generation.} Data centers increasingly deploy colocated on-site generation to reduce grid dependence. Our inventory identifies 87 facilities with on-site capability and 12,401 without. We test whether on-site capacity moderates estimated effects by interacting treatment with on-site status in the utility-level strict DiD specification. Results indicate that on-site generation substantially mitigates measured grid impacts. The sign reversal for CPQI is notable: data centers \textit{with} on-site generation are associated with improved power quality (negative coefficient), while those \textit{without} are associated with deterioration (positive coefficient). This heterogeneity suggests that \textbf{on-site generation absorbs demand spikes that would otherwise propagate to the grid}, and that aggregate grid impacts may understate total AI energy consumption.
 
-\paragraph{Training Compute.} Training compute requirements also have measurable effects: a 1\% increase in training FLOPs is associated with a \textbf{0.1\% increase in power demand}. For GPT-3.5, halving training compute would reduce energy use by enough to power 8,000--10,000 U.S.\ homes for a year.
+Figure~\ref{fig:CounterfactualCombined} extends this to policy-relevant scenarios. Remarkably, universal adoption of on-site power would shift impact of data centers from a net detriment to power quality to a net improvement.\\
+%However, all large AI data centers in our most conservative sample had on-site generation, which may exaggerate our estimates of colocated on-site generation's moderating effects.\nb{This statement again is a bit hard to parse. Does it undercut the impact statement above or support it?}
 
-\subsubsection{Colocated On-site Generation}
+% \begin{figure}[h]
+%     \centering
+%     \includegraphics[width=0.35\linewidth]{Figures/btm_scenarios_analysis.png}
+%     \caption{Impact of on-site power adoption on AI energy impacts.\nb{Dana it might be useful to collate plots in 5,6,and7 into a single figure laid side by side going across the two columns. this will save white space but also help make the figures bigger.}}
+%     \label{fig:btm_scenarios}
+% \end{figure}
 
-Data centers increasingly deploy colocated on-site generation to reduce grid dependence. Our inventory identifies 87 facilities with on-site capability and 12,401 without. We test whether on-site capacity moderates estimated effects by interacting treatment with on-site status in the utility-level strict DiD specification.
+\noindent\textbf{4) Geographic Redistribution}
 
-Results indicate that on-site generation substantially mitigates measured grid impacts. The sign reversal for CPQI is notable: data centers \textit{with} on-site generation are associated with improved power quality (negative coefficient), while those \textit{without} are associated with deterioration (positive coefficient). \textbf{This heterogeneity suggests that on-site generation absorbs demand spikes that would otherwise propagate to the grid}, and implies that aggregate grid impacts may understate total AI energy consumption.
+%We analyze grid impacts under alternative spatial distributions of AI compute.
 
-Figure~\ref{fig:btm_scenarios} extends this analysis to policy-relevant scenarios. Remarkably, universal adoption of on-site power would shift the impact of data centers from a net detriment to power quality to a net improvement. However, all large AI data centers in our most conservative sample had on-site generation, which may exaggerate our estimates of colocated on-site generation's moderating effects.
+\noindent\textbf{(a) Distributed Inference (Edge Computing).} In our sample where we know AI data centers but not specific training and inference sites, we simulate a shift from cloud-based to edge-based inference, redistributing inference demand from concentrated hyperscaler facilities to smaller data centers located closer to population centers. Under this scenario, total demand added in a particular zone falls from a baseline of 162 MWh per hour over the entire treatment period to 4 MWh per hour. Figure ~\ref{fig:CounterfactualCombined} illustrates this effect of shifting the composition of inference.
 
-\begin{figure}[h]
-    \centering
-    \includegraphics[width=0.35\linewidth]{Figures/btm_scenarios_analysis.png}
-    \caption{Impact of on-site power adoption on AI energy impacts.}
-    \label{fig:btm_scenarios}
-\end{figure}
+% \begin{figure}[h]
+%     \centering
+%     \includegraphics[width=0.5\linewidth]{Figures/CentralizedComputing.png}
+%     \caption{Impact of distributing AI inference to edge data centers.}
+%     \label{fig:edge_computing}
+% \end{figure}
 
-\subsubsection{Geographic Redistribution: Cloud versus Edge}
-
-We examine how grid impacts would change under alternative spatial distributions of AI compute.
-
-\paragraph{Scenario: Distributed Inference (Edge Computing).} In our sample where we know AI data centers but not specific training and inference sites, we simulate a shift from cloud-based to edge-based inference, redistributing inference demand from concentrated hyperscaler facilities to smaller data centers located closer to population centers. Under this scenario, total demand added in a particular zone falls from a baseline of 162 MWh per hour over the entire treatment period to 4 MWh per hour. Figure~\ref{fig:edge_computing} illustrates this effect of shifting the composition of inference.
-
-\begin{figure}[h]
-    \centering
-    \includegraphics[width=0.5\linewidth]{Figures/CentralizedComputing.png}
-    \caption{Impact of distributing AI inference to edge data centers.}
-    \label{fig:edge_computing}
-\end{figure}
-
-\paragraph{Scenario: Concentration in Low-Population, High-Supply Regions.} Alternatively, we consider relocating both training and inference to regions with abundant electricity supply and lower baseline load, such as areas in the central United States with substantial renewable or fossil capacity. We simulate this by shifting demand from the baseline case where training and inference are assumed distributed to a case where the only data center for training and inference is the largest data center owned by a hyperscaler. This leads to an extreme concentration of added demand with nearly 100 GWh added near data centers in training locations. Figure~\ref{fig:centralized_computing} shows this scenario.
+\noindent\textbf{(b) Concentration in Low-Population, High-Supply Regions.} Alternatively, we consider relocating both training and inference to regions with abundant electricity supply and lower baseline load, such as areas in the central United States with substantial renewable or fossil capacity. We simulate this by shifting demand from the baseline case where training and inference are assumed distributed to a case where the only data center for training and inference is the largest data center owned by a hyperscaler. This leads to an extreme concentration of added demand with nearly 100 GWh added near data centers in training locations. Figure~\ref{fig:CounterfactualCombined} shows this scenario.
 
 This analysis has the important caveat that shifting to one data center for all training activity is extreme, with many possible configurations between full decentralization and full centralization. Centralization may also yield other benefits, such as concentration near renewable generation and reduced energy consumption from lower communication costs.
 
-\begin{figure}[h]
+% \begin{figure}[h]
+%     \centering
+%     \includegraphics[width=0.5\linewidth]{Figures/Central.png}
+%     \caption{Impacts of centralized computing to largest data center by hyperscaler.}
+%     \label{fig:centralized_computing}
+% \end{figure}
+
+\begin{figure}
     \centering
-    \includegraphics[width=0.5\linewidth]{Figures/Central.png}
-    \caption{Impacts of centralized computing to largest data center by hyperscaler.}
-    \label{fig:centralized_computing}
+    \includegraphics[width=.9\linewidth]{Figures/combined_analysis_figure.png}
+    \caption{Effects of Geographic Concentration and On-site Generation on AI Impacts on the grid.}
+    \label{fig:CounterfactualCombined}
+    \vspace{-2em}
 \end{figure}
 
 % \subsubsection{Behind-the-Meter Power Generation Scenarios}
@@ -1577,19 +1248,15 @@ This analysis has the important caveat that shifting to one data center for all 
 
 \section{Conclusion}
 
-Understanding how AI models impact U.S. power grids is critical for ensuring energy reliability and security. This work introduces an econometric methodology to overcome the lack of fine-grained data about contributing factors. In particular, we use a difference-in-differences regressions to provide econometric estimates of the amount of power being used by specific AI models as well as the power distortions being caused by AI and the impacts of AI on price. We find evidence that AI is making power quality significantly worse and increasing fossil fuel power demand. We provide estimates of the potential impacts of increasing efficiency of AI on the power draw of data centers. We also show how changes in the geographic composition of AI, a potential shift to edge computing, and a shift in the ratio of training to inference conducted impact the power market.
+This paper provides the first causal estimates of how AI-driven data center demand affects U.S.\ electricity markets. Exploiting the staggered release of frontier large language models as natural experiments, we find that AI workloads cause statistically and economically significant deterioration in power quality, increase fossil fuel generation on the order of hundreds of GWh, and raise wholesale electricity prices by up to 25\% in heavily treated zones. These effects are consistent with the predictions of our game-theoretic model of hyperscaler electricity procurement, which formalizes the \emph{timing wedge}---the temporal mismatch between when data centers consume electricity and when their contracted or credited renewable generation produces.
 
-Our approach differs from the approach traditionally taken by the computer science energy efficiency literature, which tends to focus on the micro-scale to build up estimates of the costs of training a model in a specified way a specified number of times. Our estimates of power demand impacts are significantly higher than previous literature estimates. We believe this is primarily because we capture lifecycle and indirect power usage effects that most papers miss. Our approach also differs from the current approach amongst energy economists who tend to utilize changes from baseline simulation models to determine the impacts of external demand shocks. By focusing on market data, our approach is able to achieve estimates that are in between these levels of analysis. Our estimation is able to agnostically consider all additional electrical load from AI model activities, which provides a more realistic estimate of AI life-cycle power demand. We believe this approach is also applicable for other other opaque impacts—such as the effect of large model releases on network congestion or cooling water demand—wherever direct usage data from providers is inaccessible.
+The economic implications are substantial. The timing wedge means that the voluntary procurement instruments favored by hyperscalers---renewable energy certificates and power purchase agreements---do not internalize the externalities they are designed to address. RECs, as financial transfers unbundled from physical dispatch, leave real-time fossil generation and grid stress unaffected. PPAs improve on this margin only modestly absent firming or storage. Our counterfactual analyses reinforce this finding: universal adoption of on-site generation would reverse the sign of power quality effects, transforming data centers from a net grid liability into a net contributor. This result suggests that the externality is not inherent to AI demand per se, but rather to the spatial and temporal misalignment between that demand and clean generation---a misalignment that current market instruments fail to correct.
 
+These findings speak directly to ongoing policy debates over renewable energy procurement design. Proposals for hourly matching, such as the 24/7 Carbon-Free Energy framework, attempt to close the timing wedge by requiring temporal alignment of clean energy credits with consumption. Our model provides a framework for evaluating such proposals: tightening matching granularity raises the effective price of RECs in high-carbon hours, increases the private value of storage, and induces entry of temporally aligned generation. The empirical heterogeneity we document between data centers with and without on-site generation offers suggestive evidence that policies promoting behind-the-meter investment could yield grid-wide benefits. Geographic redistribution of inference workloads---toward edge computing or toward high-supply, low-load regions---offers an additional policy lever, though with important tradeoffs between transmission costs and local reliability.
 
+Our analysis has limitations. The parallel trends assumption underpinning any difference-in-differences design may be violated if treated and control regions were already diverging prior to model releases, or if generators anticipated these releases. Spillovers across interconnected regions and heterogeneous effects by grid topology or model type may attenuate or bias our estimates. Our power quality dataset, while novel, covers a limited time horizon that constrains our ability to characterize long-run trends. Finally, frontier model releases are an imperfect proxy for the continuous evolution of AI compute demand, and the mapping from a discrete release event to actual deployment and load is necessarily noisy.
 
-%Our methodological contribution is portable beyond the specific case of AI and electricity. By combining econometric causal inference (difference-in-differences, instrumental variables) with domain-specific data sources, we establish a general toolkit for quantifying hidden infrastructure externalities of AI systems. The same design could be adapted to study other opaque impacts—such as the effect of large model releases on network congestion, semiconductor supply chains, or cooling water demand—whenever direct usage data from providers are inaccessible. In this sense, our approach provides a scalable, data-efficient way for AI researchers to infer systemic costs and reliability effects, complementing simulation-based analyses in computer science with causal identification strategies from economics.
-
-While informative, this approach inherits the limitations of all Difference-in-Differences experimental designs. It relies on the parallel trends assumption, which may be violated if treated and control regions were already diverging or if generators anticipated model releases. %Spillovers across regions and heterogeneous impacts by grid or model type can further bias estimates.
-Timing is also critical—effects may emerge gradually or with lags, complicating interpretation. Finally, contemporaneous shocks such as weather or other industrial expansions can confound results, and the treatment itself (a model release) may not map cleanly onto actual deployment. Ideally, we would like a longer power quality dataset with more granularity to make cleaner statements about long-term trends.
-
-% To print the credit authorship contribution details
-% \printcredits
+Despite these limitations, the results carry clear implications for electricity market design. As AI workloads grow, regulators and system operators will need instruments that address not only the volume but the temporal and spatial profile of incremental demand. Our findings suggest that annual renewable accounting provides insufficient incentive for the investments in storage, on-site generation, and demand flexibility that would align private procurement with system-level reliability and emissions goals. The methodological approach developed here---combining econometric causal identification with publicly available grid data---is portable to other settings where proprietary operational data are unavailable, including the effects of AI on network congestion, cooling water demand, or semiconductor supply chains.
 
 \bibliographystyle{cas-model2-names}
 \bibliography{Energy}
@@ -1805,14 +1472,7 @@ Gopher (280B)                  & Google     &  -8.12 & 0.6566               & 0.
 
 \subsection{Expanded Dataset Description}
 
-Below, maps can be found providing more detail on the data center dataset alongside tables on the datasets and the dataset sample selection criteria.
-
-\begin{figure}[h]
-    \centering
-    \includegraphics[width=\linewidth]{Figures/Data Centers by State.png}
-    \caption{Data centers by state.}
-    \label{fig:placeholder}
-\end{figure}
+Below, maps can be found providing more detail on the dataset alongside tables on the datasets and the dataset sample selection criteria.
 
 \begin{figure}[h]
     \centering
