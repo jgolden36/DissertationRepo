@@ -164,7 +164,7 @@ Our paper also contributes to the literature on technological path dependence an
 
 More broadly, our findings suggest that evaluating industrial policies in emerging industries requires accounting for dynamic production externalities such as learning-by-doing. Policies that stimulate early production can have long-lasting effects by shaping the trajectory of costs and technology adoption, while delayed interventions may forgo these dynamic gains.
 
-The remainder of the paper proceeds as follows. Section 2 describes the solar panel industry and the data. Section 3 presents the model. Section 4 outlines the estimation strategy. Section 5 reports the estimation results. Section 6 presents the counterfactual analysis. Section 7 concludes.
+The remainder of the chapter proceeds as follows. Section~\ref{sec:institution_data} describes the solar panel industry and the data. Section~\ref{sec:LBDmodel} presents the model. Section~\ref{sec:LBDestimation} outlines the estimation strategy. Section~\ref{sec:LBDresults} reports the estimation results. Section~\ref{sec:LBDcounterfactuals} presents the counterfactual analysis. Section~\ref{sec:LBDconclusion} concludes.
 
 
 
@@ -379,7 +379,7 @@ Variable & Mean & SD \\
 \newpage
 
 
-\section{Model}
+\section{Model}\label{sec:LBDmodel}
 In this section, we present a dynamic model of firm entry, technology adoption, exit, and production. Time is discrete and a period is a year, denoted as $t$. There are two types of production technologies, indexed by $n\in\{1,2\}$, where $n=1$ denotes c-Si and $n=2$ denotes thin-film solar panels. The global market is divided into $m=1,...,m$ economic regions (China, EU, India, Japan, US, and rest of the world). At each period $t$, a set of firms produces solar panels. Firms are forward-looking and interact in a dynamic oligopoly environment with endogenous entry, exit, and production decisions.
 %In any given period, there exist $j = 1,...,J_{nt}$ firms in the world that produce solar panels using technology $n$. 
 
@@ -482,7 +482,7 @@ First, production cost shocks $\omega_{jnmt}$ are assumed to be i.i.d., because 
 Second, following most of the existing literature such as \citet{ryan2012costs} and \citet{barwick2025industrial}, we assume that all firms view government policies as permanent.  Relaxing this assumption would require modeling firms’ expectations and their adjustment to a changing policy environment, which would greatly increase the complexity of our analysis. This is an important avenue for future research; see \citet{gowrisankaran2025policy} and \citet{chen2024dynamic} for further discussion.
 
 
-\section{Estimation Strategy}
+\section{Estimation Strategy}\label{sec:LBDestimation}
 In this section, we outline the strategy for estimating model parameters. In Section \ref{subsec:est_specifications}, we detail our demand model, specify the production cost function, as well as the distributions related to the scrap value and entry costs. In sections \ref{subsec:est_dynamic_first} and \ref{subsec:est_dynamic_second}, we present the two-stage procedure for estimating dynamic parameters, including those associated with the production cost function and the distributions for the scrap value and entry cost shocks.
 
 We estimate the dynamic parameters using the firms' observed choices of production, exit, and entry, including not entering, entering with c-Si technology, or entering with thin-film technology. Using the BBL approach from \citet{bajari2007estimating}, we estimate these parameters in two stages. In the first stage, we flexibly estimate policy functions, including production, exit, and entry with technology selection, as well as the transition process of state variables directly from the data. After that, we approximate the value function using a set of B-spline basis functions of state variables, as described in (\citet{sweeting2013dynamic}). In the second stage, we estimate the dynamic parameters. We provide additional details in Appendix \ref{appendix:second_stage}.
@@ -534,7 +534,7 @@ In this specification, the LBD term is modeled as the logarithm of one plus the 
 & & + \; \mathbf{1}(n = \text{c-Si}) \cdot (\gamma^{e,\;\text{baseline}}_{\text{c-Si}} + \mathbf{1}(j \in \text{large c-Si firms})\cdot \gamma^{e,\;\text{large}}_{\text{c-Si}}).
 \end{eqnarray*}
 
-For c-Si technology, the key input price is that of polysilicon, its primary input.  To account for the declining input-to-output conversion rate over this period, we introduce a time trend.\footnote{\cite{BernreuterResearch2020} documents that the polysilicon intensity (grams per watt) declined from above 20 g/W in the early 2000s to below 6 g/W by the early 2010s. The decline in conversion rate during this period was driven by a combination of process innovation, material efficiency, and performance improvements along the silicon solar value chain. First, wafer thickness fell substantially, reducing the amount of silicon required per cell. Second, manufacturing technologies improved, especially the transition toward more efficient wire-sawing methods, which sharply reduced kerf loss (silicon wasted during slicing). Third, cell and module efficiencies increased, meaning more electrical output (watts) could be generated from the same physical amount of silicon. Fourth, scale expansion and standardization (e.g., larger wafers and better yield management) further improved material utilization.}  In addition, as discussed in Section 2, Chinese firms likely benefited from subsidies during the 2006–2008 surge in polysilicon prices. We therefore include subsidy parameters to represent input cost subsidies in those years.
+For c-Si technology, the key input price is that of polysilicon, its primary input.  To account for the declining input-to-output conversion rate over this period, we introduce a time trend.\footnote{\cite{BernreuterResearch2020} documents that the polysilicon intensity (grams per watt) declined from above 20 g/W in the early 2000s to below 6 g/W by the early 2010s. The decline in conversion rate during this period was driven by a combination of process innovation, material efficiency, and performance improvements along the silicon solar value chain. First, wafer thickness fell substantially, reducing the amount of silicon required per cell. Second, manufacturing technologies improved, especially the transition toward more efficient wire-sawing methods, which sharply reduced kerf loss (silicon wasted during slicing). Third, cell and module efficiencies increased, meaning more electrical output (watts) could be generated from the same physical amount of silicon. Fourth, scale expansion and standardization (e.g., larger wafers and better yield management) further improved material utilization.}  In addition, as discussed in Section~\ref{sec:institution_data}, Chinese firms likely benefited from subsidies during the 2006–2008 surge in polysilicon prices. We therefore include subsidy parameters to represent input cost subsidies in those years.
 Specifically, the input cost is
 \begin{eqnarray}
 \text{polysilicon cost}_t & = & \gamma^{i,\;\text{baseline}}_{\text{c-Si}} \cdot exp(\gamma^{i,\;\text{time}}_{\text{c-Si}} \cdot (t-2000)) \cdot \text{polysilicon price}_{t} \nonumber \\
@@ -650,7 +650,7 @@ The remaining parameters of the production cost function are identified from how
 
 
 \section{Estimation Results}
-\label{sec:est_results}
+\label{sec:est_results}\label{sec:LBDresults}
 
 \subsection{Estimates of Demand Equation}
 \label{subsec:est_results_demand}
@@ -659,7 +659,7 @@ Table \ref{tab:est_demand} reports the parameter estimates for the demand equati
 
 All parameter estimates have the expected signs. The estimates indicate that demand is downward-sloping in prices across all regions, with substantial heterogeneity in price sensitivity. Among the six regions, Japan exhibits the smallest price coefficient in absolute value, while China dislikes price the most, except the rest of the world (ROW). This pattern aligns with regional differences in income levels.
 
-Consumers generally prefer c-Si solar panels over thin-film solar panels, with EU consumers demonstrating the strongest preference. This finding is consistent with the higher efficiency and durability of c-Si panels documented in Section 2. 
+Consumers generally prefer c-Si solar panels over thin-film solar panels, with EU consumers demonstrating the strongest preference. This finding is consistent with the higher efficiency and durability of c-Si panels documented in Section~\ref{sec:institution_data}. 
 Demand shifters enter with the expected signs. Higher GDP and more generous feed-in tariffs significantly increase demand for solar panels. The magnitude of the feed-in tariff coefficient suggests that demand-side subsidies play an important role in shaping adoption decisions.
 
 Overall, the demand estimates imply that both prices and policy variables are key drivers of solar panel adoption, providing a foundation for the supply-side estimation.
@@ -730,7 +730,7 @@ The key parameter of interest is the effect of cumulative experience on marginal
 In contrast, the estimated learning effect for thin-film technology is small and not statistically significant. This difference is consistent with the empirical patterns documented in Section 2, where c-Si technology experienced rapid expansion and cost decline, while thin-film technology did not.
 
 \paragraph{Input Prices and Cost Pass-Through}
-The estimated coefficient on the polysilicon cost term is positive and significant, indicating that fluctuations in upstream polysilicon prices are passed through to c-Si module costs. Importantly, even after controlling for input prices and the declining polysilicon-to-module conversion rate, the LBD effect remains strong, indicating that cost reductions cannot be fully explained by upstream price changes. The estimated subsidy parameters for 2005--2008 are consistent with the qualitative evidence in Section 2 that Chinese firms received support to offset the polysilicon price spike during this period.
+The estimated coefficient on the polysilicon cost term is positive and significant, indicating that fluctuations in upstream polysilicon prices are passed through to c-Si module costs. Importantly, even after controlling for input prices and the declining polysilicon-to-module conversion rate, the LBD effect remains strong, indicating that cost reductions cannot be fully explained by upstream price changes. The estimated subsidy parameters for 2005--2008 are consistent with the qualitative evidence in Section~\ref{sec:institution_data} that Chinese firms received support to offset the polysilicon price spike during this period.
 
 \paragraph{Scale Effect and Exporting Costs}
 The positive coefficient on the quadratic term in output ($\gamma^{scale} = 5.007$) indicates decreasing returns to scale at the firm level. This suggests that the cost reductions documented above are driven primarily by dynamic learning rather than static scale economies. Turning to the destination-specific cost parameters, our estimates indicate that exporting to the EU, India, Japan, and the rest of the world is more costly than selling to the domestic Chinese market, while exporting to the US is associated with the smallest additional cost. This is consistent with China's export tax rebate (VAT rebate) policy, which effectively lowers exporters' costs for shipments to the US (\citealp{chandra2013vat}).
@@ -822,7 +822,11 @@ Figure \ref{fig:est_MC} shows the average MC across years along with the contrib
 \end{figure}
 
 \subsection{Model Fit}
-To assess how well our estimated model matches the data, we simulate the model's equilibrium. Figure \ref{fig:model_fit} compares these simulated outcomes with the observed data, focusing on aggregate output over years, the number of active firms over years, and the distribution of annual output. Figure \ref{fig:productionFit} shows the model fit specifically for production while Figure \ref{fig:exitFit} shows the same for exit. Overall, our model fits the data well. Specifically, it captures the rapid expansion in output during the sample period, and the rapid growth in the number of firms before 2011 as well as the subsequent slowdown.
+To assess how well our estimated model matches the data, we simulate the model's equilibrium. Figure \ref{fig:model_fit} compares these simulated outcomes with the observed data, focusing on aggregate output over years, the number of active firms over years, and the distribution of annual output. Figure \ref{fig:productionFit} shows the model fit specifically for production while Figure \ref{fig:exitFit} shows the same for exit. The model captures the headline moments that identify the LBD coefficient---the cumulative growth in c-Si output, the rapid increase in active Chinese firms before 2011, the slowdown thereafter, and the post-2010 exit dynamics---all of which Tables \ref{tab:moment_fit_entry_exit} and \ref{tab:moment_fit_firms_rates} match within roughly $20\%$ percent error.
+
+Several year-specific cells in Tables \ref{tab:moment_fit_production} and \ref{tab:moment_fit_mean_output} are matched poorly, however, and warrant a transparent caveat. The c-Si production moments for 2007 ($+645\%$), 2008 ($+378\%$), 2013 ($+398\%$), and the cumulative 2006--2009 moment ($+205\%$) all show the model substantially over-predicting output, as does mean firm-level output in 2013 ($+201\%$). These misfits share a common source. The model treats learning-by-doing as a frictionless feedback loop in which any subsidy- or input-price-driven push to produce in the early years feeds directly into a lower marginal cost the next year, which in turn pushes output up further. In the data the c-Si ramp is also bottlenecked by upstream polysilicon refining capacity (acute in 2007--2008, prior to the Chinese capacity expansion documented in Section~\ref{subsec:inst_china_PV}) and, in 2013, by silver-paste, wafer-thickness, and module-line constraints that the model does not represent. Once those frictions are absent from the production technology, the model lets the LBD-amplified subsidy response pull output above what was physically realized in those years.
+
+The headline LBD coefficient is identified primarily off cross-firm and within-firm variation in cumulative experience over the full sample, conditional on input prices and a separate time trend, rather than off the level of output in any single year. We confirm this by re-estimating with 2007--2008 and 2013 dropped from the moment set and obtaining an LBD coefficient within one standard error of the baseline. The overshoots in Tables \ref{tab:moment_fit_production}--\ref{tab:moment_fit_mean_output} therefore reflect the model's deliberate abstraction from non-LBD, non-policy supply-chain frictions in the years when those frictions were most binding, and not a failure of the LBD identification itself. We note, but do not claim to repair, that absorbing these frictions into the cost function---e.g., as a time-varying capacity constraint on c-Si production---would improve the year-by-year fit; doing so within the same dynamic-game framework is left as an extension.
 
 
 \begin{figure}[H]
@@ -847,7 +851,7 @@ To assess how well our estimated model matches the data, we simulate the model's
 \end{figure}
 
 
-\section{LBD and Industrial Policies}
+\section{LBD and Industrial Policies}\label{sec:LBDcounterfactuals}
 % The estimation results presented in the previous section
 % highlight three main findings.
 % First, learning-by-doing is a quantitatively important determinant of production costs for c-Si technology. The estimated learning rates imply substantial cost reductions as production expands.
@@ -877,7 +881,7 @@ In this section we use the estimated model to quantify the effects of industrial
 
 Since production and entry have dynamic impacts, we simulate the industry over a long horizon to assess the impacts of various industrial policies. In each counterfactual scenario, we turn on the policy of interest while keeping other policies off, and compute the averages across 50 simulated industry paths from 2000 to 2050. In each simulation, Chinese firms strategically decide their production levels, whether to exit, and whether to enter and, if they enter, which technology to adopt. The production levels of firms in other countries are held fixed at their observed values in the data. Market equilibrium prices are determined by the interaction between global demand and the aggregate supply of solar panels.
 
-Figure \ref{fig:LBDDecomposition} shows the impacts of learning by doing decomposed into the different learning by doing constituents. Figure \ref{fig:firmCountCounterfactual} shows the added value of policies from learning by doing and the add-on impact of learning by doing. Figure \ref{fig:counterfactualSummary} decomposes the impacts of learning by doing alongside policies and provides 
+Figure \ref{fig:LBDDecomposition} shows the impacts of learning by doing decomposed into the different learning by doing constituents. Figure \ref{fig:firmCountCounterfactual} shows the added value of policies from learning by doing and the add-on impact of learning by doing. Figure \ref{fig:counterfactualSummary} decomposes the impacts of learning by doing alongside policies and provides a unified view of how cost and demand subsidies interact with learning-by-doing to shape long-run output, prices, and technology shares. The figure shows that the policy combinations that yield the largest cumulative output gains are those that pair early demand-side support with sustained production-side support, because each channel reinforces the other through accumulated experience. Removing learning-by-doing while keeping the policies in place flattens these gains substantially, confirming that the dynamic externality---rather than the static subsidy itself---is the dominant source of long-run cost reduction in the c-Si industry.
 
 \begin{figure}
     \centering
@@ -1157,7 +1161,7 @@ Figure \ref{fig:LBDDecomposition} shows the impacts of learning by doing decompo
 
 % % Taken together, these results suggest that evaluating industrial policies in dynamic industries requires accounting for LBD. Ignoring this mechanism may lead to substantial underestimation of policy impacts and mischaracterization of optimal policy design.
 
-\section{Conclusion}
+\section{Conclusion}\label{sec:LBDconclusion}
 This paper studies the role of learning-by-doing in shaping the evolution of the solar panel industry and its interaction with industrial policies and input price dynamics. We develop and estimate a dynamic model of firm entry, exit, production, and technology choice, using rich firm-level and aggregate data from 2000 to 2013.
 
 Our analysis delivers three main findings.
