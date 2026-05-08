@@ -271,28 +271,19 @@ The electricity market includes three separate components: generation, transmiss
 These dynamics interact with broader shifts in the electricity market: greater electrification and the transition from fossil fuels to renewables. Because renewables are intermittent and less dispatchable, rising data center loads coupled with greater renewable penetration place dual pressures on grids, shaping both market outcomes and policy debates. It is therefore crucial to quantify how much power AI uses, how it distorts quality and impacts prices, and the role of efficiency improvements and developments in computing.
 
 % \subsection{Total Harmonic Distortion}
-\begin{wrapfigure}{r}{0.3\linewidth}
-    \centering
-    \vspace{-18pt}
-    \includegraphics[width=\linewidth]{Figures/HarmonicDistortion.png}
-    \caption{Total harmonic distortion representation.}%\aruna{this figure is not referenced in the text}}        
-    \label{fig:THD}
-    \vspace{5pt}
-\end{wrapfigure}
 % Figure~\ref{fig:THD} illustrates the distortions in the power frequencies. The green line shows the \emph{clear} voltage curve, which is cleanly sinusoidal, whereas with huge loads can produce harmonic distortions shown as the dotted yellow curve. This \emph{dirtier} voltage can adversely affect the operation and lifetime of household appliances and other products that use electricity.
 
 \subsection{Background: Data Center Concentration and Power-Quality}
 
-AI workloads affect power quality through three main mechanisms. First, data centers and AI computing facilities add substantial baseload demand that can strain grid capacity and compromise voltage regulation, especially during peak periods. Second, AI workloads fluctuate rapidly with computational needs, creating unpredictable load variations that challenge stability and frequency regulation. Third, the switching power supplies and electronics essential to AI hardware generate harmonic distortion, introducing waveform distortions that spread through distribution networks and degrade power quality. Figure~\ref{fig:THD} illustrates the distortions in the power frequencies. The green line shows the \emph{clear} voltage curve, which is cleanly sinusoidal, whereas with huge loads can produce harmonic distortions shown as the dotted yellow curve. This \emph{dirtier} voltage can adversely affect the operation and lifetime of household appliances and other products that use electricity.
-
 \begin{wrapfigure}{r}{0.3\linewidth}
     \centering
     \vspace{-18pt}
     \includegraphics[width=\linewidth]{Figures/HarmonicDistortion.png}
-    \caption{Total harmonic distortion representation.}%\aruna{this figure is not referenced in the text}}        
+    \caption{Total harmonic distortion representation.}
     \label{fig:THD}
     \vspace{5pt}
 \end{wrapfigure}
+AI workloads affect power quality through three main mechanisms. First, data centers and AI computing facilities add substantial baseload demand that can strain grid capacity and compromise voltage regulation, especially during peak periods. Second, AI workloads fluctuate rapidly with computational needs, creating unpredictable load variations that challenge stability and frequency regulation. Third, the switching power supplies and electronics essential to AI hardware generate harmonic distortion, introducing waveform distortions that spread through distribution networks and degrade power quality. Figure~\ref{fig:THD} illustrates the distortions in the power frequencies. The green line shows the \emph{clear} voltage curve, which is cleanly sinusoidal, whereas with huge loads can produce harmonic distortions shown as the dotted yellow curve. This \emph{dirtier} voltage can adversely affect the operation and lifetime of household appliances and other products that use electricity.
 
 AI workloads also affect wholesale electricity prices through the demand channel, with potentially indeterminate long-run retail market impacts. The U.S. electricity sector comprises both vertically integrated utilities and restructured markets featuring competitive wholesale generation alongside monopoly retail distribution. Wholesale prices are determined hourly in day-ahead markets via sealed-bid, uniform-price auctions subject to network constraints. Locational price variation reflects transmission limitations within the network. Increased demand raises wholesale prices by necessitating dispatch of higher-cost marginal generators.
 
