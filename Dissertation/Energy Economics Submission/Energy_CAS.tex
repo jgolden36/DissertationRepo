@@ -285,15 +285,6 @@ These dynamics interact with broader shifts in the electricity market: greater e
 
 AI workloads affect power quality through three main mechanisms. First, data centers and AI computing facilities add substantial baseload demand that can strain grid capacity and compromise voltage regulation, especially during peak periods. Second, AI workloads fluctuate rapidly with computational needs, creating unpredictable load variations that challenge stability and frequency regulation. Third, the switching power supplies and electronics essential to AI hardware generate harmonic distortion, introducing waveform distortions that spread through distribution networks and degrade power quality. Figure~\ref{fig:THD} illustrates the distortions in the power frequencies. The green line shows the \emph{clear} voltage curve, which is cleanly sinusoidal, whereas with huge loads can produce harmonic distortions shown as the dotted yellow curve. This \emph{dirtier} voltage can adversely affect the operation and lifetime of household appliances and other products that use electricity.
 
-\begin{wrapfigure}{r}{0.3\linewidth}
-    \centering
-    \vspace{-18pt}
-    \includegraphics[width=\linewidth]{Figures/HarmonicDistortion.png}
-    \caption{Total harmonic distortion representation.}%\aruna{this figure is not referenced in the text}}        
-    \label{fig:THD}
-    \vspace{5pt}
-\end{wrapfigure}
-
 AI workloads also affect wholesale electricity prices through the demand channel, with potentially indeterminate long-run retail market impacts. The U.S. electricity sector comprises both vertically integrated utilities and restructured markets featuring competitive wholesale generation alongside monopoly retail distribution. Wholesale prices are determined hourly in day-ahead markets via sealed-bid, uniform-price auctions subject to network constraints. Locational price variation reflects transmission limitations within the network. Increased demand raises wholesale prices by necessitating dispatch of higher-cost marginal generators.
 
 Wholesale prices are passed through to retail consumers with substantial lag. Retail rates typically reflect average procurement and distribution costs plus a state-regulated return on investment, calculated from historical data. This passthrough mechanism is indirect even absent investment-related dynamics. While new demand sources could theoretically dilute system-wide fixed costs and reduce average retail prices, increased demand more likely raises retail rates. Understanding wholesale demand and price shifts thus provides useful intuition regarding the direction and magnitude of retail price changes.
