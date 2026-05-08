@@ -1748,7 +1748,7 @@ The ISO solves a static cost minimization problem each hour, choosing dispatch q
 subject to three constraints.
 
 \paragraph{Resource Constraint (Kirchhoff's Law).} Supply must equal demand at each node, accounting for transmission losses:
-\begin{equation} \label{Budget_Constraint} \sum_{j=1}^J\sum_{k=1}^K \sum_{g=1}^G (1-B_{ij})q_{ijkgt}=L_{it} \quad \forall i. \end{equation}
+\begin{equation} \label{Budget_Constraint_appendix} \sum_{j=1}^J\sum_{k=1}^K \sum_{g=1}^G (1-B_{ij})q_{ijkgt}=L_{it} \quad \forall i. \end{equation}
 
 \paragraph{Transmission Constraint.} Flows between any two nodes cannot exceed line capacity:
 \begin{equation} \sum_{k=1}^K \sum_{g=1}^G q_{igjkt}\leq A_{ij} \quad \forall i,j,t. \end{equation}

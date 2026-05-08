@@ -1141,7 +1141,7 @@ While we are not able to provide definite evidence of the impacts on retail pric
 Using estimates from the literature as documented in Appendix Subsection \ref{WholesaleRetailPassthrough}, we can bracket the expected price rise for retail consumers. Two recent estimates apply but speak to different horizons. \cite{defeuilley2023pennsylvania} report short-run passthrough of roughly $0.53$--$0.56$ in PJM/Pennsylvania over a sample window dominated by short retail-rate refresh cycles and explicit fuel-cost-adjustment provisions; applying that passthrough to a 25\% wholesale shock in AEP implies a short-run consumer price rise of roughly 13\%. \cite{mackay2024wholesale} estimate long-run passthrough closer to one across U.S.\ retail markets, on the assumption that procurement contracts, default-service auctions, and rate-case filings eventually fully reflect sustained wholesale movements; under that estimate the long-run consumer price rise approaches the full 25\%. The two numbers therefore correspond to short-run vs.\ long-run passthrough rather than to competing estimates of the same object: the 13\% figure is the appropriate near-term magnitude for retail bills under existing PJM rate mechanics, while the 25\% figure is the appropriate long-run magnitude if the wholesale shock is sustained for several rate cycles. We report both and let the reader weight them according to the policy horizon of interest, rather than collapsing to a single point estimate.
 \section{Validating Assumptions and Robustness Checks}\label{Robustness}
 % \nb{refer to earlier mention of issues}
-We conduct several additional analyses to probe the robustness of our findings and explore effect heterogeneity in order to address issues highlighted in Subsection \ref{DCASSUmptions}. The formal testing helps provide evidence for the parallel trends assumption while the placebo tests address potential issues related to external confounds or lack of specific knowledge about training. Additional robustness analyses can be found in Appendix Subsection \ref{App:AdditionalRobustnessChecks}.
+We conduct several additional analyses to probe the robustness of our findings and explore effect heterogeneity in order to address the four identification challenges enumerated in Subsection~\ref{EconometricModel}. The formal testing helps provide evidence for the parallel trends assumption while the placebo tests address potential issues related to external confounds or lack of specific knowledge about training. Additional robustness analyses can be found in Appendix Subsection \ref{App:AdditionalRobustnessChecks}.
 
 \subsubsection{Formal Testing for Parallel Trends}
 
@@ -1468,21 +1468,21 @@ Below, maps can be found providing more detail on the dataset alongside tables o
     \centering
     \includegraphics[width=\linewidth]{Figures/ZoneMap (1).png}
     \caption{Map of zones for demand model.}
-    \label{fig:placeholder}
+    \label{fig:appendix_zonemap}
 \end{figure}
 
 \begin{figure}[h]
     \centering
     \includegraphics[width=\linewidth]{Figures/THD Dataset.jpg}
     \caption{Map of Retail Electric Utilities for Whisker Labs Data.}
-    \label{fig:placeholder}
+    \label{fig:appendix_thd_dataset}
 \end{figure}
 
 \begin{figure}
     \centering
     \includegraphics[width=0.75\linewidth]{Figures/PJMZonalMap.png}
     \caption{Map of PJM by Zones.}
-    \label{fig:placeholder}
+    \label{fig:appendix_pjm_zones}
 \end{figure}
 
 
