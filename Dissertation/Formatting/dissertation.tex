@@ -31,6 +31,9 @@
 % Make per-chapter bibliography heading match the TOC entry ("References").
 \renewcommand{\bibname}{References}
 \renewcommand{\bibsection}{\section*{\bibname}}
+% Each entry single-spaced internally; double-space gap between entries.
+% (\singlespacing is applied around \bibliography in each chapter wrapper.)
+\setlength{\bibsep}{\baselineskip}
 
 % ========================== TOC / LISTS ======================================
 \usepackage{tocloft}
@@ -159,8 +162,9 @@
 \usepackage[stable]{footmisc}
 
 % ========================== HYPERLINKS (load near last) ======================
-\usepackage[colorlinks=true, linkcolor=black, citecolor=blue,
-            urlcolor=blue, linktoc=all]{hyperref}
+\usepackage[colorlinks=true, linkcolor=black, citecolor=black,
+            urlcolor=black, filecolor=black, anchorcolor=black,
+            linktoc=all]{hyperref}
 \usepackage{url}
 \urlstyle{same}
 
@@ -202,12 +206,12 @@
 \newcommand{\cmark}{\ding{51}}
 \newcommand{\xmark}{\ding{55}}
 \newcommand{\sym}[1]{^{#1}}
-\newcommand{\red}[1]{{\color{red} #1}}
-\newcommand{\blue}[1]{{\color{blue} #1}}
+\newcommand{\red}[1]{{\color{black} #1}}
+\newcommand{\blue}[1]{{\color{black} #1}}
 \newcommand{\ds}{\displaystyle}
 \DeclareMathOperator*{\mean}{mean}
-\newcommand{\nb}[1]{\textcolor{blue}{NB[#1]}}
-\newcommand{\aruna}[1]{\textcolor{blue}{Aruna[#1]}}
+\newcommand{\nb}[1]{\textcolor{black}{NB[#1]}}
+\newcommand{\aruna}[1]{\textcolor{black}{Aruna[#1]}}
 \chardef\mhyphen="2D
 \providecommand{\U}[1]{\protect\rule{.1in}{.1in}}
 \providecommand{\degree}{\ensuremath{{}^\circ}}
@@ -322,11 +326,12 @@
 % --- Title Page (page i, number not shown) ---
 \input{front_matter/titlepage}
 
-% --- Approval Page ---
-\input{front_matter/approval}
-
-% --- Copyright Page ---
+% --- Copyright Page (no number shown, not counted) ---
 \input{front_matter/copyright}
+
+% --- Approval / Signature Page (preliminary numbering starts here at "ii") ---
+\setcounter{page}{2}
+\input{front_matter/approval}
 
 % --- Abstract ---
 \input{front_matter/abstract}
