@@ -330,7 +330,9 @@
 \input{front_matter/copyright}
 
 % --- Approval / Signature Page (preliminary numbering starts here at "ii") ---
-\setcounter{page}{2}
+% Set counter to 1 so the (unnumbered) copyright page ships as page 1
+% and the next \clearpage (at the top of approval.tex) increments to 2.
+\setcounter{page}{1}
 \input{front_matter/approval}
 
 % --- Abstract ---
